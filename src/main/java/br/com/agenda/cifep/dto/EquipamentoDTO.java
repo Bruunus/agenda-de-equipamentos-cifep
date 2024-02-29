@@ -1,11 +1,20 @@
 package br.com.agenda.cifep.dto;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class EquipamentoDTO {
 	
 	private Long id;	 
 	private String descricao;
 	private Integer quantidade;
     private String reserva;
+    private LocalDate dataRetirada;
+	private LocalTime horarioRetirada;
+	private LocalDate dataDevolucao;
+	private LocalTime horaDevolucao;
+	
+    
 
     
     public EquipamentoDTO(String descricao, Integer quantidade) {
@@ -45,6 +54,8 @@ public class EquipamentoDTO {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
+	
+	
 
 	
 	

@@ -38,6 +38,7 @@ public class ReservaService {
 	    if (reservaDTO.getSetor() == null || reservaDTO.getSetor().isEmpty() ||
 	        reservaDTO.getResponsavel() == null || reservaDTO.getResponsavel().isEmpty() ||
 	        reservaDTO.getEquipamentos() == null || reservaDTO.getEquipamentos().isEmpty()) {
+	    	System.err.println("Erro: Erro detectado no recebimento dos dados - Verifique os campos obrigatórios.");
 	        return false;
 	    }
 
@@ -53,11 +54,13 @@ public class ReservaService {
 
 	    for (EquipamentoDTO equipamentoDTO : reservaDTO.getEquipamentos()) {
 	        if (equipamentoDTO == null || equipamentoDTO.getDescricao() == null || equipamentoDTO.getDescricao().isEmpty()) {
+	        	System.err.println("Erro: Erro detectado na declaração de equipamento - Não pode ser nulo nem vazio ou pelo menos um equipamento.");
 	            return false; // Se encontrar uma descrição nula ou vazia, retorna false imediatamente
 	        }
 
 	        // Verifica se a descrição do equipamento é composta apenas de espaços em branco
 	        if (equipamentoDTO.getDescricao().trim().isEmpty()) {
+	        	System.err.println("Erro: Erro detectado na declaração de equipamento - Não pode ser nulo nem vazio ou pelo menos um equipament.");
 	            return false; // Se a descrição contiver apenas espaços em branco, retorna false
 	        }
 

@@ -1,14 +1,16 @@
 package br.com.agenda.cifep.dto;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
-
-import br.com.agenda.cifep.model.Equipamento;
 
 public class ReservaDTO {
 	
 	private String setor;
 	private String responsavel;
+	
 	private List<EquipamentoDTO> equipamentos;
+	
 	
 	
 	
@@ -30,6 +32,8 @@ public class ReservaDTO {
 	public void setEquipamentos(List<EquipamentoDTO> equipamentos) {
 		this.equipamentos = equipamentos;
 	}
+	
+	
 	
 	
 

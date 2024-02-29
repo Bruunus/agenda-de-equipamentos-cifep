@@ -24,31 +24,18 @@ public class ReservaController {
 	
 	@PostMapping("reserva")
 	public ResponseEntity<String> criarReserva(@RequestBody ReservaDTO reservaDTO) {
-		try {
-			
-			reservaService.novaReserva(reservaDTO);
-			return ResponseEntity.ok("Reserva realizada com sucesso!");
-			
-		} catch (Exception e) {
-			StringWriter sw = new StringWriter();
-	        PrintWriter pw = new PrintWriter(sw);
-	        e.printStackTrace(pw);
-	        String stackTrace = sw.toString();
+	 
+		boolean reservaRealizada = reservaService.novaReserva(reservaDTO);
+
+	    if (reservaRealizada) {
+	        return ResponseEntity.ok("Reserva realizada com sucesso!");
+		    } else {
+		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+		                .body("Erro ao realizar a reserva");
+		    } 
 	        
-	        
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	        		.body("Erro ao realizar a reserva" + e.getMessage() + "\n\nStack Trace:\n" + stackTrace);
-	        
-		}
-			 
-	}
-	
-	
-	
-	
-	
-	
-	
+		 
+	}	
 	
 	
 }
