@@ -9,10 +9,7 @@ public class EquipamentoDTO {
 	private String descricao;
 	private Integer quantidade;
     private String reserva;
-    private LocalDate dataRetirada;
-	private LocalTime horarioRetirada;
-	private LocalDate dataDevolucao;
-	private LocalTime horaDevolucao;
+    
 	
     
 

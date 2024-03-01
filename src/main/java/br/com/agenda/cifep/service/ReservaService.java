@@ -1,5 +1,6 @@
 package br.com.agenda.cifep.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,9 +36,16 @@ public class ReservaService {
 	 * @return
 	 */
 	public Boolean novaReserva(ReservaDTO reservaDTO) {
+		
+		
+		if (dataRetiradaString != null && !dataRetiradaString.isEmpty()) {
+		    dataRetirada = LocalDate.parse(dataRetiradaString);
+		}
+		
 	    if (reservaDTO.getSetor() == null || reservaDTO.getSetor().isEmpty() ||
 	        reservaDTO.getResponsavel() == null || reservaDTO.getResponsavel().isEmpty() ||
-	        reservaDTO.getEquipamentos() == null || reservaDTO.getEquipamentos().isEmpty()) {
+	        reservaDTO.getEquipamentos() == null || reservaDTO.getEquipamentos().isEmpty() ||
+	    	reservaDTO.getDataRetirada() == null || reservaDTO.getDataRetirada().   ){
 	    	System.err.println("Erro: Erro detectado no recebimento dos dados - Verifique os campos obrigatórios.");
 	        return false;
 	    }
