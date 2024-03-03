@@ -2,6 +2,8 @@ package br.com.agenda.cifep.model;
 
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +29,7 @@ public class Equipamento {
 	
 	@ManyToOne
     @JoinColumn(name = "reserva_id")
+	@JsonIgnore
     private Reserva reserva;
 
 	
@@ -65,7 +68,10 @@ public class Equipamento {
 	}
 
 	
-	
+	@JsonIgnore
+    public Reserva getReservaIgnore() {
+        return reserva;
+    }
 	
 	
 	

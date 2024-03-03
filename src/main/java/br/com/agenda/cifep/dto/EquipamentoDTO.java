@@ -10,14 +10,21 @@ public class EquipamentoDTO {
 	private Integer quantidade;
     private String reserva;
     
-	
     
+    
+	
+    public EquipamentoDTO() {
+        
+    }
 
     
     public EquipamentoDTO(String descricao, Integer quantidade) {
         this.descricao = descricao;
         this.quantidade = quantidade;
     }
+    
+    
+    
     
 	public Long getId() {
 		return id;

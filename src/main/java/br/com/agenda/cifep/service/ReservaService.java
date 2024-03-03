@@ -1,7 +1,9 @@
 package br.com.agenda.cifep.service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import br.com.agenda.cifep.dto.EquipamentoDTO;
 import br.com.agenda.cifep.dto.ReservaDTO;
 import br.com.agenda.cifep.model.Equipamento;
 import br.com.agenda.cifep.model.Reserva;
+import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.repository.EquipamentoRepository;
 import br.com.agenda.cifep.repository.ReservaRepository;
 
@@ -37,67 +40,96 @@ public class ReservaService {
 	 */
 	public Boolean novaReserva(ReservaDTO reservaDTO) {
 		
-		
-		if (dataRetiradaString != null && !dataRetiradaString.isEmpty()) {
-		    dataRetirada = LocalDate.parse(dataRetiradaString);
+		if(!reservaDTO.validationItens(reservaDTO)) {
+			return false;
 		}
-		
-	    if (reservaDTO.getSetor() == null || reservaDTO.getSetor().isEmpty() ||
-	        reservaDTO.getResponsavel() == null || reservaDTO.getResponsavel().isEmpty() ||
-	        reservaDTO.getEquipamentos() == null || reservaDTO.getEquipamentos().isEmpty() ||
-	    	reservaDTO.getDataRetirada() == null || reservaDTO.getDataRetirada().   ){
-	    	System.err.println("Erro: Erro detectado no recebimento dos dados - Verifique os campos obrigatórios.");
-	        return false;
-	    }
 
 	    Reserva reserva = new Reserva();
-	    List<Equipamento> equipamentosList = new ArrayList<>();
-
+	    
+	    
+	    
 	    reserva.setSetor(reservaDTO.getSetor());
-	    reserva.setResponsavel(reservaDTO.getResponsavel());
+	    reserva.setResponsavel(reservaDTO.getResponsavel());	
 	    
-	    // Próximo objetivo: Adicione data e hora separadamente na tabela, e ao criar a reserva seja registrada aqui, e não pelo usuário.
-	   
+	    reserva.setDataRetirada(LocalDate.now());
+	    reserva.setHoraRetirada(LocalTime.now());
 	    
-
-	    for (EquipamentoDTO equipamentoDTO : reservaDTO.getEquipamentos()) {
-	        if (equipamentoDTO == null || equipamentoDTO.getDescricao() == null || equipamentoDTO.getDescricao().isEmpty()) {
-	        	System.err.println("Erro: Erro detectado na declaração de equipamento - Não pode ser nulo nem vazio ou pelo menos um equipamento.");
-	            return false; // Se encontrar uma descrição nula ou vazia, retorna false imediatamente
-	        }
-
-	        // Verifica se a descrição do equipamento é composta apenas de espaços em branco
-	        if (equipamentoDTO.getDescricao().trim().isEmpty()) {
-	        	System.err.println("Erro: Erro detectado na declaração de equipamento - Não pode ser nulo nem vazio ou pelo menos um equipament.");
-	            return false; // Se a descrição contiver apenas espaços em branco, retorna false
-	        }
-
-	        Equipamento equipamento = new Equipamento();
-	        equipamento.setDescricao(equipamentoDTO.getDescricao());
-	        equipamento.setQuantidade(equipamentoDTO.getQuantidade());
-	        equipamento.setReserva(reserva);
-
-	        equipamentosList.add(equipamento);
-	    }
-
-	    // Melhorar esta validação ainda está passando.... não pode ser vazia e nem nula
-	    if (equipamentosList.isEmpty()) {
-	        return false;
-	    }
+	    reserva.setStatus(StatusReserva.ATIVA);
 	    
 	    
+	    List<Equipamento> equipamentosList = new ArrayList<>();
 	    
-	    
-	    
-	    
-
-	    // Salva a reserva e os equipamentos
-	    reserva.getEquipamentos().addAll(equipamentosList);
-	    reservaRepository.save(reserva);
-	    equipamentoRepository.saveAll(equipamentosList);
-
+		    for (EquipamentoDTO equipamentoDTO : reservaDTO.getEquipamentos()) {
+		        Equipamento equipamento = new Equipamento();
+		        equipamento.setDescricao(equipamentoDTO.getDescricao());
+		        equipamento.setQuantidade(equipamentoDTO.getQuantidade());
+		        equipamento.setReserva(reserva); // Associar o equipamento à reserva
+		        equipamentosList.add(equipamento);
+		    
+		    
+		    reserva.getEquipamentos().addAll(equipamentosList);
+	
+		    reservaRepository.save(reserva);
+	
+	
+		    }
+		    
 	    return true;
 	}
+
+
+	
+	
+	
+	
+	
+	
+	public List<ReservaDTO> carregarReservas() {
+		 
+	 
+		List<Reserva> reservas =  reservaRepository.findAll();
+		List<ReservaDTO> listaDeDados = new ArrayList<>();
+		
+		reservas.forEach(loadData -> {
+			ReservaDTO reservaDTO = new ReservaDTO();
+			
+			reservaDTO.setSetor(loadData.getSetor());
+			reservaDTO.setResponsavel(loadData.getResponsavel());
+			
+			// para todo join na tabela
+			List<EquipamentoDTO> equipamentosDTO = new ArrayList<>();
+			loadData.getEquipamentos().forEach(equipamento -> {
+				EquipamentoDTO equipDTO = new EquipamentoDTO();
+				
+				equipDTO.setId(equipamento.getId());
+				equipDTO.setDescricao(equipamento.getDescricao());
+				equipDTO.setQuantidade(equipamento.getQuantidade());	
+				
+				equipamentosDTO.add(equipDTO);
+			});
+			
+			
+			reservaDTO.setEquipamentos(equipamentosDTO);
+			reservaDTO.setDataRetirada(loadData.getDataRetirada());
+			reservaDTO.setHorRetirada(loadData.getHoraRetirada());
+			// loadStatus
+			// load dataDevolucao
+			// load horaDevolucao
+			
+			
+			listaDeDados.add(reservaDTO);
+			
+		});	
+		
+		
+		
+		
+		return listaDeDados;
+	}
+	
+	
+ 
+
 
 
 	

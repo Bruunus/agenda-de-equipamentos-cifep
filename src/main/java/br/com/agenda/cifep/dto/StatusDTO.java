@@ -1,0 +1,21 @@
+package br.com.agenda.cifep.dto;
+
+import br.com.agenda.cifep.model.StatusReserva;
+
+public class StatusDTO {
+	
+	private StatusReserva statusReserva;
+
+	
+	
+	public StatusReserva getStatusReserva() {
+		return statusReserva;
+	}
+
+	public void setStatusReserva(StatusReserva statusReserva) {
+		this.statusReserva = statusReserva;
+	}
+	
+	
+
+}

@@ -10,9 +10,12 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,26 +28,38 @@ public class Reserva {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;	
+	private Long id;
+	
 	@NotNull
 	private String setor;	
+	
 	@NotNull
 	private String responsavel;	
+	
 	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties({"reserva"})
 	private List<Equipamento> equipamentos = new ArrayList<>();
+	
+	
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	@NotNull 
 	private LocalDate dataRetirada;	
+	
+	
 	@NotNull @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
 	private LocalTime horaRetirada;
 	
 	// preenchida no momento da baixa da reserva
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 	private LocalDate dataDevolucao;
+	
+	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
 	private LocalTime horaDevolucao;
 	
-	
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private StatusReserva status;	
 	
 	
 	public Long getId() {
@@ -87,11 +102,11 @@ public class Reserva {
 		this.dataRetirada = dataRetirada;
 	}
 
-	public LocalTime getHorarioRetirada() {
+	public LocalTime getHoraRetirada() {
 		return horaRetirada;
 	}
 
-	public void setHorarioRetirada(LocalTime horarioRetirada) {
+	public void setHoraRetirada(LocalTime horarioRetirada) {
 		this.horaRetirada = horarioRetirada;
 	}
 
@@ -110,6 +125,15 @@ public class Reserva {
 	public void setHoraDevolucao(LocalTime horaDevolucao) {
 		this.horaDevolucao = horaDevolucao;
 	}
+
+	public StatusReserva getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusReserva status) {
+		this.status = status;
+	}
+	
 	
 	
  
