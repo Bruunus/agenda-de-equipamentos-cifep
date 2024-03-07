@@ -2,7 +2,7 @@ package br.com.agenda.cifep.dto;
 
 import br.com.agenda.cifep.model.StatusReserva;
 
-public class StatusDTO {
+public class StatusReservaDTO {
 	
 	private StatusReserva statusReserva;
 

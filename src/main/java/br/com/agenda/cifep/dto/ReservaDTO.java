@@ -4,8 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import br.com.agenda.cifep.model.Equipamento;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import br.com.agenda.cifep.model.StatusReserva;
+import br.com.agenda.cifep.model.TipoReserva;
 
 public class ReservaDTO {
 	
@@ -16,9 +19,13 @@ public class ReservaDTO {
 	private LocalTime horaRetirada;
 	
 	private LocalDate dataDevolucao;
+	
+	@JsonSerialize
+	@JsonDeserialize
 	private LocalTime horaDevolucao;
 	
 	private StatusReserva statusReserva;
+	private TipoReserva tipoReserva;
 	
 	private List<EquipamentoDTO> equipamentos;
 	
@@ -109,6 +116,15 @@ public class ReservaDTO {
 	public StatusReserva getStatusReserva() {
 		return statusReserva;
 	}
+	public TipoReserva getTipoReserva() {
+		return tipoReserva;
+	}
+
+
+
+
+
+	
 
 
 
@@ -143,7 +159,9 @@ public class ReservaDTO {
 	public void setStatusReserva(StatusReserva statusReserva) {
 		this.statusReserva = statusReserva;
 	}
-	
+	public void setTipoReserva(TipoReserva tipoReserva) {
+		this.tipoReserva = tipoReserva;
+	}
 	
 	
 	

@@ -59,8 +59,11 @@ public class Reserva {
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	private StatusReserva status;	
+	private StatusReserva status;
 	
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private TipoReserva tipo;
 	
 	public Long getId() {
 		return id;
@@ -133,6 +136,15 @@ public class Reserva {
 	public void setStatus(StatusReserva status) {
 		this.status = status;
 	}
+
+	public TipoReserva getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoReserva tipo) {
+		this.tipo = tipo;
+	}
+	
 	
 	
 	

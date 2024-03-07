@@ -2,9 +2,10 @@ package br.com.agenda.cifep.service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import br.com.agenda.cifep.dto.ReservaDTO;
 import br.com.agenda.cifep.model.Equipamento;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
+import br.com.agenda.cifep.model.TipoReserva;
 import br.com.agenda.cifep.repository.EquipamentoRepository;
 import br.com.agenda.cifep.repository.ReservaRepository;
 
@@ -54,7 +56,12 @@ public class ReservaService {
 	    reserva.setDataRetirada(LocalDate.now());
 	    reserva.setHoraRetirada(LocalTime.now());
 	    
+	    reserva.setDataDevolucao(reservaDTO.getDataDevolucao());
+	    reserva.setHoraDevolucao(reservaDTO.getHoraDevolucao());
+	    
 	    reserva.setStatus(StatusReserva.ATIVA);
+	    reserva.setTipo(TipoReserva.EVENTUAL);
+	    
 	    
 	    
 	    List<Equipamento> equipamentosList = new ArrayList<>();
@@ -77,14 +84,55 @@ public class ReservaService {
 	    return true;
 	}
 
+	
 
+	public boolean novaReservaAgendada(ReservaDTO reservaDTO) {
+		
+		if(!reservaDTO.validationItens(reservaDTO)) {
+			return false;
+		}
+
+	    Reserva reserva = new Reserva();
+	    
+	    
+	    
+	    reserva.setSetor(reservaDTO.getSetor());
+	    reserva.setResponsavel(reservaDTO.getResponsavel());
+	    reserva.setDataRetirada(reservaDTO.getDataRetirada());
+	    reserva.setHoraRetirada(reservaDTO.getHoraRetirada());
+	    reserva.setDataDevolucao(reservaDTO.getDataDevolucao());
+	    reserva.setHoraDevolucao(reservaDTO.getHoraDevolucao());
+	    
+	    reserva.setStatus(StatusReserva.ATIVA);
+	    reserva.setTipo(TipoReserva.AGENDADA);
+	    
+	    
+	    List<Equipamento> equipamentosList = new ArrayList<>();
+	    
+	    for (EquipamentoDTO equipamentoDTO : reservaDTO.getEquipamentos()) {
+	        Equipamento equipamento = new Equipamento();
+	        equipamento.setDescricao(equipamentoDTO.getDescricao());
+	        equipamento.setQuantidade(equipamentoDTO.getQuantidade());
+	        equipamento.setReserva(reserva); // Associar o equipamento à reserva
+	        equipamentosList.add(equipamento);
+	    
+	    
+	    reserva.getEquipamentos().addAll(equipamentosList);
+
+	    reservaRepository.save(reserva);
+
+
+	    }
+	    
+		return true;
+	}
 	
 	
 	
 	
 	
 	
-	public List<ReservaDTO> carregarReservas() {
+	public List<ReservaDTO> carregarTodasReservas() {
 		 
 	 
 		List<Reserva> reservas =  reservaRepository.findAll();
@@ -112,9 +160,10 @@ public class ReservaService {
 			reservaDTO.setEquipamentos(equipamentosDTO);
 			reservaDTO.setDataRetirada(loadData.getDataRetirada());
 			reservaDTO.setHorRetirada(loadData.getHoraRetirada());
-			// loadStatus
-			// load dataDevolucao
-			// load horaDevolucao
+			reservaDTO.setStatusReserva(loadData.getStatus());
+			reservaDTO.setTipoReserva(loadData.getTipo());
+			reservaDTO.setDataDevolucao(loadData.getDataDevolucao());
+			reservaDTO.setHoraDevolucao(loadData.getHoraDevolucao());
 			
 			
 			listaDeDados.add(reservaDTO);
@@ -126,6 +175,58 @@ public class ReservaService {
 		
 		return listaDeDados;
 	}
+
+
+	
+
+
+
+
+
+
+	public boolean finalizaReserva(Long id) {
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+		
+		Optional<Reserva> registro = reservaRepository.findById(id);
+		
+		System.out.println(registro.toString());
+		
+		
+		if(registro.isPresent()) {
+			
+			Reserva reservaLoad = registro.get();
+			
+			System.out.println(reservaLoad.toString() );
+		
+			if(reservaLoad.getStatus() == StatusReserva.FINALIZADA) {
+				return false;
+			};
+			
+		reservaLoad.setDataDevolucao(LocalDate.now());
+		String dataDevolucao = LocalTime.now().format(formatter);
+		reservaLoad.setHoraDevolucao(LocalTime.parse(dataDevolucao, formatter));
+		reservaLoad.setStatus(StatusReserva.FINALIZADA);		
+		 
+		reservaRepository.save(reservaLoad);
+		return true;
+		
+		} else {
+			
+			return false;
+		
+		}
+		
+	}
+
+
+
+
+
+
+
+
+	
 	
 	
  

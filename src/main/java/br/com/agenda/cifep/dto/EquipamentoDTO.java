@@ -1,13 +1,14 @@
 package br.com.agenda.cifep.dto;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class EquipamentoDTO {
 	
 	private Long id;	 
 	private String descricao;
 	private Integer quantidade;
+	
+	@JsonIgnore
     private String reserva;
     
     
