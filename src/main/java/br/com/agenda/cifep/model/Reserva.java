@@ -7,12 +7,11 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -63,7 +62,24 @@ public class Reserva {
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
+	@Column(length = 100)
 	private TipoReserva tipo;
+	
+	@NotNull
+	private String recorrenciaDeToda;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public Long getId() {
 		return id;
@@ -143,6 +159,14 @@ public class Reserva {
 
 	public void setTipo(TipoReserva tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getRecorrenciaDeToda() {
+		return recorrenciaDeToda;
+	}
+
+	public void setRecorrenciaDeToda(String recorrenciaDeToda) {
+		this.recorrenciaDeToda = recorrenciaDeToda;
 	}
 	
 	

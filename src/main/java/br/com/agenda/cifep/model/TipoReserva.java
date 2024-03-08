@@ -1,7 +1,17 @@
 package br.com.agenda.cifep.model;
 
 public enum TipoReserva {
+	
+	
 
 	EVENTUAL,
-	AGENDADA
+	AGENDADA_NAO_ANUAL,
+	AGENDADA_ANUAL;
+	
+	
+	
+		
+	
+	
+	
 }

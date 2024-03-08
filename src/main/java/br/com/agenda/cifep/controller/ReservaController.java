@@ -42,9 +42,9 @@ public class ReservaController {
 	
 	
 	@PostMapping("new/scheduled/reserva")
-	public ResponseEntity<String> criarReservaAgendada(@RequestBody ReservaDTO reservaDTO) {
+	public ResponseEntity<String> criarReservaAgendadaNaoAnual(@RequestBody ReservaDTO reservaDTO) {
 	 
-		boolean reservaRealizada = reservaService.novaReservaAgendada(reservaDTO);
+		boolean reservaRealizada = reservaService.novaReservaAgendadaNaoAnual(reservaDTO);
 
 	    if (reservaRealizada) {
 	        return ResponseEntity.ok("Reserva realizada com sucesso!");
@@ -54,6 +54,24 @@ public class ReservaController {
 		    } 	        
 		 
 	}
+	
+	
+	@PostMapping("new/scheduled-full-year/reserva")
+	public ResponseEntity<String> criarReservaAgendadaAnual(@RequestBody ReservaDTO reservaDTO) {
+	 
+		boolean reservaRealizada = reservaService.novaReservaAgendadaAnual(reservaDTO);
+
+	    if (reservaRealizada) {
+	        return ResponseEntity.ok("Reserva anual realizada com sucesso!");
+		    } else {
+		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+		                .body("Erro ao realizar a reserva anual.");
+		    } 	        
+		 
+	}
+	
+	
+	
 	
 	
 	

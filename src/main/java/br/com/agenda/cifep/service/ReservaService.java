@@ -26,8 +26,6 @@ public class ReservaService {
 	@Autowired
 	private ReservaRepository reservaRepository;
 	
-	@Autowired
-	private EquipamentoRepository equipamentoRepository;
 	
 
 	/**
@@ -61,7 +59,7 @@ public class ReservaService {
 	    
 	    reserva.setStatus(StatusReserva.ATIVA);
 	    reserva.setTipo(TipoReserva.EVENTUAL);
-	    
+	    reserva.setRecorrenciaDeToda("*");
 	    
 	    
 	    List<Equipamento> equipamentosList = new ArrayList<>();
@@ -86,14 +84,13 @@ public class ReservaService {
 
 	
 
-	public boolean novaReservaAgendada(ReservaDTO reservaDTO) {
+	public boolean novaReservaAgendadaNaoAnual(ReservaDTO reservaDTO) {
 		
 		if(!reservaDTO.validationItens(reservaDTO)) {
 			return false;
 		}
 
 	    Reserva reserva = new Reserva();
-	    
 	    
 	    
 	    reserva.setSetor(reservaDTO.getSetor());
@@ -104,8 +101,8 @@ public class ReservaService {
 	    reserva.setHoraDevolucao(reservaDTO.getHoraDevolucao());
 	    
 	    reserva.setStatus(StatusReserva.ATIVA);
-	    reserva.setTipo(TipoReserva.AGENDADA);
-	    
+	    reserva.setTipo(TipoReserva.AGENDADA_NAO_ANUAL);
+	    reserva.setRecorrenciaDeToda("*");
 	    
 	    List<Equipamento> equipamentosList = new ArrayList<>();
 	    
@@ -125,6 +122,48 @@ public class ReservaService {
 	    }
 	    
 		return true;
+	}
+	
+	
+	
+	public boolean novaReservaAgendadaAnual(ReservaDTO reservaDTO) {
+		
+		if(!reservaDTO.validationItens(reservaDTO)) {
+			return false;
+		}
+
+	    Reserva reserva = new Reserva();	    
+	    
+	    reserva.setSetor(reservaDTO.getSetor());
+	    reserva.setResponsavel(reservaDTO.getResponsavel());
+	    reserva.setDataRetirada(reservaDTO.getDataRetirada());
+	    reserva.setHoraRetirada(reservaDTO.getHoraRetirada());
+	    reserva.setDataDevolucao(reservaDTO.getDataDevolucao());
+	    reserva.setHoraDevolucao(reservaDTO.getHoraDevolucao());
+	    
+	    reserva.setStatus(StatusReserva.ATIVA);
+	    reserva.setTipo(TipoReserva.AGENDADA_ANUAL);
+	    reserva.setRecorrenciaDeToda(reservaDTO.getRecorrenciaDeToda());
+	    
+	    List<Equipamento> equipamentosList = new ArrayList<>();
+	    
+	    for (EquipamentoDTO equipamentoDTO : reservaDTO.getEquipamentos()) {
+	        Equipamento equipamento = new Equipamento();
+	        equipamento.setDescricao(equipamentoDTO.getDescricao());
+	        equipamento.setQuantidade(equipamentoDTO.getQuantidade());
+	        equipamento.setReserva(reserva); // Associar o equipamento à reserva
+	        equipamentosList.add(equipamento);
+	    
+	    
+	    reserva.getEquipamentos().addAll(equipamentosList);
+
+	    reservaRepository.save(reserva);
+
+
+	    }
+	    
+		return true;
+		
 	}
 	
 	

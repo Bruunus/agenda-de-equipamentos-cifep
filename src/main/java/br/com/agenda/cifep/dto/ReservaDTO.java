@@ -29,6 +29,7 @@ public class ReservaDTO {
 	
 	private List<EquipamentoDTO> equipamentos;
 	
+	private String recorrenciaDeToda;
  
 	
 	
@@ -119,12 +120,9 @@ public class ReservaDTO {
 	public TipoReserva getTipoReserva() {
 		return tipoReserva;
 	}
-
-
-
-
-
-	
+	public String getRecorrenciaDeToda() {
+		return recorrenciaDeToda;
+	}
 
 
 
@@ -161,6 +159,10 @@ public class ReservaDTO {
 	}
 	public void setTipoReserva(TipoReserva tipoReserva) {
 		this.tipoReserva = tipoReserva;
+	}
+
+	public void setRecorrenciaDeToda(String recorrenciaDeToda) {
+		this.recorrenciaDeToda = recorrenciaDeToda;
 	}
 	
 	
