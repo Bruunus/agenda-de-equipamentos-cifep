@@ -2,11 +2,15 @@ package br.com.agenda.cifep.dto;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;
 
@@ -29,6 +33,7 @@ public class ReservaDTO {
 	
 	private List<EquipamentoDTO> equipamentos;
 	
+	@JsonIgnore
 	private String recorrenciaDeToda;
  
 	
@@ -82,6 +87,52 @@ public class ReservaDTO {
 	    return true;
 	       
 	}
+	
+	
+	public List<ReservaDTO> carregarDados(List <Reserva> reserva, int code) {
+		
+		List<ReservaDTO> listaDeDados = new ArrayList<>();
+		
+		reserva.forEach(loadData -> {
+			ReservaDTO reservaDTO = new ReservaDTO();
+			
+			reservaDTO.setSetor(loadData.getSetor());
+			reservaDTO.setResponsavel(loadData.getResponsavel());
+			
+			// para todo join na tabela
+			List<EquipamentoDTO> equipamentosDTO = new ArrayList<>();
+			loadData.getEquipamentos().forEach(equipamento -> {
+				EquipamentoDTO equipDTO = new EquipamentoDTO();
+				
+				equipDTO.setId(equipamento.getId());
+				equipDTO.setDescricao(equipamento.getDescricao());
+				equipDTO.setQuantidade(equipamento.getQuantidade());	
+				
+				equipamentosDTO.add(equipDTO);
+			});
+			
+			
+			reservaDTO.setEquipamentos(equipamentosDTO);
+			reservaDTO.setDataRetirada(loadData.getDataRetirada());
+			reservaDTO.setHorRetirada(loadData.getHoraRetirada());
+			reservaDTO.setStatusReserva(loadData.getStatus());
+			reservaDTO.setTipoReserva(loadData.getTipo());
+			reservaDTO.setDataDevolucao(loadData.getDataDevolucao());
+			reservaDTO.setHoraDevolucao(loadData.getHoraDevolucao());
+			
+			if(code == 1) {
+				//reservaDTO.setRecorrenciaDeToda(loadData.getRecorrenciaDeToda());
+				listaDeDados.add(reservaDTO);
+			} else {
+				listaDeDados.add(reservaDTO);
+			}
+			
+			
+			
+		});	
+				
+		return listaDeDados;
+	}
 		
 		
 		
@@ -120,6 +171,8 @@ public class ReservaDTO {
 	public TipoReserva getTipoReserva() {
 		return tipoReserva;
 	}
+	
+	@JsonProperty
 	public String getRecorrenciaDeToda() {
 		return recorrenciaDeToda;
 	}
