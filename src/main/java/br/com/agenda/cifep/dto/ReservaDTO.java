@@ -88,8 +88,8 @@ public class ReservaDTO {
 	       
 	}
 	
-	
-	public List<ReservaDTO> carregarDados(List <Reserva> reserva, int code) {
+	 
+	public List<ReservaDTO> carregarDados(List <Reserva> reserva) {
 		
 		List<ReservaDTO> listaDeDados = new ArrayList<>();
 		
@@ -120,12 +120,7 @@ public class ReservaDTO {
 			reservaDTO.setDataDevolucao(loadData.getDataDevolucao());
 			reservaDTO.setHoraDevolucao(loadData.getHoraDevolucao());
 			
-			if(code == 1) {
-				//reservaDTO.setRecorrenciaDeToda(loadData.getRecorrenciaDeToda());
-				listaDeDados.add(reservaDTO);
-			} else {
-				listaDeDados.add(reservaDTO);
-			}
+			
 			
 			
 			
@@ -134,7 +129,46 @@ public class ReservaDTO {
 		return listaDeDados;
 	}
 		
+	 
+	public List<ReservaDTO> carregarDados(List <Reserva> reserva, int code) {
 		
+		List<ReservaDTO> listaDeDados = new ArrayList<>();
+		
+		reserva.forEach(loadData -> {
+			ReservaDTO reservaDTO = new ReservaDTO();
+			
+			reservaDTO.setSetor(loadData.getSetor());
+			reservaDTO.setResponsavel(loadData.getResponsavel());
+			
+			// para todo join na tabela
+			List<EquipamentoDTO> equipamentosDTO = new ArrayList<>();
+			loadData.getEquipamentos().forEach(equipamento -> {
+				EquipamentoDTO equipDTO = new EquipamentoDTO();
+				
+				equipDTO.setId(equipamento.getId());
+				equipDTO.setDescricao(equipamento.getDescricao());
+				equipDTO.setQuantidade(equipamento.getQuantidade());	
+				
+				equipamentosDTO.add(equipDTO);
+			});
+			
+			
+			reservaDTO.setEquipamentos(equipamentosDTO);
+			reservaDTO.setDataRetirada(loadData.getDataRetirada());
+			reservaDTO.setHorRetirada(loadData.getHoraRetirada());
+			reservaDTO.setStatusReserva(loadData.getStatus());
+			reservaDTO.setTipoReserva(loadData.getTipo());
+			reservaDTO.setDataDevolucao(loadData.getDataDevolucao());
+			reservaDTO.setHoraDevolucao(loadData.getHoraDevolucao());
+			reservaDTO.setRecorrenciaDeToda(loadData.getRecorrenciaDeToda());
+			 
+			
+		});	
+				
+		return listaDeDados;
+	}
+	
+	
 		
  
 		

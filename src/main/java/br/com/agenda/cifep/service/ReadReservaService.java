@@ -31,7 +31,7 @@ public class ReadReservaService {
 		 
 		 
 		List<Reserva> reservas =  reservaRepository.findAll();		
-		return reservaDTO.carregarDados(reservas, 0);
+		return reservaDTO.carregarDados(reservas);
 	}
 	
 	
@@ -39,7 +39,7 @@ public class ReadReservaService {
 	public List<ReservaDTO> carregarTodasReservasAtivas() {
 		
 		List<Reserva> reservas =  reservaRepository.findByStatus(StatusReserva.ATIVA);		
-		return reservaDTO.carregarDados(reservas, 0);
+		return reservaDTO.carregarDados(reservas);
 
 	}
 
@@ -49,16 +49,15 @@ public class ReadReservaService {
 	public List<ReservaDTO> carregarTodasReservasAtivasAnuais() {
 		 
 		List<Reserva> reservas =  reservaRepository.findByStatusAndTipo(StatusReserva.ATIVA, TipoReserva.AGENDADA_ANUAL);
-		return reservaDTO.carregarDados(reservas, 1);		
+		return reservaDTO.carregarDados(reservas);		
 		
 	}
 
 
-	
-	public List<ReservaDTO> carregarTodasReservasMesAtual(int mes) {
-		
+	// 	Consulta com JPQL
+	public List<ReservaDTO> carregarTodasReservasMesAtual(int mes) {		
 
-		List<Reserva> reservas =  reservaRepository.findByDataRetiradaMonthAndTipoAndStatus(mes, TipoReserva.AGENDADA_NAO_ANUAL, StatusReserva.ATIVA);
+		List<Reserva> reservas =  reservaRepository.buscaMesAtual(mes);
 		
 		List<ReservaDTO> listaDeDados = new ArrayList<>();
 		
@@ -78,8 +77,7 @@ public class ReadReservaService {
 				equipDTO.setQuantidade(equipamento.getQuantidade());	
 				
 				equipamentosDTO.add(equipDTO);
-			});
-			
+			});			
 			
 			reservaDTO.setEquipamentos(equipamentosDTO);
 			reservaDTO.setDataRetirada(loadData.getDataRetirada());
@@ -87,9 +85,7 @@ public class ReadReservaService {
 			reservaDTO.setStatusReserva(loadData.getStatus());
 			reservaDTO.setTipoReserva(loadData.getTipo());
 			reservaDTO.setDataDevolucao(loadData.getDataDevolucao());
-			reservaDTO.setHoraDevolucao(loadData.getHoraDevolucao());
-			
-			
+			reservaDTO.setHoraDevolucao(loadData.getHoraDevolucao());			
 			
 			listaDeDados.add(reservaDTO);
 			
