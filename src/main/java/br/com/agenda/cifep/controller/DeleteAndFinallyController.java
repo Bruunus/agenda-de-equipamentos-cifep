@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.agenda.cifep.service.DeleteAndFinallyReservaService;
+import br.com.agenda.cifep.service.DeleteAndFinishReservaService;
 
 @RestController
 @RequestMapping("/")
@@ -16,12 +16,12 @@ public class DeleteAndFinallyController {
 	
 	
 	@Autowired
-	private DeleteAndFinallyReservaService deleteAndFinallyReservaService; 
+	private DeleteAndFinishReservaService deleteAndFinishReservaService; 
 	
 	
 	@PutMapping("reserva/{id}/close-on")
 	public ResponseEntity<String> finalizarReserva(@PathVariable Long id) {
-		boolean statusFecharReserva = deleteAndFinallyReservaService.finalizaReserva(id);
+		boolean statusFecharReserva = deleteAndFinishReservaService.finalizaReserva(id);
 		
 		if(statusFecharReserva) {
 			return ResponseEntity.ok("Reserva finalizada com sucesso!");

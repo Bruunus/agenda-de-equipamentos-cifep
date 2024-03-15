@@ -13,7 +13,7 @@ import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.repository.ReservaRepository;
 
 @Service
-public class DeleteAndFinallyReservaService {
+public class DeleteAndFinishReservaService {
 	
 	
 	@Autowired

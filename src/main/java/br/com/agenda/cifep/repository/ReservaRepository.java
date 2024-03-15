@@ -23,10 +23,17 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 	List<Reserva> findByStatusAndTipo(StatusReserva ativa, TipoReserva agendadaAnual);
 
 	// Busca os registros que tenha o mes passado por parametro, que o tipo seja AGENDADA_NAO_ANUAL e com o status ativo
-	@Query(value = "SELECT * FROM reserva r WHERE MONTH(data_retirada) = :mes AND tipo = 'AGENDADA_NAO_ANUAL' AND status = 'ATIVA'", nativeQuery = true)
-	List<Reserva> buscaMesAtual(@Param("mes") int mes);
+	@Query(value = "SELECT * FROM reserva r WHERE MONTH(data_retirada) = :mes AND status = 'ATIVA'", nativeQuery = true)
+	List<Reserva> buscaMesAtualAtivas(@Param("mes") int mes);
 
 	
+	@Query(value = "SELECT * FROM reserva r WHERE MONTH(data_devolucao) = :mes AND status = 'FINALIZADA'", nativeQuery = true)
+	List<Reserva> buscaMesAtualFinalizadas(@Param("mes") int mes);
+
+	
+	List<Reserva> findByResponsavelAndStatus(String nome, StatusReserva finalizada);
+
+	List<Reserva> findBySetorAndStatus(String setor, StatusReserva finalizada);
 	
 	
 }

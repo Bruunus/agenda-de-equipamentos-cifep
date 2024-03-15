@@ -48,7 +48,7 @@ public class CreateReservaService {
 	    
 	    reserva.setStatus(StatusReserva.ATIVA);
 	    reserva.setTipo(TipoReserva.AGENDADA_NAO_ANUAL);
-	    reserva.setRecorrenciaDeToda("*");
+	    reserva.setRecorrenciaDeToda("");
 	    
 	    List<Equipamento> equipamentosList = new ArrayList<>();
 	    
