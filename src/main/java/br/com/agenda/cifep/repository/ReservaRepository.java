@@ -27,13 +27,20 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 	List<Reserva> buscaMesAtualAtivas(@Param("mes") int mes);
 
 	
-	@Query(value = "SELECT * FROM reserva r WHERE MONTH(data_devolucao) = :mes AND status = 'FINALIZADA'", nativeQuery = true)
+	@Query(value = "SELECT * FROM reserva r WHERE MONTH(data_retirada) = :mes AND status = 'FINALIZADA'", nativeQuery = true)
 	List<Reserva> buscaMesAtualFinalizadas(@Param("mes") int mes);
 
 	
 	List<Reserva> findByResponsavelAndStatus(String nome, StatusReserva finalizada);
 
 	List<Reserva> findBySetorAndStatus(String setor, StatusReserva finalizada);
+
+	@Query(value = "SELECT * FROM reserva r WHERE MONTH(data_retirada) = :now AND status = 'ATIVA'", nativeQuery = true)
+	List<Reserva> buscarPorMesAtual(@Param("now")int now);
+
+	
+	@Query(value = "SELECT * FROM reserva r WHERE DAY(data_retirada) = :day AND status = 'ATIVA'", nativeQuery = true)
+	List<Reserva> buscarPorDiaAtual(int day);
 	
 	
 }

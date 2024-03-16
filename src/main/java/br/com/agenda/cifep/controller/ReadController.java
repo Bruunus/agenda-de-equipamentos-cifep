@@ -1,5 +1,7 @@
 package br.com.agenda.cifep.controller;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.agenda.cifep.dto.ReservaDTO;
 import br.com.agenda.cifep.service.ReadReservaService;
 
-
+// implanar o cors quando for testar no front-angular
 @RestController
 @RequestMapping("load/")
 public class ReadController {
@@ -24,29 +26,22 @@ public class ReadController {
 	private ReadReservaService readReservaService;
 
 	
+	
+	//ativas 
 		
 	@GetMapping("actives/reservas")
-	public ResponseEntity<List<ReservaDTO>> carregarTodasAsReservasAtivas() {
+	public ResponseEntity<List<ReservaDTO>> carregarAsReservasAtivas() {
 		List<ReservaDTO> list = readReservaService.carregarTodasReservasAtivas();
 		return new ResponseEntity<>(list, HttpStatus.OK);
 		
 	}
 	
-	@GetMapping("finished/reservas")
-	public ResponseEntity<List<ReservaDTO>> carregarsReservasFinalizadas() {
-		List<ReservaDTO> list = readReservaService.carregarReservasFinalizadas();
-		return new ResponseEntity<>(list, HttpStatus.OK);
-		
-	}
-	
-	
 	@GetMapping("actives-full-year/reservas")
-	public ResponseEntity<List<ReservaDTO>> carregarTodasAsReservasAtivasAnual() {
+	public ResponseEntity<List<ReservaDTO>> carregarAsReservasAtivasAnual() {
 		List<ReservaDTO> list = readReservaService.carregarTodasReservasAtivasAnuais();
 		return new ResponseEntity<>(list, HttpStatus.OK);
 		
 	}
-	
 	
 	@GetMapping("month/{mes}/reservas")
 	public ResponseEntity<List<ReservaDTO>> pesquisarReservaPorMesAtivas(@PathVariable int mes) {
@@ -55,14 +50,54 @@ public class ReadController {
 		
 	}
 	
+	@GetMapping("current-month/reservas")
+	public ResponseEntity<?> carregarReservasDoMesAtual() {
+		List<ReservaDTO> list = readReservaService.carregarTodasReservasDoMesAtual();
+		
+		// ordenar por dia 
+//		Collections.sort(list, Comparator.comparing(ReservaDTO::getDataRetirada));
+		
+		if(list.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Não há nenhuma reserva para este mês!");
+		} else {
+			return ResponseEntity.ok(list);
+		}		
+	}
+	
+	@GetMapping("current-day/reservas")
+	public ResponseEntity<?> carregarReservasDoDia() {
+		List<ReservaDTO> list = readReservaService.carregarTodasReservasDoDiaAtual();
+		
+		// ordenar por hora
+		Collections.sort(list, Comparator.comparing(ReservaDTO::getHoraRetirada));
+		
+		if(list.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Não há nenhuma reserva para o dia!");
+		} else {
+			return ResponseEntity.ok(list);
+		}		
+	}
+	
+	
+	
+	// finalizadas
+	
+	
+	@GetMapping("finished/reservas")
+	public ResponseEntity<List<ReservaDTO>> carregarsReservasFinalizadas() {
+		List<ReservaDTO> list = readReservaService.carregarReservasFinalizadas();
+		return new ResponseEntity<>(list, HttpStatus.OK);
+		
+	}	
 	
 	@GetMapping("finished-for-date/{mes}/reservas")
 	public ResponseEntity<List<ReservaDTO>> pesquisarReservaPorMesFanalizadas(@PathVariable int mes) {
 		List<ReservaDTO> list = readReservaService.carregarReservasFinalizadasPorMes(mes);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 		
-	}
-	
+	}	
 	
 	@GetMapping("finished-for-name/reservas")
 	public ResponseEntity<?> pesquisarReservaPorNomeFanalizadas(@RequestParam("name") String nome) {
