@@ -1,4 +1,4 @@
-package br.com.agenda.cifep.controller;
+package br.com.agenda.cifep.controller.reserva;
 
 import java.util.List;
 import java.util.Set;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.agenda.cifep.dto.ReservaDTO;
-import br.com.agenda.cifep.service.CreateReservaService;
+import br.com.agenda.cifep.service.reserva.CreateReservaService;
 
 @RestController
 @RequestMapping("/")

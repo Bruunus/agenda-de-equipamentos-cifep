@@ -1,4 +1,4 @@
-package br.com.agenda.cifep.controller;
+package br.com.agenda.cifep.controller.reserva;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

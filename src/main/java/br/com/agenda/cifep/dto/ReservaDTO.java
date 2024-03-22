@@ -16,6 +16,7 @@ import br.com.agenda.cifep.model.TipoReserva;
 
 public class ReservaDTO {
 	
+	private Long id;
 	private String setor;
 	private String responsavel;		
 	
@@ -96,6 +97,7 @@ public class ReservaDTO {
 		reserva.forEach(loadData -> {
 			ReservaDTO reservaDTO = new ReservaDTO();
 			
+			reservaDTO.setId(loadData.getId());
 			reservaDTO.setSetor(loadData.getSetor());
 			reservaDTO.setResponsavel(loadData.getResponsavel());
 			
@@ -136,7 +138,9 @@ public class ReservaDTO {
 		
  
 	
-	
+	public Long getId() {
+		return id;
+	}
 	
 	public String getSetor() {
 		return setor;
@@ -174,7 +178,9 @@ public class ReservaDTO {
 
 
 
-
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public void setSetor(String setor) {
 		this.setor = setor;
@@ -212,6 +218,12 @@ public class ReservaDTO {
 	public void setRecorrenciaDeToda(String recorrenciaDeToda) {
 		this.recorrenciaDeToda = recorrenciaDeToda;
 	}
+
+
+
+
+
+	
 	
 	
 	

@@ -1,4 +1,4 @@
-package br.com.agenda.cifep.controller;
+package br.com.agenda.cifep.controller.reserva;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.agenda.cifep.service.DeleteAndFinishReservaService;
+import br.com.agenda.cifep.service.reserva.DeleteAndFinishReservaService;
 
 @RestController
 @RequestMapping("/")

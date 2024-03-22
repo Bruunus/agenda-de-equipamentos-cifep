@@ -1,4 +1,4 @@
-package br.com.agenda.cifep.service;
+package br.com.agenda.cifep.service.reserva;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -25,6 +25,9 @@ public class ReadReservaService {
 	
 	@Autowired
 	private ReservaRepository reservaRepository;
+	
+	
+	// Serviços para reservas ativas
 	
 	
 	public List<ReservaDTO> carregarTodasReservas() {
@@ -55,11 +58,74 @@ public class ReadReservaService {
 	// 	Consulta com JPQL
 	public List<ReservaDTO> carregarTodasReservasMesAtual(int mes) {		
 
-		List<Reserva> reservas =  reservaRepository.buscaMesAtualAtivas(mes);		
+		List<Reserva> reservas =  reservaRepository.pesquisaMesAtualAtivas(mes);		
 		return reservaDTO.carregarDados(reservas);
 		
 	}
+	
+	// SQL nativo
+	public List<ReservaDTO> carregarTodasReservasDoMesAtual() {
+		
+		int now = LocalDate.now().getMonthValue();	
+		System.out.println(now);
+		//int teste = 4;
+		List<Reserva> mesAtual = reservaRepository.pesquisaPorMesAtual(now); 
+		
+		if(mesAtual.isEmpty() || mesAtual == null) {
+			return Collections.emptyList();
+		} else {				
+			return reservaDTO.carregarDados(mesAtual);
+		}
+	 
+		
+	}		
 
+
+	// SQL nativo
+	public List<ReservaDTO> carregarTodasReservasDoDiaAtual() {
+		
+		int day = LocalDate.now().getDayOfMonth();
+		//int teste = 18;
+		List<Reserva> diaAtual = reservaRepository.pesquisaPorDiaAtual(day);
+		
+		if(diaAtual.isEmpty() || diaAtual == null) {
+			return Collections.emptyList();
+		} else {				
+			return reservaDTO.carregarDados(diaAtual);
+		}
+		
+	}
+
+
+
+	public List<ReservaDTO> carregarReservasPorSetor(String sector) {
+		
+		List<Reserva> setor = reservaRepository.pesquisaPorSetor(sector);
+		
+		
+		if(setor.isEmpty() || setor == null) {
+			return Collections.emptyList();
+		} else {				
+			return reservaDTO.carregarDados(setor);
+		}
+	}
+			
+
+	public List<ReservaDTO> carregarReservasAtivasPorNome(String nome) {
+		List<Reserva> porNome = reservaRepository.pesquisaPorNome(nome);
+		
+		if(porNome.isEmpty() || porNome == null) {
+			return Collections.emptyList();
+		} else {				
+			return reservaDTO.carregarDados(porNome);
+		}
+	}
+
+
+	
+	
+	
+	// Serviços para reservas finalizadas
 
 
 	public List<ReservaDTO> carregarReservasFinalizadas() {
@@ -71,7 +137,7 @@ public class ReadReservaService {
 	// 	SQL nativo
 		public List<ReservaDTO> carregarReservasFinalizadasPorMes(int mes) {		
 	
-			List<Reserva> finalizadasPorMes =  reservaRepository.buscaMesAtualFinalizadas(mes);		
+			List<Reserva> finalizadasPorMes =  reservaRepository.pesquisaPorMesAtualFinalizadas(mes);		
 			return reservaDTO.carregarDados(finalizadasPorMes);
 			
 		}
@@ -103,52 +169,10 @@ public class ReadReservaService {
 		}
 
 
-		// SQL nativo
-		public List<ReservaDTO> carregarTodasReservasDoMesAtual() {
-			
-			int now = LocalDate.now().getMonthValue();	
-			System.out.println(now);
-			//int teste = 4;
-			List<Reserva> mesAtual = reservaRepository.buscarPorMesAtual(now); 
-			
-			if(mesAtual.isEmpty() || mesAtual == null) {
-				return Collections.emptyList();
-			} else {				
-				return reservaDTO.carregarDados(mesAtual);
-			}
-		 
-			
-		}
+
 		
-		
-		// SQL nativo
-		public List<ReservaDTO> carregarTodasReservasDoD() {
-			return carregarTodasReservasDoDiaAtual();
-		}
 
 
-
-		// SQL nativo
-		public List<ReservaDTO> carregarTodasReservasDiaAtual() {
-			return carregarTodasReservasDoDiaAtual();
-		}
-
-
-
-		// SQL nativo
-		public List<ReservaDTO> carregarTodasReservasDoDiaAtual() {
-			
-			int day = LocalDate.now().getDayOfMonth();
-			//int teste = 18;
-			List<Reserva> diaAtual = reservaRepository.buscarPorDiaAtual(day);
-			
-			if(diaAtual.isEmpty() || diaAtual == null) {
-				return Collections.emptyList();
-			} else {				
-				return reservaDTO.carregarDados(diaAtual);
-			}
-			
-		}
 		
 		
 	

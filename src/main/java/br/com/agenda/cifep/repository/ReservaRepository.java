@@ -15,6 +15,8 @@ import br.com.agenda.cifep.model.TipoReserva;
 @Repository
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
+	// SELECT
+	
 	@Query("SELECT new br.com.agenda.cifep.dto.ReservaDTO(r.setor, r.responsavel, r.dataRetirada, r.horaRetirada, e.descricao, e.quantidade) FROM Reserva r JOIN r.equipamentos e")
 	List<ReservaDTO> findReservasDTO();
 
@@ -24,23 +26,37 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
 	// Busca os registros que tenha o mes passado por parametro, que o tipo seja AGENDADA_NAO_ANUAL e com o status ativo
 	@Query(value = "SELECT * FROM reserva r WHERE MONTH(data_retirada) = :mes AND status = 'ATIVA'", nativeQuery = true)
-	List<Reserva> buscaMesAtualAtivas(@Param("mes") int mes);
+	List<Reserva> pesquisaMesAtualAtivas(@Param("mes") int mes);
 
 	
 	@Query(value = "SELECT * FROM reserva r WHERE MONTH(data_retirada) = :mes AND status = 'FINALIZADA'", nativeQuery = true)
-	List<Reserva> buscaMesAtualFinalizadas(@Param("mes") int mes);
+	List<Reserva> pesquisaPorMesAtualFinalizadas(@Param("mes") int mes);
 
 	
 	List<Reserva> findByResponsavelAndStatus(String nome, StatusReserva finalizada);
 
 	List<Reserva> findBySetorAndStatus(String setor, StatusReserva finalizada);
 
+	
 	@Query(value = "SELECT * FROM reserva r WHERE MONTH(data_retirada) = :now AND status = 'ATIVA'", nativeQuery = true)
-	List<Reserva> buscarPorMesAtual(@Param("now")int now);
+	List<Reserva> pesquisaPorMesAtual(@Param("now")int now);
+ 
+	@Query(value = "SELECT * FROM reserva r WHERE DAY(data_retirada) = :day AND status = 'ATIVA'", nativeQuery = true)
+	List<Reserva> pesquisaPorDiaAtual(int day);
+	
+	@Query(value = "SELECT * FROM reserva r WHERE setor = :sector AND status = 'ATIVA'", nativeQuery = true)
+	List<Reserva> pesquisaPorSetor(@Param("sector")String sector);
+
+	@Query(value = "SELECT * FROM reserva r WHERE responsavel = :nome AND status = 'ATIVA'", nativeQuery = true)
+	List<Reserva> pesquisaPorNome(@Param("nome") String nome);
 
 	
-	@Query(value = "SELECT * FROM reserva r WHERE DAY(data_retirada) = :day AND status = 'ATIVA'", nativeQuery = true)
-	List<Reserva> buscarPorDiaAtual(int day);
+	Object findByIdAndStatus(Long id, StatusReserva ativa);
+	
+	
+	// UPDATE
+	
+	
 	
 	
 }

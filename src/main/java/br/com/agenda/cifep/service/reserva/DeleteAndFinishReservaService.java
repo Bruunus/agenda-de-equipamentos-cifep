@@ -1,4 +1,4 @@
-package br.com.agenda.cifep.service;
+package br.com.agenda.cifep.service.reserva;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
