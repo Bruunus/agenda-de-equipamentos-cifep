@@ -22,6 +22,8 @@ import jakarta.persistence.Table;
 @Table(name = "reserva")
 public class Reserva {
 	
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -55,6 +57,22 @@ public class Reserva {
 	
 	
 	
+	public Reserva() {}
+	
+	public Reserva(Long id, @NotNull String setor, @NotNull String responsavel, List<Equipamento> equipamentos,
+			List<Agenda> agenda, @NotNull StatusReserva status, @NotNull TipoReserva tipo,
+			@NotNull String recorrenciaDeToda) {
+		this.id = id;
+		this.setor = setor;
+		this.responsavel = responsavel;
+		this.equipamentos = equipamentos;
+		this.agenda = agenda;
+		this.status = status;
+		this.tipo = tipo;
+		this.recorrenciaDeToda = recorrenciaDeToda;
+	}
+	
+
 	public Long getId() {
 		return id;
 	}
