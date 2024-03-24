@@ -1,22 +1,19 @@
 package br.com.agenda.cifep.service.reserva;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.agenda.cifep.dto.AgendaDTO;
 import br.com.agenda.cifep.dto.EquipamentoDTO;
 import br.com.agenda.cifep.dto.ReservaDTO;
+import br.com.agenda.cifep.model.Agenda;
 import br.com.agenda.cifep.model.Equipamento;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;
-import br.com.agenda.cifep.repository.EquipamentoRepository;
 import br.com.agenda.cifep.repository.ReservaRepository;
 
 @Service
@@ -30,7 +27,7 @@ public class CreateReservaService {
 
 	
 
-	public boolean novaReservaAgendadaNaoAnual(ReservaDTO reservaDTO) {
+	public boolean novaReservaAgendadaEventual(ReservaDTO reservaDTO) {
 		
 		if(!reservaDTO.validationItens(reservaDTO)) {
 			return false;
@@ -41,13 +38,27 @@ public class CreateReservaService {
 	    
 	    reserva.setSetor(reservaDTO.getSetor());
 	    reserva.setResponsavel(reservaDTO.getResponsavel());
-	    reserva.setDataRetirada(reservaDTO.getDataRetirada());
-	    reserva.setHoraRetirada(reservaDTO.getHoraRetirada());
-	    reserva.setDataDevolucao(reservaDTO.getDataDevolucao());
-	    reserva.setHoraDevolucao(reservaDTO.getHoraDevolucao());
+	    
+	    List<Agenda> agenda = new ArrayList<>();
+	    
+	    
+	    for(AgendaDTO agendaDTO : reservaDTO.getAgenda()) {
+	    	Agenda agendaDb = new Agenda();
+	    	
+	    	agendaDb.setDataRetirada(agendaDTO.getDataRetirada());
+	    	agendaDb.setHoraRetirada(agendaDTO.getHoraRetirada());
+	    	agendaDb.setDataDevolucao(agendaDTO.getDataDevolucao());
+	    	agendaDb.setHoraDevolucao(agendaDTO.getHoraDevolucao());
+	    	
+	    	agendaDb.setReserva(reserva);
+	    	agenda.add(agendaDb);
+	    }
+	    
+	    reserva.setAgenda(agenda);
+	    
 	    
 	    reserva.setStatus(StatusReserva.ATIVA);
-	    reserva.setTipo(TipoReserva.AGENDADA_NAO_ANUAL);
+	    reserva.setTipo(TipoReserva.EVENTUAL);
 	    reserva.setRecorrenciaDeToda("");
 	    
 	    List<Equipamento> equipamentosList = new ArrayList<>();
@@ -82,13 +93,28 @@ public class CreateReservaService {
 	    
 	    reserva.setSetor(reservaDTO.getSetor());
 	    reserva.setResponsavel(reservaDTO.getResponsavel());
-	    reserva.setDataRetirada(reservaDTO.getDataRetirada());
-	    reserva.setHoraRetirada(reservaDTO.getHoraRetirada());
-	    reserva.setDataDevolucao(reservaDTO.getDataDevolucao());
-	    reserva.setHoraDevolucao(reservaDTO.getHoraDevolucao());
+	    
+	    
+	    List<Agenda> agenda = new ArrayList<>();
+	    
+	    for(AgendaDTO agendaDTO : reservaDTO.getAgenda()) {
+	    	Agenda agendaDb = new Agenda();
+	    	
+	    	agendaDb.setDataRetirada(agendaDTO.getDataRetirada());
+	    	agendaDb.setHoraRetirada(agendaDTO.getHoraRetirada());
+	    	agendaDb.setDataDevolucao(agendaDTO.getDataDevolucao());
+	    	agendaDb.setHoraDevolucao(agendaDTO.getHoraDevolucao());
+	    	
+	    	agendaDb.setReserva(reserva);
+	    	agenda.add(agendaDb);
+	    	
+	    }
+	    
+	    reserva.setAgenda(agenda);
+	     
 	    
 	    reserva.setStatus(StatusReserva.ATIVA);
-	    reserva.setTipo(TipoReserva.AGENDADA_ANUAL);
+	    reserva.setTipo(TipoReserva.ANUAL);
 	    reserva.setRecorrenciaDeToda(reservaDTO.getRecorrenciaDeToda());
 	    
 	    List<Equipamento> equipamentosList = new ArrayList<>();

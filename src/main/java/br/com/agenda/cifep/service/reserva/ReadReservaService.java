@@ -49,7 +49,7 @@ public class ReadReservaService {
  
 	public List<ReservaDTO> carregarTodasReservasAtivasAnuais() {
 		 
-		List<Reserva> reservas =  reservaRepository.findByStatusAndTipo(StatusReserva.ATIVA, TipoReserva.AGENDADA_ANUAL);
+		List<Reserva> reservas =  reservaRepository.findByStatusAndTipo(StatusReserva.ATIVA, TipoReserva.ANUAL);
 		return reservaDTO.carregarDados(reservas);		
 		
 	}
@@ -58,7 +58,7 @@ public class ReadReservaService {
 	// 	Consulta com JPQL
 	public List<ReservaDTO> carregarTodasReservasMesAtual(int mes) {		
 
-		List<Reserva> reservas =  reservaRepository.pesquisaMesAtualAtivas(mes);		
+		List<Reserva> reservas =  reservaRepository.pesquisaMesAtualAtivas(mes);	
 		return reservaDTO.carregarDados(reservas);
 		
 	}

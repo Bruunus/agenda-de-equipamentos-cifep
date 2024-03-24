@@ -19,27 +19,23 @@ public class ReservaDTO {
 	private Long id;
 	private String setor;
 	private String responsavel;		
-	
-	private LocalDate dataRetirada;
-	private LocalTime horaRetirada;
-	
-	private LocalDate dataDevolucao;
-	
-	@JsonSerialize
-	@JsonDeserialize
-	private LocalTime horaDevolucao;
-	
+	 
+	 
 	private StatusReserva statusReserva;
 	private TipoReserva tipoReserva;
 	
 	private List<EquipamentoDTO> equipamentos;
+	
+	private List<AgendaDTO> agenda;
 	
 	@JsonIgnore
 	private String recorrenciaDeToda;
  
 	
 	
-	public ReservaDTO() {}
+	public ReservaDTO() {
+		this.agenda = new ArrayList<>();
+	}
 	
 	
 	 
@@ -47,9 +43,7 @@ public class ReservaDTO {
 	
 	public ReservaDTO(String setor, String responsavel, LocalDate dataRetirada, LocalTime horaRetirada, String descricaoEquipamento, Integer quantidadeEquipamento) {
 	    this.setor = setor;
-	    this.responsavel = responsavel;
-	    this.dataRetirada = dataRetirada;
-	    this.horaRetirada = horaRetirada; 
+	    this.responsavel = responsavel; 
 	}
 
 
@@ -111,17 +105,29 @@ public class ReservaDTO {
 				equipDTO.setQuantidade(equipamento.getQuantidade());	
 				
 				equipamentosDTO.add(equipDTO);
-			});			
-			
+			});						
 			reservaDTO.setEquipamentos(equipamentosDTO);
-			reservaDTO.setDataRetirada(loadData.getDataRetirada());
-			reservaDTO.setHorRetirada(loadData.getHoraRetirada());
+			
+			
+			List<AgendaDTO> agenda = new ArrayList<>();			
+			loadData.getAgenda().forEach(datas -> {
+				AgendaDTO agendaDTO = new AgendaDTO();
+				
+				agendaDTO.setDataRetirada(datas.getDataRetirada());
+				agendaDTO.setHoraRetirada(datas.getHoraRetirada());
+				agendaDTO.setDataDevolucao(datas.getDataDevolucao());
+				agendaDTO.setHoraDevolucao(datas.getHoraDevolucao());
+				
+				agenda.add(agendaDTO);
+			});
+			
+			reservaDTO.setAgenda(agenda);
+			
 			reservaDTO.setStatusReserva(loadData.getStatus());
-			reservaDTO.setTipoReserva(loadData.getTipo());
-			reservaDTO.setDataDevolucao(loadData.getDataDevolucao());
-			reservaDTO.setHoraDevolucao(loadData.getHoraDevolucao()); 
+			reservaDTO.setTipoReserva(loadData.getTipo());			
 			reservaDTO.setRecorrenciaDeToda(loadData.getRecorrenciaDeToda());
-
+			
+			
 			listaDeDados.add(reservaDTO);			
 			
 		});	
@@ -151,18 +157,10 @@ public class ReservaDTO {
 	public List<EquipamentoDTO> getEquipamentos() {
 		return equipamentos;
 	}
-	public LocalDate getDataRetirada() {
-		return dataRetirada;
+	public List<AgendaDTO> getAgenda() {
+		return agenda;
 	}
-	public LocalTime getHoraRetirada() {
-		return horaRetirada;
-	}
-	public LocalDate getDataDevolucao() {
-		return dataDevolucao;
-	}
-	public LocalTime getHoraDevolucao() {
-		return horaDevolucao;
-	}
+	 
 		
 	public StatusReserva getStatusReserva() {
 		return statusReserva;
@@ -191,22 +189,10 @@ public class ReservaDTO {
 	public void setEquipamentos(List<EquipamentoDTO> equipamentos) {
 		this.equipamentos = equipamentos;
 	}
-	public void setDataRetirada(LocalDate dataRetirada) {
-		this.dataRetirada = dataRetirada;
+	public void setAgenda(List<AgendaDTO> agenda) {
+		this.agenda = agenda;
 	}
-	public void setHorRetirada(LocalTime horaRetirada) {
-		this.horaRetirada = horaRetirada;
-	}
-	public void setDataDevolucao(LocalDate dataDevolucao) {
-		this.dataDevolucao = dataDevolucao;
-	}
-	public void setHoraDevolucao(LocalTime horaDevolucao) {
-		this.horaDevolucao = horaDevolucao;
-	}
-
-	public void setHoraRetirada(LocalTime horaRetirada) {
-		this.horaRetirada = horaRetirada;
-	}
+	 
 
 	public void setStatusReserva(StatusReserva statusReserva) {
 		this.statusReserva = statusReserva;

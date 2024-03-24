@@ -1,13 +1,10 @@
 package br.com.agenda.cifep.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -40,21 +37,9 @@ public class Reserva {
 	private List<Equipamento> equipamentos = new ArrayList<>();
 	
 	
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	@NotNull 
-	private LocalDate dataRetirada;	
-	
-	
-	@NotNull @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-	private LocalTime horaRetirada;
-	
-	// preenchida no momento da baixa da reserva
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-	private LocalDate dataDevolucao;
-	
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm")
-	private LocalTime horaDevolucao;
+	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
+	private List<Agenda> agenda = new ArrayList<>();
+		
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
@@ -66,18 +51,7 @@ public class Reserva {
 	private TipoReserva tipo;
 	
 	@NotNull
-	private String recorrenciaDeToda;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	private String recorrenciaDeToda;	
 	
 	
 	
@@ -112,39 +86,13 @@ public class Reserva {
 	public void setEquipamentos(List<Equipamento> list) {
 		this.equipamentos = list;
 	}
-
-	public LocalDate getDataRetirada() {
-		return dataRetirada;
+		
+	public void setAgenda(List<Agenda> agenda) {
+		this.agenda = agenda;
 	}
 
-	public void setDataRetirada(LocalDate dataRetirada) {
-		this.dataRetirada = dataRetirada;
-	}
-
-	public LocalTime getHoraRetirada() {
-		return horaRetirada;
-	}
-
-	public void setHoraRetirada(LocalTime horarioRetirada) {
-		this.horaRetirada = horarioRetirada;
-	}
-
-	public LocalDate getDataDevolucao() {
-		return dataDevolucao;
-	}
-
-	public void setDataDevolucao(LocalDate dataDevolucao) {
-		this.dataDevolucao = dataDevolucao;
-	}
-
-	public LocalTime getHoraDevolucao() {
-		return horaDevolucao;
-	}
-
-	public void setHoraDevolucao(LocalTime horaDevolucao) {
-		this.horaDevolucao = horaDevolucao;
-	}
-
+	
+	
 	public StatusReserva getStatus() {
 		return status;
 	}
@@ -169,6 +117,9 @@ public class Reserva {
 		this.recorrenciaDeToda = recorrenciaDeToda;
 	}
 	
+	public List<Agenda> getAgenda() {
+		return agenda;
+	}
 	
 	
 	

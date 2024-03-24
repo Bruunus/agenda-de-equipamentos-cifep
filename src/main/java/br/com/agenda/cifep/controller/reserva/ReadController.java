@@ -67,11 +67,11 @@ public class ReadController {
 	}
 	
 	@GetMapping("current-day/reservas")
-	@CrossOrigin("*")
+	//@CrossOrigin("*")
 	public ResponseEntity<?> carregarReservasDoDia() {
 		List<ReservaDTO> list = readReservaService.carregarTodasReservasDoDiaAtual();		
 		// ordenar por hora
-		Collections.sort(list, Comparator.comparing(ReservaDTO::getHoraRetirada));
+		//Collections.sort(list, Comparator.comparing(ReservaDTO::getHoraRetirada));
 		
 		if(list.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

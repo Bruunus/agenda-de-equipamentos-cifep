@@ -17,7 +17,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
 	// SELECT
 	
-	@Query("SELECT new br.com.agenda.cifep.dto.ReservaDTO(r.setor, r.responsavel, r.dataRetirada, r.horaRetirada, e.descricao, e.quantidade) FROM Reserva r JOIN r.equipamentos e")
+	@Query(value = "SELECT new br.com.agenda.cifep.dto.ReservaDTO(r.setor, r.responsavel, r.dataRetirada, r.horaRetirada, e.descricao, e.quantidade) FROM Reserva r JOIN r.equipamentos e", nativeQuery = true)
 	List<ReservaDTO> findReservasDTO();
 
 	List<Reserva> findByStatus(StatusReserva s);
@@ -25,11 +25,12 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 	List<Reserva> findByStatusAndTipo(StatusReserva ativa, TipoReserva agendadaAnual);
 
 	// Busca os registros que tenha o mes passado por parametro, que o tipo seja AGENDADA_NAO_ANUAL e com o status ativo
-	@Query(value = "SELECT * FROM reserva r WHERE MONTH(data_retirada) = :mes AND status = 'ATIVA'", nativeQuery = true)
+	@Query(value = "SELECT r.* FROM reserva r INNER JOIN data d ON r.id = d.reserva_id WHERE MONTH(d.data_retirada) = :mes AND r.status = 'ATIVA'", nativeQuery = true)
 	List<Reserva> pesquisaMesAtualAtivas(@Param("mes") int mes);
 
+
 	
-	@Query(value = "SELECT * FROM reserva r WHERE MONTH(data_retirada) = :mes AND status = 'FINALIZADA'", nativeQuery = true)
+	@Query(value = "SELECT * FROM reserva r INNER JOIN data d ON r.id = d.reserva_id WHERE MONTH(d.data_retirada) = :mes AND status = 'FINALIZADA'", nativeQuery = true)
 	List<Reserva> pesquisaPorMesAtualFinalizadas(@Param("mes") int mes);
 
 	
@@ -38,10 +39,10 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 	List<Reserva> findBySetorAndStatus(String setor, StatusReserva finalizada);
 
 	
-	@Query(value = "SELECT * FROM reserva r WHERE MONTH(data_retirada) = :now AND status = 'ATIVA'", nativeQuery = true)
+	@Query(value = "SELECT * FROM reserva r INNER JOIN data d ON r.id = d.reserva_id WHERE MONTH(d.data_retirada) = :now AND r.status = 'ATIVA'", nativeQuery = true)
 	List<Reserva> pesquisaPorMesAtual(@Param("now")int now);
  
-	@Query(value = "SELECT * FROM reserva r WHERE DAY(data_retirada) = :day AND status = 'ATIVA'", nativeQuery = true)
+	@Query(value = "SELECT * FROM reserva r INNER JOIN data d ON r.id = d.reserva_id WHERE DAY(data_retirada) = :day AND status = 'ATIVA'", nativeQuery = true)
 	List<Reserva> pesquisaPorDiaAtual(int day);
 	
 	@Query(value = "SELECT * FROM reserva r WHERE setor = :sector AND status = 'ATIVA'", nativeQuery = true)

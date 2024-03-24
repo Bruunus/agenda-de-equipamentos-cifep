@@ -8,11 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import br.com.agenda.cifep.dto.AgendaDTO;
 import br.com.agenda.cifep.dto.EquipamentoDTO;
 import br.com.agenda.cifep.dto.ReservaDTO;
+import br.com.agenda.cifep.model.Agenda;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
-import br.com.agenda.cifep.model.TipoReserva;
 import br.com.agenda.cifep.repository.ReservaRepository;
 
 @Service
@@ -33,10 +34,23 @@ public class UpdateReservaService {
 		  
 		} else {
 		 
-			updateReserva.setDataDevolucao(reservaDTOHttp.getDataDevolucao());
-			updateReserva.setDataRetirada(reservaDTOHttp.getDataRetirada());
-			updateReserva.setHoraDevolucao(reservaDTOHttp.getHoraDevolucao());
-			updateReserva.setHoraRetirada(reservaDTOHttp.getHoraRetirada());
+		List<AgendaDTO> novaAgendaDTO = reservaDTOHttp.getAgenda();
+		List<Agenda> agenda = updateReserva.getAgenda();
+
+		int tamanhoLista = Math.min(novaAgendaDTO.size(), agenda.size());
+
+		for (int i = 0; i < tamanhoLista; i++) {
+		    AgendaDTO agendaDTO = novaAgendaDTO.get(i);
+		    Agenda agendaToUpdate = agenda.get(i);
+
+		    agendaToUpdate.setDataRetirada(agendaDTO.getDataRetirada());
+		    agendaToUpdate.setHoraRetirada(agendaDTO.getHoraRetirada());
+		    agendaToUpdate.setDataDevolucao(agendaDTO.getDataDevolucao());
+		    agendaToUpdate.setHoraDevolucao(agendaDTO.getHoraDevolucao());
+		}
+
+			
+			
 			updateReserva.setRecorrenciaDeToda(reservaDTOHttp.getRecorrenciaDeToda());
 			updateReserva.setResponsavel(reservaDTOHttp.getResponsavel());
 			updateReserva.setSetor(reservaDTOHttp.getSetor());

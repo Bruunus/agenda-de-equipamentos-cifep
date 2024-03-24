@@ -5,8 +5,8 @@ public enum TipoReserva {
 	
 
 	EVENTUAL,
-	AGENDADA_NAO_ANUAL,
-	AGENDADA_ANUAL;
+	RECORRENTE,
+	ANUAL;
 	
 	
 	

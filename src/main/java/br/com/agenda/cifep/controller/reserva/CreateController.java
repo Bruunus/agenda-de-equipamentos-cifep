@@ -30,7 +30,7 @@ public class CreateController {
 	@PostMapping("new/scheduled/reserva")
 	public ResponseEntity<String> criarReservaAgendadaNaoAnual(@RequestBody ReservaDTO reservaDTO) {
 	 
-		boolean reservaRealizada = createReservaService.novaReservaAgendadaNaoAnual(reservaDTO);
+		boolean reservaRealizada = createReservaService.novaReservaAgendadaEventual(reservaDTO);
 
 	    if (reservaRealizada) {
 	        return ResponseEntity.ok("Reserva realizada com sucesso!");
@@ -55,6 +55,10 @@ public class CreateController {
 		    } 	        
 		 
 	}
+	
+	
+	//@PostMapping("new/scheduled-multiple/reserva")
+	
 	
 	
 	
