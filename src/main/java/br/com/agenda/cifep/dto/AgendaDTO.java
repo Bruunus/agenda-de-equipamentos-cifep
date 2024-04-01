@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.agenda.cifep.model.Reserva;
 import jakarta.persistence.JoinColumn;
@@ -22,7 +23,7 @@ public class AgendaDTO {
 	 
 	private LocalTime horaDevolucao;
 	
-	 
+	@JsonIgnore
 	private Reserva reserva;
 	
 	

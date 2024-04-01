@@ -57,8 +57,19 @@ public class CreateController {
 	}
 	
 	
-	//@PostMapping("new/scheduled-multiple/reserva")
 	
+	
+	@PostMapping("new/scheduled-multiple/reserva")
+	public ResponseEntity<String> criarReservaAgendadaMultipla(@RequestBody ReservaDTO reservaDTO) {
+		boolean reservaRealizada = createReservaService.createReservaMultipla(reservaDTO);
+		
+		if (reservaRealizada) {
+	        return ResponseEntity.ok("Reserva multipla realizada com sucesso!");
+		    } else {
+		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+		                .body("Erro ao realizar a reserva multipla.");
+		    } 
+	}
 	
 	
 	

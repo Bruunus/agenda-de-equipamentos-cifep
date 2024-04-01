@@ -83,6 +83,8 @@ public class CreateReservaService {
 	
 	
 	
+	
+	
 	public boolean novaReservaAgendadaAnual(ReservaDTO reservaDTO) {
 		
 		if(!reservaDTO.validationItens(reservaDTO)) {
@@ -136,6 +138,60 @@ public class CreateReservaService {
 	    
 		return true;
 		
+	}
+
+
+
+	public boolean createReservaMultipla(ReservaDTO reservaDTO) {
+		
+		if(!reservaDTO.validationItens(reservaDTO)) {
+			return false;
+		}		
+
+	    Reserva reserva = new Reserva();
+	    
+	    
+	    reserva.setSetor(reservaDTO.getSetor());
+	    reserva.setResponsavel(reservaDTO.getResponsavel());
+	    
+	    List<Agenda> agenda = new ArrayList<>();
+	    
+	    
+	    for(AgendaDTO agendaDTO : reservaDTO.getAgenda()) {
+	    	Agenda agendaDb = new Agenda();
+	    	
+	    	agendaDb.setDataRetirada(agendaDTO.getDataRetirada());
+	    	agendaDb.setHoraRetirada(agendaDTO.getHoraRetirada());
+	    	agendaDb.setDataDevolucao(agendaDTO.getDataDevolucao());
+	    	agendaDb.setHoraDevolucao(agendaDTO.getHoraDevolucao());
+	    	
+	    	agendaDb.setReserva(reserva);
+	    	agenda.add(agendaDb);
+	    }
+	    
+	    reserva.setAgenda(agenda);
+	    
+	    
+	    reserva.setStatus(StatusReserva.ATIVA);
+	    reserva.setTipo(TipoReserva.RECORRENTE);
+	    reserva.setRecorrenciaDeToda("");
+	    
+	    List<Equipamento> equipamentosList = new ArrayList<>();
+	    
+	    for (EquipamentoDTO equipamentoDTO : reservaDTO.getEquipamentos()) {
+	        Equipamento equipamento = new Equipamento();
+	        equipamento.setDescricao(equipamentoDTO.getDescricao());
+	        equipamento.setQuantidade(equipamentoDTO.getQuantidade());
+	        equipamento.setReserva(reserva); // Associar o equipamento à reserva
+	        equipamentosList.add(equipamento);	    
+	    
+	    reserva.getEquipamentos().addAll(equipamentosList);
+
+	    reservaRepository.save(reserva);
+
+	    }		
+		
+		return false;
 	}
 	
 	
