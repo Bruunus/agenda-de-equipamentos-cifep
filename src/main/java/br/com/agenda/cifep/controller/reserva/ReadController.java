@@ -93,9 +93,9 @@ public class ReadController {
 		}
 	}
 	
-	@GetMapping("active-for-name/reservas")
-	public ResponseEntity<?> pesquisarReservaPorNomeAtivas(@RequestParam("search/name") String nome) {
-		List<ReservaDTO> list = readReservaService.carregarReservasAtivasPorNome(nome);
+	@GetMapping("reservas")
+	public ResponseEntity<?> pesquisarReservaPorNomeAtivas(@RequestParam("search") String search) {
+		List<ReservaDTO> list = readReservaService.pesquisarReservasPorNomeOuSetor(search);
 		if(list.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 	                .body("Nenhum resultado na pesquisa.");
@@ -103,6 +103,8 @@ public class ReadController {
 			return ResponseEntity.ok(list);
 		}		
 	}
+	
+	
 	
 	
 	

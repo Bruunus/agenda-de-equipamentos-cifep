@@ -48,8 +48,8 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 	@Query(value = "SELECT * FROM reserva r WHERE setor = :sector AND status = 'ATIVA'", nativeQuery = true)
 	List<Reserva> pesquisaPorSetor(@Param("sector")String sector);
 
-	@Query(value = "SELECT * FROM reserva r WHERE responsavel = :nome AND status = 'ATIVA'", nativeQuery = true)
-	List<Reserva> pesquisaPorNome(@Param("nome") String nome);
+	@Query(value = "SELECT * FROM reserva r WHERE responsavel LIKE %:search% OR setor LIKE %:search%", nativeQuery = true)
+	List<Reserva> pesquisaPorNomeOuSetor(@Param("search") String search);
 
 	
 	Object findByIdAndStatus(Long id, StatusReserva ativa);

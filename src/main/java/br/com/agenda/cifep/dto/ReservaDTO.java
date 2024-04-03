@@ -118,6 +118,7 @@ public class ReservaDTO {
 				agendaDTO.setDataDevolucao(datas.getDataDevolucao());
 				agendaDTO.setHoraDevolucao(datas.getHoraDevolucao());
 				
+				
 				agenda.add(agendaDTO);
 			});
 			
@@ -144,6 +145,20 @@ public class ReservaDTO {
 		
  
 	
+	private static void converterTime(Object setHoraRetirada) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+ 
+
+
+
+
+
 	public Long getId() {
 		return id;
 	}

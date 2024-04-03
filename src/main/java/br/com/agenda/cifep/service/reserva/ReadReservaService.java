@@ -111,13 +111,14 @@ public class ReadReservaService {
 	}
 			
 
-	public List<ReservaDTO> carregarReservasAtivasPorNome(String nome) {
-		List<Reserva> porNome = reservaRepository.pesquisaPorNome(nome);
+	public List<ReservaDTO> pesquisarReservasPorNomeOuSetor(String search) {
+		List<Reserva> porParametro = reservaRepository.pesquisaPorNomeOuSetor(search);
 		
-		if(porNome.isEmpty() || porNome == null) {
+		if(porParametro.isEmpty() || porParametro == null) {
 			return Collections.emptyList();
-		} else {				
-			return reservaDTO.carregarDados(porNome);
+		} else {	
+			
+			return reservaDTO.carregarDados(porParametro);
 		}
 	}
 
