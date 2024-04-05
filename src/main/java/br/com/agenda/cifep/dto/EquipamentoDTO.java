@@ -61,6 +61,11 @@ public class EquipamentoDTO {
 	}
 	
 	
+	@Override
+	public String toString() {
+		 
+		return "\nDescrição: "+this.getDescricao() + " Quantidade: "+ this.getQuantidade();
+	}
 
 	
 	

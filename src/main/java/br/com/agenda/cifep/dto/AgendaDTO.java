@@ -68,5 +68,12 @@ public class AgendaDTO {
 	public void setHoraDevolucao(LocalTime horaDevolucao) {
 		this.horaDevolucao = horaDevolucao;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "\nData da retirada: " + this.getDataRetirada() + " - Hora da retirada: " + this.getHoraRetirada()
+		+ "\nData da devolução: "+ this.getDataDevolucao() + " - Hora da devolução: "+this.getHoraDevolucao();
+	}
 
 }

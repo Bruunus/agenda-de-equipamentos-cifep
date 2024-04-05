@@ -222,6 +222,12 @@ public class ReservaDTO {
 
 
 
+	@Override
+	public String toString() {
+		 
+		return "Setor: "+ this.getSetor() + "\nResponsável: "+ this.getResponsavel() + 
+				"\nEquipamento(s): " + this.getEquipamentos() + "\nAgenda: " + this.getAgenda();
+	}
 
 
 	
