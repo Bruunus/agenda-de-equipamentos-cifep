@@ -73,10 +73,9 @@ public class CreateReservaService {
 	    
 	    reserva.getEquipamentos().addAll(equipamentosList);
 
+	    }	    
+	    
 	    reservaRepository.save(reserva);
-
-
-	    }
 	    
 		return true;
 	}
@@ -128,13 +127,11 @@ public class CreateReservaService {
 	        equipamento.setReserva(reserva); // Associar o equipamento à reserva
 	        equipamentosList.add(equipamento);
 	    
+	        reserva.getEquipamentos().addAll(equipamentosList);	    
 	    
-	    reserva.getEquipamentos().addAll(equipamentosList);
-
-	    reservaRepository.save(reserva);
-
-
 	    }
+	    
+	    reservaRepository.save(reserva);
 	    
 		return true;
 		
@@ -187,9 +184,9 @@ public class CreateReservaService {
 	    
 	    reserva.getEquipamentos().addAll(equipamentosList);
 
-	    reservaRepository.save(reserva);
-
 	    }		
+	    
+	    reservaRepository.save(reserva);
 		
 		return false;
 	}
