@@ -3,6 +3,7 @@ package br.com.agenda.cifep.service.reserva;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -87,54 +88,93 @@ public class CreateReservaService {
 	
 	
 	
-	public boolean novaReservaAgendadaAnual(ReservaDTO reservaDTO) {
+	public boolean novaReservaAgendadaAnual(List <ReservaDTO> reservaDTO) {
 		
-		if(!reservaDTO.validationItens(reservaDTO)) {
-			return false;
-		}
+	 
+		List<ReservaDTO> listaDeReservas = new ArrayList<ReservaDTO>();
+		
+		 
+		
+		reservaDTO.forEach(reserva -> {
+			
+		    int quantidade = reserva.getAgenda().size();	// depende do tamnho de itens que tem no array agenda
 
-	    Reserva reserva = new Reserva();	    
-	    
-	    reserva.setSetor(reservaDTO.getSetor());
-	    reserva.setResponsavel(reservaDTO.getResponsavel());
-	    
-	    
-	    List<Agenda> agenda = new ArrayList<>();
-	    
-	    for(AgendaDTO agendaDTO : reservaDTO.getAgenda()) {
-	    	Agenda agendaDb = new Agenda();
-	    	
-	    	agendaDb.setDataRetirada(agendaDTO.getDataRetirada());
-	    	agendaDb.setHoraRetirada(agendaDTO.getHoraRetirada());
-	    	agendaDb.setDataDevolucao(agendaDTO.getDataDevolucao());
-	    	agendaDb.setHoraDevolucao(agendaDTO.getHoraDevolucao());
-	    	
-	    	agendaDb.setReserva(reserva);
-	    	agenda.add(agendaDb);
-	    	
-	    }
-	    
-	    reserva.setAgenda(agenda);
-	     
-	    
-	    reserva.setStatus(StatusReserva.ATIVA);
-	    reserva.setTipo(TipoReserva.ANUAL);
-	    reserva.setRecorrenciaDeToda(reservaDTO.getRecorrenciaDeToda());
-	    
-	    List<Equipamento> equipamentosList = new ArrayList<>();
-	    
-	    for (EquipamentoDTO equipamentoDTO : reservaDTO.getEquipamentos()) {
-	        Equipamento equipamento = new Equipamento();
-	        equipamento.setDescricao(equipamentoDTO.getDescricao());
-	        equipamento.setQuantidade(equipamentoDTO.getQuantidade());
-	        equipamento.setReserva(reserva); // Associar o equipamento à reserva
-	        equipamentosList.add(equipamento);
-	    
-	        reserva.getEquipamentos().addAll(equipamentosList);	    
-	    
-	    }
-	    
-	    reservaRepository.save(reserva);
+		    for (int i = 0; i < quantidade; i++) {	// para cada quantidade
+		    	
+		        ReservaDTO novaReserva = new ReservaDTO();
+		        
+		        novaReserva.setResponsavel(reserva.getResponsavel());
+		        novaReserva.setSetor(reserva.getSetor());
+
+		        AgendaDTO agenda = reserva.getAgenda().get(i);
+		        novaReserva.getAgenda().add(agenda);
+
+		        listaDeReservas.add(novaReserva);
+		    }
+		});
+			
+			listaDeReservas.forEach(teste -> {
+				System.out.println(teste+"\n");
+			});
+			
+ 
+			
+			
+			
+		 
+		
+		
+
+		
+		
+		
+		
+//		if(!reservaDTO.validationItens(reservaDTO)) {
+//			return false;
+//		}
+//
+//	    Reserva reserva = new Reserva();	    
+//	    
+//	    reserva.setSetor(reservaDTO.getSetor());
+//	    reserva.setResponsavel(reservaDTO.getResponsavel());
+//	    
+//	    
+//	    List<Agenda> agenda = new ArrayList<>();
+//	    
+//	    for(AgendaDTO agendaDTO : reservaDTO.getAgenda()) {
+//	    	Agenda agendaDb = new Agenda();
+//	    	
+//	    	agendaDb.setDataRetirada(agendaDTO.getDataRetirada());
+//	    	agendaDb.setHoraRetirada(agendaDTO.getHoraRetirada());
+//	    	agendaDb.setDataDevolucao(agendaDTO.getDataDevolucao());
+//	    	agendaDb.setHoraDevolucao(agendaDTO.getHoraDevolucao());
+//	    	
+//	    	agendaDb.setReserva(reserva);
+//	    	agenda.add(agendaDb);
+//	    	
+//	    }
+//	    
+//	    reserva.setAgenda(agenda);
+//	     
+//	    
+//	    reserva.setStatus(StatusReserva.ATIVA);
+//	    reserva.setTipo(TipoReserva.ANUAL);
+//	    reserva.setRecorrenciaDeToda(reservaDTO.getRecorrenciaDeToda());
+//	    
+//	    List<Equipamento> equipamentosList = new ArrayList<>();
+//	    
+//	    for (EquipamentoDTO equipamentoDTO : reservaDTO.getEquipamentos()) {
+//	        Equipamento equipamento = new Equipamento();
+//	        equipamento.setDescricao(equipamentoDTO.getDescricao());
+//	        equipamento.setQuantidade(equipamentoDTO.getQuantidade());
+//	        equipamento.setReserva(reserva); // Associar o equipamento à reserva
+//	        equipamentosList.add(equipamento);
+//	    
+//	        reserva.getEquipamentos().addAll(equipamentosList);	    
+//	    
+//	    }
+//	    
+//	    reservaRepository.save(reserva);
 	    
 		return true;
 		
@@ -142,7 +182,7 @@ public class CreateReservaService {
 
 
 	// em contrução
-	public boolean createReservaMultipla(List<ReservaDTO> reservaDTO) {
+	/*public boolean createReservaMultipla(List<ReservaDTO> reservaDTO) {
 		
 		for (ReservaDTO reserva : reservaDTO) {
 			
@@ -170,9 +210,9 @@ public class CreateReservaService {
 		        // Salva a agenda no banco de dados usando o repository
 		        agendaRepository.save(agendaEntity);
 		    }
-		}
+		}*/
 
-		
+
 		
 		
 		
@@ -279,8 +319,8 @@ public class CreateReservaService {
 //		 
 // 	    reservaRepository.saveAll(list);
 //		
-		return false;
-	}
+		
+	 
 	
 	
 	

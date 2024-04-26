@@ -43,7 +43,7 @@ public class CreateController {
 	
 	
 	@PostMapping("new/scheduled-full-year/reserva")
-	public ResponseEntity<String> criarReservaAgendadaAnual(@RequestBody ReservaDTO reservaDTO) {
+	public ResponseEntity<String> criarReservaAgendadaAnual(@RequestBody List<ReservaDTO> reservaDTO) {
 	 
 		boolean reservaRealizada = createReservaService.novaReservaAgendadaAnual(reservaDTO);
 
@@ -59,17 +59,17 @@ public class CreateController {
 	
 	
 	
-	@PostMapping("new/scheduled-multiple/reserva")
-	public ResponseEntity<String> criarReservaAgendadaMultipla(@RequestBody ReservaDTO reservaDTO) {
-		boolean reservaRealizada = createReservaService.createReservaMultipla(reservaDTO);
-		
-		if (reservaRealizada) {
-	        return ResponseEntity.ok("Reserva multipla realizada com sucesso!");
-		    } else {
-		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-		                .body("Erro ao realizar a reserva multipla.");
-		    } 
-	}
+//	@PostMapping("new/scheduled-multiple/reserva")
+//	public ResponseEntity<String> criarReservaAgendadaMultipla(@RequestBody ReservaDTO reservaDTO) {
+//		boolean reservaRealizada = createReservaService.createReservaMultipla(reservaDTO);
+//		
+//		if (reservaRealizada) {
+//	        return ResponseEntity.ok("Reserva multipla realizada com sucesso!");
+//		    } else {
+//		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//		                .body("Erro ao realizar a reserva multipla.");
+//		    } 
+//	}
 	
 	
 	
