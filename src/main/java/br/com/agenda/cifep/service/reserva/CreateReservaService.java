@@ -96,6 +96,16 @@ public class CreateReservaService {
 		 
 		
 		reservaDTO.forEach(reserva -> {
+
+			/*
+
+				Neste código, para cada objeto ReservaDTO na lista reservaDTO, estamos percorrendo a lista de agendas (agenda) dentro de cada reserva. Para cada item da agenda, criamos um novo objeto ReservaDTO chamado novaReserva, copiamos o responsável e o setor da reserva original para a novaReserva e adicionamos o item da agenda correspondente à novaReserva. Em seguida, adicionamos cada novaReserva à lista listaDeReservas.
+
+				Dessa forma, você terá uma nova lista listaDeReservas com todas as duplicações do objeto ReservaDTO, mantendo o mesmo responsável, setor e alterando apenas os itens da agenda para cada duplicação.
+			
+			 */
+
+
 			
 		    int quantidade = reserva.getAgenda().size();	// depende do tamnho de itens que tem no array agenda
 
