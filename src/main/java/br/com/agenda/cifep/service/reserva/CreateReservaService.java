@@ -85,109 +85,64 @@ public class CreateReservaService {
 	}
 	
 	
-	
-	
-	
-	public boolean novaReservaAgendadaAnual(List <ReservaDTO> reservaDTO) {
-		
-	 
-		List<ReservaDTO> listaDeReservas = new ArrayList<ReservaDTO>();
-		
-		 
-		
-		reservaDTO.forEach(reserva -> {
-
-			/*
-
-				Neste código, para cada objeto ReservaDTO na lista reservaDTO, estamos percorrendo a lista de agendas (agenda) dentro de cada reserva. Para cada item da agenda, criamos um novo objeto ReservaDTO chamado novaReserva, copiamos o responsável e o setor da reserva original para a novaReserva e adicionamos o item da agenda correspondente à novaReserva. Em seguida, adicionamos cada novaReserva à lista listaDeReservas.
-
-				Dessa forma, você terá uma nova lista listaDeReservas com todas as duplicações do objeto ReservaDTO, mantendo o mesmo responsável, setor e alterando apenas os itens da agenda para cada duplicação.
-			
-			 */
-
-
-			
-		    int quantidade = reserva.getAgenda().size();	// depende do tamnho de itens que tem no array agenda
-
-		    for (int i = 0; i < quantidade; i++) {	// para cada quantidade
-		    	
-		        ReservaDTO novaReserva = new ReservaDTO();
-		        
-		        novaReserva.setResponsavel(reserva.getResponsavel());
-		        novaReserva.setSetor(reserva.getSetor());
-
-		        AgendaDTO agenda = reserva.getAgenda().get(i);
-		        novaReserva.getAgenda().add(agenda);
-
-		        listaDeReservas.add(novaReserva);
-		    }
-		});
-			
-			listaDeReservas.forEach(teste -> {
-				System.out.println(teste+"\n");
-			});
-			
- 
-			
-			
-			
-		 
-		
-		
-
+	public boolean createReservaMultipla(List<ReservaDTO> reservaDTO) {
 		
 		
 		
 		
-//		if(!reservaDTO.validationItens(reservaDTO)) {
-//			return false;
-//		}
-//
-//	    Reserva reserva = new Reserva();	    
-//	    
-//	    reserva.setSetor(reservaDTO.getSetor());
-//	    reserva.setResponsavel(reservaDTO.getResponsavel());
-//	    
-//	    
-//	    List<Agenda> agenda = new ArrayList<>();
-//	    
-//	    for(AgendaDTO agendaDTO : reservaDTO.getAgenda()) {
-//	    	Agenda agendaDb = new Agenda();
-//	    	
-//	    	agendaDb.setDataRetirada(agendaDTO.getDataRetirada());
-//	    	agendaDb.setHoraRetirada(agendaDTO.getHoraRetirada());
-//	    	agendaDb.setDataDevolucao(agendaDTO.getDataDevolucao());
-//	    	agendaDb.setHoraDevolucao(agendaDTO.getHoraDevolucao());
-//	    	
-//	    	agendaDb.setReserva(reserva);
-//	    	agenda.add(agendaDb);
-//	    	
-//	    }
-//	    
-//	    reserva.setAgenda(agenda);
-//	     
-//	    
-//	    reserva.setStatus(StatusReserva.ATIVA);
-//	    reserva.setTipo(TipoReserva.ANUAL);
-//	    reserva.setRecorrenciaDeToda(reservaDTO.getRecorrenciaDeToda());
-//	    
-//	    List<Equipamento> equipamentosList = new ArrayList<>();
-//	    
-//	    for (EquipamentoDTO equipamentoDTO : reservaDTO.getEquipamentos()) {
-//	        Equipamento equipamento = new Equipamento();
-//	        equipamento.setDescricao(equipamentoDTO.getDescricao());
-//	        equipamento.setQuantidade(equipamentoDTO.getQuantidade());
-//	        equipamento.setReserva(reserva); // Associar o equipamento à reserva
-//	        equipamentosList.add(equipamento);
-//	    
-//	        reserva.getEquipamentos().addAll(equipamentosList);	    
-//	    
-//	    }
-//	    
-//	    reservaRepository.save(reserva);
-	    
 		return true;
+	}
+	
+	
+	
+	public boolean novaReservaAgendadaAnual(List<ReservaDTO> reservaDTO) {
 		
+	    List<Reserva> reservasSalvas = new ArrayList<>();
+
+	    reservaDTO.forEach(reserva -> {
+	    	
+	        int quantidade = reserva.getAgenda().size(); //65
+
+	        for (int i = 0; i < quantidade; i++) {
+	        	
+	            Reserva novaReserva = new Reserva();
+	            novaReserva.setResponsavel(reserva.getResponsavel());
+	            novaReserva.setSetor(reserva.getSetor());
+	            novaReserva.setStatus(StatusReserva.ATIVA);
+	            novaReserva.setTipo(TipoReserva.ANUAL);
+
+	            List<Equipamento> equipamentosList = new ArrayList<>();
+
+	            reserva.getEquipamentos().forEach(equipamentoDTO -> {
+	                Equipamento equipamento = new Equipamento();
+	                equipamento.setDescricao(equipamentoDTO.getDescricao());
+	                equipamento.setQuantidade(equipamentoDTO.getQuantidade());
+	                equipamento.setReserva(novaReserva);
+	                equipamentosList.add(equipamento);
+	            });
+
+	            novaReserva.setEquipamentos(equipamentosList);
+
+	            AgendaDTO agendaDTO = reserva.getAgenda().get(i);
+	            Agenda agenda = new Agenda();
+	            agenda.setDataRetirada(agendaDTO.getDataRetirada());
+	            agenda.setHoraRetirada(agendaDTO.getHoraRetirada());
+	            agenda.setDataDevolucao(agendaDTO.getDataDevolucao());
+	            agenda.setHoraDevolucao(agendaDTO.getHoraDevolucao());
+	            agenda.setReserva(novaReserva);
+
+	            novaReserva.getAgenda().add(agenda);
+
+	            Reserva reservaSalva = reservaRepository.save(novaReserva);
+	            reservasSalvas.add(reservaSalva);
+	        }
+	    });
+
+	    reservasSalvas.forEach(reserva -> {
+	        System.out.println(reserva + "\n");
+	    });
+
+	    return !reservasSalvas.isEmpty();
 	}
 
 
