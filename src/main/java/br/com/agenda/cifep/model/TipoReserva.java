@@ -4,7 +4,7 @@ public enum TipoReserva {
 	
 
 	EVENTUAL,
-	RECORRENTE,
+	MULTIPLA,
 	ANUAL;
 	
 	

@@ -28,7 +28,7 @@ public class ReservaDTO {
 	
 	private List<AgendaDTO> agenda;
 	
-	@JsonIgnore
+	
 	private String recorrenciaDeToda;
  
 	
@@ -82,6 +82,43 @@ public class ReservaDTO {
 	    return true;
 	       
 	}
+	
+	
+//	public boolean validationItens(List<ReservaDTO> reservaDTO) {
+//		
+//		 for(ReservaDTO verificador : reservaDTO) {
+//			
+//		 if (
+//			 verificador.getSetor() == null || verificador.getSetor().isEmpty() ||
+//			 verificador.getResponsavel() == null || verificador.getResponsavel().isEmpty() ||
+//			 verificador.getEquipamentos() == null || verificador.getEquipamentos().isEmpty()
+//		 ) 
+//			 {
+//			        System.err.println("Erro: Erro detectado na validação dos itens - Setor, responsável e equipamentos são obrigatórios.");
+//			        return false;
+//			 }
+//
+//			    for (EquipamentoDTO equip : verificador.getEquipamentos()) {
+//			        if (
+//			        		equip == null || equip.getDescricao() == null || equip.getDescricao().isEmpty() || 
+//			        		equip.getQuantidade() == 0 || equip.getQuantidade() == null
+//			        ) {
+//			            System.err.println("Erro: Erro detectado na declaração de equipamento - Não pode ser nulo nem vazio ou pelo menos um equipamento.");
+//			            return false; 
+//			        }
+//			
+//			        // Verifica se a descrição do equipamento é composta apenas de espaços em branco
+//			        if (equip.getDescricao().trim().isEmpty()) {
+//			            System.err.println("Erro: Erro detectado na declaração de equipamento - Não pode ser nulo nem vazio ou pelo menos um equipamento.");
+//			            return false; // Se a descrição contiver apenas espaços em branco, retorna false
+//			        }
+//			    }			    
+//			
+//		};
+//		
+//		return true;
+//				       
+//		}
 	
 	 
 	public List<ReservaDTO> carregarDados(List <Reserva> reserva) {
