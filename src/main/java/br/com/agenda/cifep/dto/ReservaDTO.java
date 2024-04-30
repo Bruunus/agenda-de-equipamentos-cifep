@@ -27,7 +27,7 @@ public class ReservaDTO {
 	private List<EquipamentoDTO> equipamentos;
 	
 	private List<AgendaDTO> agenda;
-	
+	 
 	
 	private String recorrenciaDeToda;
  
@@ -266,6 +266,11 @@ public class ReservaDTO {
 				"\nEquipamento(s): " + this.getEquipamentos() + "\nAgenda: " + this.getAgenda();
 	}
 
+
+
+
+
+	 
 
 	
 	
