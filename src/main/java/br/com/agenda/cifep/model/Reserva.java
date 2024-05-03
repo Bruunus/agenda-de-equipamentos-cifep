@@ -36,7 +36,7 @@ public class Reserva {
 	
 	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties({"reserva"})
-	private List<Equipamento> equipamentos = new ArrayList<>();
+	private List<ReservaDeEquipamento> reservaDeEquipamentos = new ArrayList<>();
 	
 	
 	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
@@ -59,13 +59,13 @@ public class Reserva {
 	
 	public Reserva() {}
 	
-	public Reserva(Long id, @NotNull String setor, @NotNull String responsavel, List<Equipamento> equipamentos,
+	public Reserva(Long id, @NotNull String setor, @NotNull String responsavel, List<ReservaDeEquipamento> reservaDeEquipamentos,
 			List<Agenda> agenda, @NotNull StatusReserva status, @NotNull TipoReserva tipo,
 			@NotNull String recorrenciaDeToda) {
 		this.id = id;
 		this.setor = setor;
 		this.responsavel = responsavel;
-		this.equipamentos = equipamentos;
+		this.reservaDeEquipamentos = reservaDeEquipamentos;
 		this.agenda = agenda;
 		this.status = status;
 		this.tipo = tipo;
@@ -97,12 +97,12 @@ public class Reserva {
 		this.responsavel = responsavel;
 	}
 
-	public List<Equipamento> getEquipamentos() {
-		return equipamentos;
+	public List<ReservaDeEquipamento> getEquipamentos() {
+		return reservaDeEquipamentos;
 	}
 
-	public void setEquipamentos(List<Equipamento> list) {
-		this.equipamentos = list;
+	public void setEquipamentos(List<ReservaDeEquipamento> list) {
+		this.reservaDeEquipamentos = list;
 	}
 		
 	public void setAgenda(List<Agenda> agenda) {

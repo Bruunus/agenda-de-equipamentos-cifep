@@ -2,20 +2,16 @@ package br.com.agenda.cifep.model;
 
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "reserva-equipamento")
-public class ReservaDeEquipamento {
-	
+@Table(name = "estoque-de-equipamento")
+public class EstoqueEquipamento {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -25,14 +21,10 @@ public class ReservaDeEquipamento {
 	
 	@NotNull
 	private Integer quantidade;
-	 
 	
-	@ManyToOne
-    @JoinColumn(name = "reserva_id")
-	@JsonIgnore
-    private Reserva reserva;
+	
+	
 
-	
 	public Long getId() {
 		return id;
 	}
@@ -49,16 +41,6 @@ public class ReservaDeEquipamento {
 		this.descricao = descricao;
 	}
 
-	
-
-	public Reserva getReserva() {
-		return reserva;
-	}
-
-	public void setReserva(Reserva reserva) {
-		this.reserva = reserva;
-	}
-
 	public Integer getQuantidade() {
 		return quantidade;
 	}
@@ -66,14 +48,8 @@ public class ReservaDeEquipamento {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
-
-	
-	@JsonIgnore
-    public Reserva getReservaIgnore() {
-        return reserva;
-    }
 	
 	
 	
-
+	
 }

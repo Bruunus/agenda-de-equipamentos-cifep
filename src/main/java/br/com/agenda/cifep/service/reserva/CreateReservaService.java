@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.agenda.cifep.dto.AgendaDTO;
-import br.com.agenda.cifep.dto.EquipamentoDTO;
+import br.com.agenda.cifep.dto.ReservaDeEquipamentoDTO;
 import br.com.agenda.cifep.dto.ReservaDTO;
 import br.com.agenda.cifep.model.Agenda;
-import br.com.agenda.cifep.model.Equipamento;
+import br.com.agenda.cifep.model.ReservaDeEquipamento;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;
@@ -62,14 +62,14 @@ public class CreateReservaService {
 	    reserva.setTipo(TipoReserva.EVENTUAL);
 	    reserva.setRecorrenciaDeToda("*");
 	    
-	    List<Equipamento> equipamentosList = new ArrayList<>();
+	    List<ReservaDeEquipamento> equipamentosList = new ArrayList<>();
 	    
-	    for (EquipamentoDTO equipamentoDTO : reservaDTO.getEquipamentos()) {
-	        Equipamento equipamento = new Equipamento();
-	        equipamento.setDescricao(equipamentoDTO.getDescricao());
-	        equipamento.setQuantidade(equipamentoDTO.getQuantidade());
-	        equipamento.setReserva(reserva); // Associar o equipamento à reserva
-	        equipamentosList.add(equipamento);
+	    for (ReservaDeEquipamentoDTO reservaDeEquipamentoDTO : reservaDTO.getEquipamentos()) {
+	        ReservaDeEquipamento reservaDeEquipamento = new ReservaDeEquipamento();
+	        reservaDeEquipamento.setDescricao(reservaDeEquipamentoDTO.getDescricao());
+	        reservaDeEquipamento.setQuantidade(reservaDeEquipamentoDTO.getQuantidade());
+	        reservaDeEquipamento.setReserva(reserva); // Associar o equipamento à reserva
+	        equipamentosList.add(reservaDeEquipamento);
 	    
 	    
 	    reserva.getEquipamentos().addAll(equipamentosList);
@@ -110,14 +110,14 @@ public class CreateReservaService {
             novaReserva.setStatus(StatusReserva.ATIVA);
             novaReserva.setTipo(TipoReserva.MULTIPLA);
 
-            List<Equipamento> equipamentosList = new ArrayList<>();
+            List<ReservaDeEquipamento> equipamentosList = new ArrayList<>();
 
             reserva.getEquipamentos().forEach(equipamentoDTO -> {
-                Equipamento equipamento = new Equipamento();
-                equipamento.setDescricao(equipamentoDTO.getDescricao());
-                equipamento.setQuantidade(equipamentoDTO.getQuantidade());
-                equipamento.setReserva(novaReserva);
-                equipamentosList.add(equipamento);
+                ReservaDeEquipamento reservaDeEquipamento = new ReservaDeEquipamento();
+                reservaDeEquipamento.setDescricao(equipamentoDTO.getDescricao());
+                reservaDeEquipamento.setQuantidade(equipamentoDTO.getQuantidade());
+                reservaDeEquipamento.setReserva(novaReserva);
+                equipamentosList.add(reservaDeEquipamento);
             });
 
             novaReserva.setEquipamentos(equipamentosList);
@@ -174,14 +174,14 @@ public class CreateReservaService {
 	            novaReserva.setStatus(StatusReserva.ATIVA);
 	            novaReserva.setTipo(TipoReserva.ANUAL);
 
-	            List<Equipamento> equipamentosList = new ArrayList<>();
+	            List<ReservaDeEquipamento> equipamentosList = new ArrayList<>();
 
 	            reserva.getEquipamentos().forEach(equipamentoDTO -> {
-	                Equipamento equipamento = new Equipamento();
-	                equipamento.setDescricao(equipamentoDTO.getDescricao());
-	                equipamento.setQuantidade(equipamentoDTO.getQuantidade());
-	                equipamento.setReserva(novaReserva);
-	                equipamentosList.add(equipamento);
+	                ReservaDeEquipamento reservaDeEquipamento = new ReservaDeEquipamento();
+	                reservaDeEquipamento.setDescricao(equipamentoDTO.getDescricao());
+	                reservaDeEquipamento.setQuantidade(equipamentoDTO.getQuantidade());
+	                reservaDeEquipamento.setReserva(novaReserva);
+	                equipamentosList.add(reservaDeEquipamento);
 	            });
 
 	            novaReserva.setEquipamentos(equipamentosList);

@@ -24,7 +24,7 @@ public class ReservaDTO {
 	private StatusReserva statusReserva;
 	private TipoReserva tipoReserva;
 	
-	private List<EquipamentoDTO> equipamentos;
+	private List<ReservaDeEquipamentoDTO> equipamentos;
 	
 	private List<AgendaDTO> agenda;
 	 
@@ -64,7 +64,7 @@ public class ReservaDTO {
 	        return false;
 	 }
 
-	    for (EquipamentoDTO equip : reservaDTO.getEquipamentos()) {
+	    for (ReservaDeEquipamentoDTO equip : reservaDTO.getEquipamentos()) {
 	        if (
 	        		equip == null || equip.getDescricao() == null || equip.getDescricao().isEmpty() || 
 	        		equip.getQuantidade() == 0 || equip.getQuantidade() == null
@@ -98,7 +98,7 @@ public class ReservaDTO {
 //			        return false;
 //			 }
 //
-//			    for (EquipamentoDTO equip : verificador.getEquipamentos()) {
+//			    for (ReservaDeEquipamentoDTO equip : verificador.getEquipamentos()) {
 //			        if (
 //			        		equip == null || equip.getDescricao() == null || equip.getDescricao().isEmpty() || 
 //			        		equip.getQuantidade() == 0 || equip.getQuantidade() == null
@@ -133,9 +133,9 @@ public class ReservaDTO {
 			reservaDTO.setResponsavel(loadData.getResponsavel());
 			
 			// para todo join na tabela
-			List<EquipamentoDTO> equipamentosDTO = new ArrayList<>();
+			List<ReservaDeEquipamentoDTO> equipamentosDTO = new ArrayList<>();
 			loadData.getEquipamentos().forEach(equipamento -> {
-				EquipamentoDTO equipDTO = new EquipamentoDTO();
+				ReservaDeEquipamentoDTO equipDTO = new ReservaDeEquipamentoDTO();
 				
 				equipDTO.setId(equipamento.getId());
 				equipDTO.setDescricao(equipamento.getDescricao());
@@ -206,7 +206,7 @@ public class ReservaDTO {
 	public String getResponsavel() {
 		return responsavel;
 	}
-	public List<EquipamentoDTO> getEquipamentos() {
+	public List<ReservaDeEquipamentoDTO> getEquipamentos() {
 		return equipamentos;
 	}
 	public List<AgendaDTO> getAgenda() {
@@ -238,7 +238,7 @@ public class ReservaDTO {
 	public void setResponsavel(String responsavel) {
 		this.responsavel = responsavel;
 	}	
-	public void setEquipamentos(List<EquipamentoDTO> equipamentos) {
+	public void setEquipamentos(List<ReservaDeEquipamentoDTO> equipamentos) {
 		this.equipamentos = equipamentos;
 	}
 	public void setAgenda(List<AgendaDTO> agenda) {
