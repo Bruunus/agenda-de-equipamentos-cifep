@@ -50,6 +50,11 @@ public class EstoqueEquipamento {
 	}
 	
 	
+	@Override
+	public String toString() {
+		 
+		return ""+this.id+" "+this.descricao+" "+this.quantidade;
+	}
 	
 	
 }

@@ -1,4 +1,4 @@
-package br.com.agenda.cifep.controller;
+package br.com.agenda.cifep.controller.reserva;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import br.com.agenda.cifep.service.reserva.UpdateReservaService;
 
 @RestController
 @RequestMapping("update/")
-public class UpdateController {
+public class UpdateReservaController {
 
 	@Autowired
 	private UpdateReservaService updateReservaService;

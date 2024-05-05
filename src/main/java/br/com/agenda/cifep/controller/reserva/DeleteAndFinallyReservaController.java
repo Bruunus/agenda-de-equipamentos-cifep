@@ -12,7 +12,7 @@ import br.com.agenda.cifep.service.reserva.DeleteAndFinishReservaService;
 
 @RestController
 @RequestMapping("/")
-public class DeleteAndFinallyController {
+public class DeleteAndFinallyReservaController {
 	
 	
 	@Autowired

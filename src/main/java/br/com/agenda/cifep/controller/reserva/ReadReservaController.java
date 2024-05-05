@@ -1,13 +1,10 @@
 package br.com.agenda.cifep.controller.reserva;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +18,7 @@ import br.com.agenda.cifep.service.reserva.ReadReservaService;
 @RestController
 @RequestMapping("load/")
 //@CrossOrigin("*")
-public class ReadController {
+public class ReadReservaController {
 		
 	@Autowired
 	private ReadReservaService readReservaService;

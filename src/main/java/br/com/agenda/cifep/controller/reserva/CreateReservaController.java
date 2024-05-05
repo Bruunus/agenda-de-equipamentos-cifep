@@ -15,7 +15,7 @@ import br.com.agenda.cifep.service.reserva.CreateReservaService;
 
 @RestController
 @RequestMapping("/")
-public class CreateController {
+public class CreateReservaController {
 	
 	
 	@Autowired 
@@ -24,7 +24,7 @@ public class CreateController {
 	
 	
 	@PostMapping("new/scheduled/reserva")
-	public ResponseEntity<String> criarReservaAgendadaNaoAnual(@RequestBody ReservaDTO reservaDTO) {
+	public ResponseEntity<String> criarReservaEventual(@RequestBody ReservaDTO reservaDTO) {
 	 
 		boolean reservaRealizada = createReservaService.novaReservaAgendadaEventual(reservaDTO);
 

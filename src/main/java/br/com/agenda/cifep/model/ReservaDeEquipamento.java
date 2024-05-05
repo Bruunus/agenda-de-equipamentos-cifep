@@ -74,6 +74,12 @@ public class ReservaDeEquipamento {
     }
 	
 	
+	@Override
+	public String toString() {
+		 
+		return this.descricao+" "+this.quantidade;
+	}
+	
 	
 
 }

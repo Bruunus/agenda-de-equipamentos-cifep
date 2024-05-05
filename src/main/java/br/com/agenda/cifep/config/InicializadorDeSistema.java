@@ -12,7 +12,7 @@ import jakarta.annotation.PostConstruct;
 public class InicializadorDeSistema {
 	
 	@Autowired
-	EstoqueDeEquipamentoRepository estoqueEquipamentoRepository;
+	EstoqueDeEquipamentoRepository estoqueEquipamentoRepository;	// esta incrementando automaticamente
 
 	@PostConstruct
 	public void init() {
@@ -70,6 +70,24 @@ public class InicializadorDeSistema {
 				}
 				case PEN_DRIVE : {
 					estoqueEquipamento.setQuantidade(0);
+					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					break;					 
+				}
+				
+				case CABO_P2 : {
+					estoqueEquipamento.setQuantidade(3);
+					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					break;					 
+				}
+				
+				case CABO_P10 : {
+					estoqueEquipamento.setQuantidade(4);
+					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					break;					 
+				}
+				
+				case MICROFONE : {
+					estoqueEquipamento.setQuantidade(3);
 					estoqueEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}

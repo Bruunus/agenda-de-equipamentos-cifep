@@ -12,6 +12,7 @@ import br.com.agenda.cifep.model.Agenda;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.repository.ReservaRepository;
+import br.com.agenda.cifep.service.equipamento.UpdateEquipamentoService;
 
 @Service
 public class DeleteAndFinishReservaService {
@@ -20,10 +21,16 @@ public class DeleteAndFinishReservaService {
 	@Autowired
 	private ReservaRepository reservaRepository;
 	
+	@Autowired
+	private UpdateEquipamentoService updateEquipamentoService = 
+		 new UpdateEquipamentoService();
+	
 	
 
-	public boolean finalizaReserva(Long id) {
+	public boolean finalizaReserva(Long id)  {
 			
+		Long idReserva;
+		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 		
 		Optional<Reserva> registro = reservaRepository.findById(id);	 
@@ -32,6 +39,8 @@ public class DeleteAndFinishReservaService {
 		if(registro.isPresent()) {
 			
 			Reserva reservaLoad = registro.get();
+			idReserva = reservaLoad.getId();
+//			System.out.println("Registro à ser deletado "+reservaLoad);
 						
 			if(reservaLoad.getStatus() == StatusReserva.FINALIZADA) {
 				return false;
@@ -49,7 +58,14 @@ public class DeleteAndFinishReservaService {
 		
 		reservaLoad.setStatus(StatusReserva.FINALIZADA);
 		
-		reservaRepository.save(reservaLoad);	
+		reservaRepository.save(reservaLoad);
+		
+		
+		
+	 
+		updateEquipamentoService.atualizaEstoqueAoFecharReserva(idReserva);
+		 
+		
 		
 			
 		return true;

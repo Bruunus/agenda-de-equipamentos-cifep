@@ -10,11 +10,15 @@ import br.com.agenda.cifep.dto.AgendaDTO;
 import br.com.agenda.cifep.dto.ReservaDeEquipamentoDTO;
 import br.com.agenda.cifep.dto.ReservaDTO;
 import br.com.agenda.cifep.model.Agenda;
+import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.model.ReservaDeEquipamento;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;
+import br.com.agenda.cifep.repository.EstoqueDeEquipamentoRepository;
 import br.com.agenda.cifep.repository.ReservaRepository;
+import br.com.agenda.cifep.service.equipamento.EquipamentoService;
+import br.com.agenda.cifep.service.equipamento.UpdateEquipamentoService;
 
 @Service
 public class CreateReservaService {
@@ -23,10 +27,15 @@ public class CreateReservaService {
 	@Autowired
 	private ReservaRepository reservaRepository;
 	
+	@Autowired
+	private UpdateEquipamentoService updateEquipamentoService = 
+		 new UpdateEquipamentoService();
+	
+	
 	
 
 	
-
+ 
 	public boolean novaReservaAgendadaEventual(ReservaDTO reservaDTO) {
 		
 		if(!reservaDTO.validationItens(reservaDTO)) {
@@ -65,21 +74,35 @@ public class CreateReservaService {
 	    List<ReservaDeEquipamento> equipamentosList = new ArrayList<>();
 	    
 	    for (ReservaDeEquipamentoDTO reservaDeEquipamentoDTO : reservaDTO.getEquipamentos()) {
+	    		
 	        ReservaDeEquipamento reservaDeEquipamento = new ReservaDeEquipamento();
-	        reservaDeEquipamento.setDescricao(reservaDeEquipamentoDTO.getDescricao());
-	        reservaDeEquipamento.setQuantidade(reservaDeEquipamentoDTO.getQuantidade());
-	        reservaDeEquipamento.setReserva(reserva); // Associar o equipamento à reserva
+	        
+	        reservaDeEquipamento.setDescricao(reservaDeEquipamentoDTO.getDescricao());	        
+	        reservaDeEquipamento.setQuantidade(reservaDeEquipamentoDTO.getQuantidade());	        
+	        
+	        reservaDeEquipamento.setReserva(reserva);  
 	        equipamentosList.add(reservaDeEquipamento);
-	    
+	        
 	    
 	    reserva.getEquipamentos().addAll(equipamentosList);
 
 	    }	    
 	    
-	    reservaRepository.save(reserva);
+	    reservaRepository.save(reserva);	  
+	    updateEquipamentoService.atualizaEstoqueAbrirReserva(equipamentosList);
+	  
+	    	
+	    
+        // chama o método aqui
+	    
 	    
 		return true;
 	}
+	
+	
+	
+	
+	
 	
 	
 	
@@ -133,6 +156,7 @@ public class CreateReservaService {
             novaReserva.getAgenda().add(agenda);
 
             Reserva reservaSalva = reservaRepository.save(novaReserva);
+            updateEquipamentoService.atualizaEstoqueAbrirReserva(equipamentosList);	//não testado ainda
             reservasSalvas.add(reservaSalva);
         }
 	    });
@@ -197,6 +221,7 @@ public class CreateReservaService {
 	            novaReserva.getAgenda().add(agenda);
 
 	            Reserva reservaSalva = reservaRepository.save(novaReserva);
+	            updateEquipamentoService.atualizaEstoqueAbrirReserva(equipamentosList);	//não testado ainda
 	            reservasSalvas.add(reservaSalva);
 	        }
 	    });
