@@ -30,6 +30,7 @@ public class ReadEquipamentoService {
 	    	EstoqueDeEquipamentosDTO listaEstoqueDTO = new EstoqueDeEquipamentosDTO();
 	    	listaEstoqueDTO.setId(data.getId());
 	    	listaEstoqueDTO.setDescricao(data.getDescricao());	
+	    	listaEstoqueDTO.setValor(data.getValor());
 	    	listaEstoqueDTO.setQuantidade(data.getQuantidade());
 	    	list.add(listaEstoqueDTO);
 	    });	     

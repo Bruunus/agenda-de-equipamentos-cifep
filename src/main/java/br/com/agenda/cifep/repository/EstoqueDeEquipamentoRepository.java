@@ -12,7 +12,7 @@ import br.com.agenda.cifep.model.EstoqueEquipamento;
 @Repository
 public interface EstoqueDeEquipamentoRepository extends JpaRepository<EstoqueEquipamento, Long> {
 
-	EstoqueEquipamento findByDescricao(String name);
+	EstoqueEquipamento findByValor(String name);
 	
 	List<EstoqueEquipamento> findAll();
 	

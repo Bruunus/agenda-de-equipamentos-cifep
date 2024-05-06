@@ -17,6 +17,9 @@ public class EstoqueEquipamento {
 	private Long id;
 	
 	@NotNull
+	private String valor;
+	
+	@NotNull
 	private String descricao;
 	
 	@NotNull
@@ -33,12 +36,12 @@ public class EstoqueEquipamento {
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getValor() {
+		return valor;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setValor(String descricao) {
+		this.valor = descricao;
 	}
 
 	public Integer getQuantidade() {
@@ -47,13 +50,21 @@ public class EstoqueEquipamento {
 
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
+	}	
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 	
 	
 	@Override
 	public String toString() {
 		 
-		return ""+this.id+" "+this.descricao+" "+this.quantidade;
+		return ""+this.id+" "+this.valor+" "+this.quantidade;
 	}
 	
 	

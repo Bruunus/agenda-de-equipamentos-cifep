@@ -27,7 +27,7 @@ public class UpdateEquipamentoService {
 			
 			listData.forEach(dataEmEstoque -> {
 				
-				if(dataRequest.getDescricao().equals(dataEmEstoque.getDescricao())) {
+				if(dataRequest.getDescricao().equals(dataEmEstoque.getValor())) {
 					Integer quantidadeRequest = dataRequest.getQuantidade();
 					Integer quantidadeData = dataEmEstoque.getQuantidade();
 					Integer updateQuantidade = quantidadeData - quantidadeRequest;
