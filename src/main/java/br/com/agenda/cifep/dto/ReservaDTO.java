@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -53,6 +54,7 @@ public class ReservaDTO {
 
 
 
+	@SuppressWarnings("unused")
 	public boolean validationItens(ReservaDTO reservaDTO) {
 		
 	 if (
@@ -61,6 +63,29 @@ public class ReservaDTO {
             reservaDTO.getEquipamentos() == null || reservaDTO.getEquipamentos().isEmpty()) 
 	 {
 	        System.err.println("Erro: Erro detectado na validação dos itens - Setor, responsável e equipamentos são obrigatórios.");
+	        
+	        System.out.println(
+	        		"Setor: "+reservaDTO.getSetor() +"\n"+
+	        		"Responsável: "+reservaDTO.getResponsavel() +"\n" +
+	        		"Equipamento: "	        		
+	        		);
+	        
+	        List<ReservaDeEquipamentoDTO> equipamentosError = new ArrayList<>();
+	        
+	        if (reservaDTO.getEquipamentos() != null) {
+	            equipamentosError.addAll(reservaDTO.getEquipamentos());
+	            equipamentosError.forEach(equipamento -> {
+		        	System.out.println(equipamento+"");
+		        });
+	        } else {
+	        	System.out.println("A lista de equipamentos está vazia, não é possível processar.");
+	        }
+	        
+	         
+	        
+	        
+	        
+	        
 	        return false;
 	 }
 

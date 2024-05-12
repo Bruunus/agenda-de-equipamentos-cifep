@@ -23,32 +23,31 @@ public class CreateReservaController {
 
 	
 	
+	 
 	@PostMapping("new/scheduled/reserva")
-	public ResponseEntity<String> criarReservaEventual(@RequestBody ReservaDTO reservaDTO) {
+	public ResponseEntity<HttpStatus> criarReservaEventual(@RequestBody ReservaDTO reservaDTO) {
 	 
 		boolean reservaRealizada = createReservaService.novaReservaAgendadaEventual(reservaDTO);
 
 	    if (reservaRealizada) {
-	        return ResponseEntity.ok("Reserva realizada com sucesso!");
+	        return ResponseEntity.ok(HttpStatus.OK);
 		    } else {
-		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-		                .body("Erro ao realizar a reserva");
+		        return ResponseEntity.ok(HttpStatus.INTERNAL_SERVER_ERROR);		                
 		    } 	        
 		 
 	}
 	
 	
 	@PostMapping("new/scheduled-full-year/reserva")
-	public ResponseEntity<String> criarReservaAgendadaAnual(@RequestBody List<ReservaDTO> reservaDTO) {
+	public ResponseEntity<HttpStatus> criarReservaAgendadaAnual(@RequestBody List<ReservaDTO> reservaDTO) {
 	 
 		boolean reservaRealizada = createReservaService.novaReservaAgendadaAnual(reservaDTO);
 
-	    if (reservaRealizada) {
-	        return ResponseEntity.ok("Reserva anual realizada com sucesso!");
+		if (reservaRealizada) {
+	        return ResponseEntity.ok(HttpStatus.OK);
 		    } else {
-		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-		                .body("Erro ao realizar a reserva anual.");
-		    } 	        
+		        return ResponseEntity.ok(HttpStatus.INTERNAL_SERVER_ERROR);		                
+		    }	        
 		 
 	}
 	
@@ -56,14 +55,13 @@ public class CreateReservaController {
 	
 	
 	@PostMapping("new/scheduled-multiple/reserva")
-	public ResponseEntity<String> criarReservaAgendadaMultipla(@RequestBody List<ReservaDTO>reservaDTO) {
+	public ResponseEntity<HttpStatus> criarReservaAgendadaMultipla(@RequestBody List<ReservaDTO>reservaDTO) {
 		boolean reservaRealizada = createReservaService.createReservaMultipla(reservaDTO);
 		
 		if (reservaRealizada) {
-	        return ResponseEntity.ok("Reserva multipla realizada com sucesso!");
+	        return ResponseEntity.ok(HttpStatus.OK);
 		    } else {
-		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-		                .body("Erro ao realizar a reserva multipla.");
+		        return ResponseEntity.ok(HttpStatus.INTERNAL_SERVER_ERROR);		                
 		    } 
 	}
 	
