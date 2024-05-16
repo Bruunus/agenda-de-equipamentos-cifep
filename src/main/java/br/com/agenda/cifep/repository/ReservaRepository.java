@@ -17,7 +17,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
 	// SELECT
 	
-	@Query(value = "SELECT new br.com.agenda.cifep.dto.ReservaDTO(r.setor, r.responsavel, r.dataRetirada, r.horaRetirada, e.descricao, e.quantidade) FROM Reserva r JOIN r.equipamentos e", nativeQuery = true)
+	@Query(value = "SELECT new br.com.agenda.cifep.dto.ReservaDTO(r.setor, r.nome, r.sobrenome, r.dataRetirada, r.horaRetirada, e.descricao, e.quantidade) FROM Reserva r JOIN r.equipamentos e", nativeQuery = true)
 	List<ReservaDTO> findReservasDTO();
 
 	List<Reserva> findByStatus(StatusReserva s);
@@ -34,7 +34,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 	List<Reserva> pesquisaPorMesAtualFinalizadas(@Param("mes") int mes);
 
 	
-	List<Reserva> findByResponsavelAndStatus(String nome, StatusReserva finalizada);
+	List<Reserva> findByNomeAndStatus(String nome, StatusReserva finalizada);
 
 	List<Reserva> findBySetorAndStatus(String setor, StatusReserva finalizada);
 
@@ -48,7 +48,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 	@Query(value = "SELECT * FROM reserva r WHERE setor = :sector AND status = 'ATIVA'", nativeQuery = true)
 	List<Reserva> pesquisaPorSetor(@Param("sector")String sector);
 
-	@Query(value = "SELECT * FROM reserva r WHERE responsavel LIKE %:search% OR setor LIKE %:search%", nativeQuery = true)
+	@Query(value = "SELECT * FROM reserva r WHERE nome LIKE %:search% OR setor LIKE %:search%", nativeQuery = true)
 	List<Reserva> pesquisaPorNomeOuSetor(@Param("search") String search);
 
 	

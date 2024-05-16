@@ -13,6 +13,6 @@ public interface ReservaDeEquipamentoRepository extends JpaRepository<ReservaDeE
 	// Próxima funcionalidade
 	// ver os equipamentos que estiver na coluna responsavel chamada Kelly (ou qualquer responsavel)
 	// SELECT e.* FROM equipamento e INNER JOIN reserva r ON e.reserva_id = r.id WHERE r.responsavel = 'Kelly';
-	List<ReservaDeEquipamento> findByReservaResponsavel(String responsavel);
+	List<ReservaDeEquipamento> findByReservaNome(String responsavel);
 	
 }

@@ -146,7 +146,7 @@ public class ReadReservaService {
 
 
 		public List<ReservaDTO> carregarReservasFinalizadasPorNome(String nome) {
-			List<Reserva> finalizadasPorNome = reservaRepository.findByResponsavelAndStatus(nome, StatusReserva.FINALIZADA);
+			List<Reserva> finalizadasPorNome = reservaRepository.findByNomeAndStatus(nome, StatusReserva.FINALIZADA);
 			if(finalizadasPorNome.isEmpty() || finalizadasPorNome == null) {
 				return Collections.emptyList();
 			} else {

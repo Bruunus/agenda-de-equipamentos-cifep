@@ -32,7 +32,10 @@ public class Reserva {
 	private String setor;	
 	
 	@NotNull
-	private String responsavel;	
+	private String nome;	
+	
+	@NotNull
+	private String sobrenome;
 	
 	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties({"reserva"})
@@ -64,7 +67,7 @@ public class Reserva {
 			@NotNull String recorrenciaDeToda) {
 		this.id = id;
 		this.setor = setor;
-		this.responsavel = responsavel;
+		this.nome = responsavel;
 		this.reservaDeEquipamentos = reservaDeEquipamentos;
 		this.agenda = agenda;
 		this.status = status;
@@ -89,12 +92,20 @@ public class Reserva {
 		this.setor = setor;
 	}
 
-	public String getResponsavel() {
-		return responsavel;
+	public String getNome() {
+		return nome;
+	}
+	
+	public String getSobrenome() {
+		return sobrenome;
 	}
 
-	public void setResponsavel(String responsavel) {
-		this.responsavel = responsavel;
+	public void setNome(String responsavel) {
+		this.nome = responsavel;
+	}
+	
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
 	}
 
 	public List<ReservaDeEquipamento> getEquipamentos() {

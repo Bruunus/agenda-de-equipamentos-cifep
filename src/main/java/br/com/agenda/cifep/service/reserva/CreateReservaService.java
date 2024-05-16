@@ -3,6 +3,7 @@ package br.com.agenda.cifep.service.reserva;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.boot.model.source.spi.SecondaryTableSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,8 @@ public class CreateReservaService {
 	    
 	    
 	    reserva.setSetor(reservaDTO.getSetor());
-	    reserva.setResponsavel(reservaDTO.getResponsavel());
+	    reserva.setNome(reservaDTO.getNome());
+	    reserva.setSobrenome(reservaDTO.getSobrenome());
 	    
 	    List<Agenda> agenda = new ArrayList<>();
 	    
@@ -127,7 +129,8 @@ public class CreateReservaService {
         for (int i = 0; i < quantidade; i++) {
         	
             Reserva novaReserva = new Reserva();
-            novaReserva.setResponsavel(reserva.getResponsavel());
+            novaReserva.setNome(reserva.getNome());
+            novaReserva.setSobrenome(reserva.getSobrenome());
             novaReserva.setSetor(reserva.getSetor());
             novaReserva.setRecorrenciaDeToda("*");
             novaReserva.setStatus(StatusReserva.ATIVA);
@@ -192,7 +195,8 @@ public class CreateReservaService {
 	        for (int i = 0; i < quantidade; i++) {
 	        	
 	            Reserva novaReserva = new Reserva();
-	            novaReserva.setResponsavel(reserva.getResponsavel());
+	            novaReserva.setNome(reserva.getNome());
+	            novaReserva.setSobrenome(reserva.getSobrenome());
 	            novaReserva.setSetor(reserva.getSetor());
 	            novaReserva.setRecorrenciaDeToda(reserva.getRecorrenciaDeToda());
 	            novaReserva.setStatus(StatusReserva.ATIVA);

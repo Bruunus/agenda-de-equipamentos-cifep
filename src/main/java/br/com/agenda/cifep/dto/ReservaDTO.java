@@ -19,7 +19,8 @@ public class ReservaDTO {
 	
 	private Long id;
 	private String setor;
-	private String responsavel;		
+	private String nome;		
+	private String sobrenome;
 	 
 	 
 	private StatusReserva statusReserva;
@@ -42,9 +43,9 @@ public class ReservaDTO {
 	 
 	
 	
-	public ReservaDTO(String setor, String responsavel, LocalDate dataRetirada, LocalTime horaRetirada, String descricaoEquipamento, Integer quantidadeEquipamento) {
+	public ReservaDTO(String setor, String nome, LocalDate dataRetirada, LocalTime horaRetirada, String descricaoEquipamento, Integer quantidadeEquipamento) {
 	    this.setor = setor;
-	    this.responsavel = responsavel; 
+	    this.nome = nome; 
 	}
 
 
@@ -59,14 +60,14 @@ public class ReservaDTO {
 		
 	 if (
 			reservaDTO.getSetor() == null || reservaDTO.getSetor().isEmpty() ||
-			reservaDTO.getResponsavel() == null || reservaDTO.getResponsavel().isEmpty() ||
+			reservaDTO.getNome() == null || reservaDTO.getNome().isEmpty() ||
             reservaDTO.getEquipamentos() == null || reservaDTO.getEquipamentos().isEmpty()) 
 	 {
 	        System.err.println("Erro: Erro detectado na validação dos itens - Setor, responsável e equipamentos são obrigatórios.");
 	        
 	        System.out.println(
 	        		"Setor: "+reservaDTO.getSetor() +"\n"+
-	        		"Responsável: "+reservaDTO.getResponsavel() +"\n" +
+	        		"Responsável: "+reservaDTO.getNome() +"\n" +
 	        		"Equipamento: "	        		
 	        		);
 	        
@@ -155,7 +156,8 @@ public class ReservaDTO {
 			
 			reservaDTO.setId(loadData.getId());
 			reservaDTO.setSetor(loadData.getSetor());
-			reservaDTO.setResponsavel(loadData.getResponsavel());
+			reservaDTO.setNome(loadData.getNome());
+			reservaDTO.setSobrenome(loadData.getSobrenome());
 			
 			// para todo join na tabela
 			List<ReservaDeEquipamentoDTO> equipamentosDTO = new ArrayList<>();
@@ -228,8 +230,11 @@ public class ReservaDTO {
 	public String getSetor() {
 		return setor;
 	}
-	public String getResponsavel() {
-		return responsavel;
+	public String getNome() {
+		return nome;
+	}
+	public String getSobrenome() {
+		return sobrenome;
 	}
 	public List<ReservaDeEquipamentoDTO> getEquipamentos() {
 		return equipamentos;
@@ -260,8 +265,11 @@ public class ReservaDTO {
 	public void setSetor(String setor) {
 		this.setor = setor;
 	}	
-	public void setResponsavel(String responsavel) {
-		this.responsavel = responsavel;
+	public void setNome(String nome) {
+		this.nome = nome;
+	}	
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
 	}	
 	public void setEquipamentos(List<ReservaDeEquipamentoDTO> equipamentos) {
 		this.equipamentos = equipamentos;
@@ -287,7 +295,7 @@ public class ReservaDTO {
 	@Override
 	public String toString() {
 		 
-		return "Setor: "+ this.getSetor() + "\nResponsável: "+ this.getResponsavel() + 
+		return "Setor: "+ this.getSetor() + "\nResponsável: "+ this.getNome() + 
 				"\nEquipamento(s): " + this.getEquipamentos() + "\nAgenda: " + this.getAgenda();
 	}
 

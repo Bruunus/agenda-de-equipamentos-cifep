@@ -52,7 +52,8 @@ public class UpdateReservaService {
 			
 			
 			updateReserva.setRecorrenciaDeToda(reservaDTOHttp.getRecorrenciaDeToda());
-			updateReserva.setResponsavel(reservaDTOHttp.getResponsavel());
+			updateReserva.setNome(reservaDTOHttp.getNome());
+			updateReserva.setSobrenome(reservaDTOHttp.getSobrenome());
 			updateReserva.setSetor(reservaDTOHttp.getSetor());
 			updateReserva.setTipo(reservaDTOHttp.getTipoReserva());
 			
