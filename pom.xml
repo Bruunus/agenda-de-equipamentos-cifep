@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.agenda</groupId>
-	<artifactId>cifep</artifactId>
+	<artifactId>agenda-de-equipamentos-cifep</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cifep</name>
 	<description>Agenda de equipamentos</description>
