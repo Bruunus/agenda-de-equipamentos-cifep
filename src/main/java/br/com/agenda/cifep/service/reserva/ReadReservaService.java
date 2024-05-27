@@ -9,8 +9,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.agenda.cifep.dto.ReservaDeEquipamentoDTO;
-import br.com.agenda.cifep.dto.ReservaDTO;
+import br.com.agenda.cifep.dto.equipamentos.ReservaDeEquipamentoDTO;
+import br.com.agenda.cifep.dto.reserva.ReservaDTO;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;

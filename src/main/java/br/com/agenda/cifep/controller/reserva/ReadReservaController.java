@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.agenda.cifep.dto.ReservaDTO;
+import br.com.agenda.cifep.dto.reserva.ReservaDTO;
 import br.com.agenda.cifep.service.reserva.ReadReservaService;
 
 // implanar o cors quando for testar no front-angular

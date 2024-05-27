@@ -1,4 +1,4 @@
-package br.com.agenda.cifep.dto;
+package br.com.agenda.cifep.dto.reserva;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import br.com.agenda.cifep.dto.equipamentos.ReservaDeEquipamentoDTO;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;

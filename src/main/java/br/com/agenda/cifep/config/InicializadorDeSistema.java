@@ -3,7 +3,7 @@ package br.com.agenda.cifep.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.agenda.cifep.dto.TiposEquipamentos;
+import br.com.agenda.cifep.dto.equipamentos.TiposEquipamentos;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.repository.EstoqueDeEquipamentoRepository;
 import jakarta.annotation.PostConstruct;

@@ -1,4 +1,4 @@
-package br.com.agenda.cifep.dto;
+package br.com.agenda.cifep.dto.equipamentos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

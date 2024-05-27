@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.agenda.cifep.dto.EstoqueDeEquipamentosDTO;
+import br.com.agenda.cifep.dto.equipamentos.EstoqueDeEquipamentosDTO;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.repository.EstoqueDeEquipamentoRepository;
 

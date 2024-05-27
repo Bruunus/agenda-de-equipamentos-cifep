@@ -7,9 +7,9 @@ import org.hibernate.boot.model.source.spi.SecondaryTableSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.agenda.cifep.dto.AgendaDTO;
-import br.com.agenda.cifep.dto.ReservaDeEquipamentoDTO;
-import br.com.agenda.cifep.dto.ReservaDTO;
+import br.com.agenda.cifep.dto.equipamentos.ReservaDeEquipamentoDTO;
+import br.com.agenda.cifep.dto.reserva.AgendaDTO;
+import br.com.agenda.cifep.dto.reserva.ReservaDTO;
 import br.com.agenda.cifep.model.Agenda;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.model.ReservaDeEquipamento;

@@ -1,6 +1,4 @@
-package br.com.agenda.cifep.dto;
-
-import java.util.List;
+package br.com.agenda.cifep.dto.equipamentos;
 
 public class EstoqueDeEquipamentosDTO {
 

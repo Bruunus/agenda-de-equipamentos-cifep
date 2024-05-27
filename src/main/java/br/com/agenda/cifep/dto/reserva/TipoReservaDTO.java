@@ -1,4 +1,4 @@
-package br.com.agenda.cifep.dto;
+package br.com.agenda.cifep.dto.reserva;
 
 import br.com.agenda.cifep.model.TipoReserva;
 

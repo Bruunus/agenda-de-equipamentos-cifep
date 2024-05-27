@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import br.com.agenda.cifep.dto.ReservaDTO;
+import br.com.agenda.cifep.dto.reserva.ReservaDTO;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;
@@ -17,7 +17,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
 	// SELECT
 	
-	@Query(value = "SELECT new br.com.agenda.cifep.dto.ReservaDTO(r.setor, r.nome, r.sobrenome, r.dataRetirada, r.horaRetirada, e.descricao, e.quantidade) FROM Reserva r JOIN r.equipamentos e", nativeQuery = true)
+	@Query(value = "SELECT new br.com.agenda.cifep.dto.reserva.ReservaDTO(r.setor, r.nome, r.sobrenome, r.dataRetirada, r.horaRetirada, e.descricao, e.quantidade) FROM Reserva r JOIN r.equipamentos e", nativeQuery = true)
 	List<ReservaDTO> findReservasDTO();
 
 	List<Reserva> findByStatus(StatusReserva s);

@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.com.agenda.cifep.dto.AgendaDTO;
-import br.com.agenda.cifep.dto.ReservaDeEquipamentoDTO;
-import br.com.agenda.cifep.dto.ReservaDTO;
+import br.com.agenda.cifep.dto.equipamentos.ReservaDeEquipamentoDTO;
+import br.com.agenda.cifep.dto.reserva.AgendaDTO;
+import br.com.agenda.cifep.dto.reserva.ReservaDTO;
 import br.com.agenda.cifep.model.Agenda;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
