@@ -62,14 +62,17 @@ public class ReservaDTO {
 	 if (
 			reservaDTO.getSetor() == null || reservaDTO.getSetor().isEmpty() ||
 			reservaDTO.getNome() == null || reservaDTO.getNome().isEmpty() ||
-            reservaDTO.getEquipamentos() == null || reservaDTO.getEquipamentos().isEmpty()) 
+			reservaDTO.getSobrenome() == null || reservaDTO.getSobrenome().isEmpty() ||
+			reservaDTO.getEquipamentos() == null || reservaDTO.getEquipamentos().isEmpty()) 
 	 {
-	        System.err.println("Erro: Erro detectado na validação dos itens - Setor, responsável e equipamentos são obrigatórios.");
+	        System.err.println("Erro: Erro detectado na validação dos itens - "
+	        		+ "Setor, nome, sobrenome e equipamentos são obrigatórios.");
 	        
 	        System.out.println(
 	        		"Setor: "+reservaDTO.getSetor() +"\n"+
-	        		"Responsável: "+reservaDTO.getNome() +"\n" +
-	        		"Equipamento: "	        		
+	        		"Nome: "+reservaDTO.getNome() +"\n" +
+    				"Sobrenome: "+reservaDTO.getSobrenome() +"\n"+
+	        		"Equipamento(s): "	        		
 	        		);
 	        
 	        List<ReservaDeEquipamentoDTO> equipamentosError = new ArrayList<>();

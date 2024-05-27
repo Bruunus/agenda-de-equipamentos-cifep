@@ -3,7 +3,6 @@
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/dto/websocket/ConexaoWebSocketDTO.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/controller/reserva/CreateReservaController.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/service/reserva/ReadReservaService.java
-/home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/config/websocket/WebSocketConfig.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/model/ReservaDeEquipamento.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/model/Reserva.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/dto/reserva/StatusReservaDTO.java
@@ -13,9 +12,7 @@
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/model/EstoqueEquipamento.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/CifepApplication.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/repository/ReservaDeEquipamentoRepository.java
-/home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/config/websocket/WebSocketMensagens.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/config/RepositoruBean.java
-/home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/controller/equipamentos/ReadEquipamentoControllerWebSocket.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/controller/equipamentos/ReadEquipamentoController.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/service/equipamento/UpdateEquipamentoService.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/service/reserva/HomeService.java

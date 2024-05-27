@@ -26,8 +26,14 @@ public class CreateReservaController {
 	 
 	@PostMapping("new/scheduled/reserva")
 	public ResponseEntity<HttpStatus> criarReservaEventual(@RequestBody ReservaDTO reservaDTO) {
-	 
+				
 		boolean reservaRealizada = createReservaService.novaReservaAgendadaEventual(reservaDTO);
+		// System.out.println("Valores chegados no servidor:\n\n"
+		// 		+ reservaDTO.getNome() +"\n"  
+		// 		+ reservaDTO.getSobrenome() +"\n" 
+		// 		+ reservaDTO.getSetor() +"\n"  
+				
+		// 		);  // {Debug}
 
 	    if (reservaRealizada) {
 	        return ResponseEntity.ok(HttpStatus.OK);
