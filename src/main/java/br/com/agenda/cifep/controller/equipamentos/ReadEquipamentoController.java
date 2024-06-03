@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.agenda.cifep.dto.equipamentos.EstoqueDeEquipamentosDTO;
+import br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO;
 import br.com.agenda.cifep.service.equipamento.ReadEquipamentoService;
 
 @RestController
@@ -27,6 +28,16 @@ public class ReadEquipamentoController {
 		return new ResponseEntity(list, HttpStatus.OK);
 		
 	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@GetMapping("/getestoquequantidade")
+	public ResponseEntity<EstoqueQuantidadeDTO> carregarEstoqueDeQuantidade() {
+		List<EstoqueQuantidadeDTO> list = equipamentoService.getEstoqueQuantidades();
+		return new ResponseEntity(list, HttpStatus.OK);
+		
+	}
+	
+	
 	
 
 }

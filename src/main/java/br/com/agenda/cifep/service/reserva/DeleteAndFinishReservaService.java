@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import br.com.agenda.cifep.model.Agenda;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
-import br.com.agenda.cifep.repository.ReservaRepository;
+import br.com.agenda.cifep.repository.reserva.ReservaRepository;
 import br.com.agenda.cifep.service.equipamento.UpdateEquipamentoService;
 
 @Service

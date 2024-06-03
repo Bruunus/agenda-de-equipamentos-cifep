@@ -1,4 +1,4 @@
-package br.com.agenda.cifep.repository;
+package br.com.agenda.cifep.repository.reserva;
 
 import java.util.List;
 

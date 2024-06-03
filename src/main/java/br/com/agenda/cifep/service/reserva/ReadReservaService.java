@@ -14,7 +14,7 @@ import br.com.agenda.cifep.dto.reserva.ReservaDTO;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;
-import br.com.agenda.cifep.repository.ReservaRepository;
+import br.com.agenda.cifep.repository.reserva.ReservaRepository;
 
 @Service
 public class ReadReservaService {

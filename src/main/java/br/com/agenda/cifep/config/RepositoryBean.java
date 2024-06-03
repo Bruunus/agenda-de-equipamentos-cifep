@@ -2,14 +2,14 @@ package br.com.agenda.cifep.config;
 
 import org.springframework.stereotype.Service;
 
-import br.com.agenda.cifep.repository.EstoqueDeEquipamentoRepository;
+import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
 
 @Service
-public class RepositoruBean {
+public class RepositoryBean {
 
 	private EstoqueDeEquipamentoRepository estoqueDeEquipamentoRepository;
 	    
-	    public RepositoruBean(EstoqueDeEquipamentoRepository estoqueDeEquipamentoRepository) {
+	    public RepositoryBean(EstoqueDeEquipamentoRepository estoqueDeEquipamentoRepository) {
 	        this.estoqueDeEquipamentoRepository = estoqueDeEquipamentoRepository;
 	    }
 	    

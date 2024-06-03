@@ -1,34 +1,18 @@
 package br.com.agenda.cifep.dto.equipamentos;
 
-public class EstoqueDeEquipamentosDTO {
-
-private Long id;
-	
-	 
-	private String descricao;
+public class EstoqueQuantidadeDTO {	 
+ 
 	
 	private String valor;	
 	 
 	private Integer quantidade;
 	
+	public EstoqueQuantidadeDTO() {}
+	public EstoqueQuantidadeDTO(String valor, int quantidade) {
+		this.valor = valor;
+		this.quantidade = quantidade;
+	}
 	
-	
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
 
 	public Integer getQuantidade() {
 		return quantidade;

@@ -7,8 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.agenda.cifep.dto.equipamentos.EstoqueDeEquipamentosDTO;
+import br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
-import br.com.agenda.cifep.repository.EstoqueDeEquipamentoRepository;
+import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
 
 @Service
 public class ReadEquipamentoService {
@@ -37,6 +38,22 @@ public class ReadEquipamentoService {
 
 	    return list;
 	}
+
+
+	/**
+	 * Funcionalidade para buscar e carregar apenas a quantidade em estoque disponível
+	 * vis JPQL
+	 * @return
+	 */
+	public List<EstoqueQuantidadeDTO> getEstoqueQuantidades() {		
+ 
+		List<EstoqueQuantidadeDTO> listData = 
+				estoqueDeEquipamentoRepository.getEstoqueQuantidades();
+		 		
+		return listData;
+	}
+	
+	
 	
 
 	

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import br.com.agenda.cifep.dto.equipamentos.TiposEquipamentos;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
-import br.com.agenda.cifep.repository.EstoqueDeEquipamentoRepository;
+import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
 import jakarta.annotation.PostConstruct;
 
 @Component

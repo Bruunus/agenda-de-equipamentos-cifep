@@ -3,7 +3,6 @@ package br.com.agenda.cifep.service.reserva;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.boot.model.source.spi.SecondaryTableSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +10,11 @@ import br.com.agenda.cifep.dto.equipamentos.ReservaDeEquipamentoDTO;
 import br.com.agenda.cifep.dto.reserva.AgendaDTO;
 import br.com.agenda.cifep.dto.reserva.ReservaDTO;
 import br.com.agenda.cifep.model.Agenda;
-import br.com.agenda.cifep.model.EstoqueEquipamento;
-import br.com.agenda.cifep.model.ReservaDeEquipamento;
 import br.com.agenda.cifep.model.Reserva;
+import br.com.agenda.cifep.model.ReservaDeEquipamento;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;
-import br.com.agenda.cifep.repository.EstoqueDeEquipamentoRepository;
-import br.com.agenda.cifep.repository.ReservaRepository;
-import br.com.agenda.cifep.service.equipamento.EquipamentoService;
+import br.com.agenda.cifep.repository.reserva.ReservaRepository;
 import br.com.agenda.cifep.service.equipamento.UpdateEquipamentoService;
 
 @Service

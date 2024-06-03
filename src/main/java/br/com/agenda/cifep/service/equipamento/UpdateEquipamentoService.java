@@ -1,14 +1,13 @@
 package br.com.agenda.cifep.service.equipamento;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.model.ReservaDeEquipamento;
-import br.com.agenda.cifep.repository.EstoqueDeEquipamentoRepository;
+import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
 
 @Service
 public class UpdateEquipamentoService {
