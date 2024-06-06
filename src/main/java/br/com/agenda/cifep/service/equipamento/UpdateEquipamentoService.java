@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.model.ReservaDeEquipamento;
 import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
+import br.com.agenda.cifep.service.error.EstoqueInsuficienteException;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class UpdateEquipamentoService {
@@ -18,7 +21,13 @@ public class UpdateEquipamentoService {
 	
 	
 	
-	public void atualizaEstoqueAbrirReserva(List<ReservaDeEquipamento> equipamentosRequest) {
+	/**
+	 * Este método é uma funcionalidade aplicada nas classes de serviço quando uma reserva
+	 * é realizada. Desse reseva é passado uma lista de equipamentos que vem da requisição,
+	 * 
+	 * @param equipamentosRequest
+	 */
+	public void atualizaEstoqueAbrirReserva(List<ReservaDeEquipamento> equipamentosRequest) {		
 		
 		List<EstoqueEquipamento> listData = estoqueDeEquipamentoRepository.findAll();
 		
@@ -42,14 +51,49 @@ public class UpdateEquipamentoService {
 //		listData.forEach(atualizado -> {
 //			System.out.println("Update: "+atualizado.getDescricao()+" "+
 //			atualizado.getQuantidade());
-//		});
-		    	
+//		});		    	
 		    	
     }
 	
 	
 	
-	public void atualizaEstoqueAoFecharReserva(Long id)    {
+	public boolean validacaoAoAtualizaEstoque(List<ReservaDeEquipamento> equipamentosRequest)	{
+		
+		List<EstoqueEquipamento> listData = estoqueDeEquipamentoRepository.findAll();
+		
+		AtomicBoolean estoqueValido = new AtomicBoolean(true);
+		
+		equipamentosRequest.forEach(dataRequest -> {
+					
+			listData.forEach(dataEmEstoque -> {
+				
+				if(dataRequest.getDescricao().equals(dataEmEstoque.getValor())) {
+					
+					Integer quantidadeRequest = dataRequest.getQuantidade();
+					Integer quantidadeData = dataEmEstoque.getQuantidade();
+					
+					if(quantidadeData < quantidadeRequest) {
+						estoqueValido.set(false);
+						// erro 
+						throw new EstoqueInsuficienteException
+						("Quantidade em estoque insuficiente para " + dataRequest.getDescricao() + 
+								"\nFavor atualizar o estoque e tentar novamente.");
+					} else {
+						estoqueValido.set(true);
+						System.out.println("Quantidade de solicitação ao estoque validada !");
+					}
+					
+				}
+				
+			});
+			 
+		});
+		
+		return estoqueValido.get();
+	}
+	
+	
+public void atualizaEstoqueAoFecharReserva(Long id)    {
 		
 		
 		//	crie uma query fazendo para buscar na tabela de equipamentos emprestados pelo id que voce recebeu

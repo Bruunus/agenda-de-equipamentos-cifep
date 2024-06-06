@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.agenda.cifep.dto.equipamentos.EquipamentoValidation;
 import br.com.agenda.cifep.dto.equipamentos.ReservaDeEquipamentoDTO;
 import br.com.agenda.cifep.dto.reserva.AgendaDTO;
 import br.com.agenda.cifep.dto.reserva.ReservaDTO;
@@ -37,10 +38,9 @@ public class CreateReservaService {
 		
 		if(!reservaDTO.validationItens(reservaDTO)) {
 			return false;
-		}
+		}		
 
 	    Reserva reserva = new Reserva();
-	    
 	    
 	    reserva.setSetor(reservaDTO.getSetor());
 	    reserva.setNome(reservaDTO.getNome());
@@ -86,6 +86,7 @@ public class CreateReservaService {
 
 	    }	    
 	    
+	    updateEquipamentoService.validacaoAoAtualizaEstoque(equipamentosList);
 	    reservaRepository.save(reserva);	  
 	    updateEquipamentoService.atualizaEstoqueAbrirReserva(equipamentosList);
 	  

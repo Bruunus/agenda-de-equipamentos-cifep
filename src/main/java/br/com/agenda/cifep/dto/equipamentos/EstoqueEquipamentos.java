@@ -1,10 +1,10 @@
 package br.com.agenda.cifep.dto.equipamentos;
 
-public enum TiposEquipamentos {
+public enum EstoqueEquipamentos {
 	
-	/* Os valores aqui serão renderizados nas <option> como value */
+	/* Os valores aqui representam os equipamentos oficiais em estoque */
 	
 	DATASHOW, NOTEBOOK, LASER_POINTER, CABO_HDMI, EXTENSAO, ADAPTADOR, 
-	FLIP_CHART, WEB_CAM, PEN_DRIVE, CABO_P2, CABO_P10, MICROFONE, OUTROS
+	FLIP_CHART, WEB_CAM, PEN_DRIVE, CABO_P2, CABO_P10, MICROFONE
 
 }

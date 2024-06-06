@@ -4,13 +4,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import br.com.agenda.cifep.dto.equipamentos.EquipamentoValidation;
 import br.com.agenda.cifep.dto.equipamentos.ReservaDeEquipamentoDTO;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
@@ -30,6 +27,7 @@ public class ReservaDTO {
 	private List<ReservaDeEquipamentoDTO> equipamentos;
 	
 	private List<AgendaDTO> agenda;
+	private EquipamentoValidation equipamentoValidation;
 	 
 	
 	private String recorrenciaDeToda;
@@ -38,6 +36,7 @@ public class ReservaDTO {
 	
 	public ReservaDTO() {
 		this.agenda = new ArrayList<>();
+		this.equipamentoValidation = new EquipamentoValidation();
 	}
 	
 	
@@ -59,11 +58,13 @@ public class ReservaDTO {
 	@SuppressWarnings("unused")
 	public boolean validationItens(ReservaDTO reservaDTO) {
 		
+		
 	 if (
 			reservaDTO.getSetor() == null || reservaDTO.getSetor().isEmpty() ||
 			reservaDTO.getNome() == null || reservaDTO.getNome().isEmpty() ||
 			reservaDTO.getSobrenome() == null || reservaDTO.getSobrenome().isEmpty() ||
-			reservaDTO.getEquipamentos() == null || reservaDTO.getEquipamentos().isEmpty()) 
+			reservaDTO.getEquipamentos() == null || reservaDTO.getEquipamentos().isEmpty()
+		) 
 	 {
 	        System.err.println("Erro: Erro detectado na validação dos itens - "
 	        		+ "Setor, nome, sobrenome e equipamentos são obrigatórios.");
@@ -84,15 +85,14 @@ public class ReservaDTO {
 		        });
 	        } else {
 	        	System.out.println("A lista de equipamentos está vazia, não é possível processar.");
-	        }
-	        
-	         
-	        
-	        
+	        }	        
 	        
 	        
 	        return false;
 	 }
+	 
+	 
+	 
 
 	    for (ReservaDeEquipamentoDTO equip : reservaDTO.getEquipamentos()) {
 	        if (

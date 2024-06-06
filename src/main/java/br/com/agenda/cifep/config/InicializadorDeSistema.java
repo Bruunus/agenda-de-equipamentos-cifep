@@ -3,7 +3,7 @@ package br.com.agenda.cifep.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.agenda.cifep.dto.equipamentos.TiposEquipamentos;
+import br.com.agenda.cifep.dto.equipamentos.EstoqueEquipamentos;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
 import jakarta.annotation.PostConstruct;
@@ -17,7 +17,7 @@ public class InicializadorDeSistema {
 	@PostConstruct
 	public void init() {
 //		System.out.println("Inicializado contexto Spring Boot!!!");
-		for (TiposEquipamentos item : TiposEquipamentos.values()) {
+		for (EstoqueEquipamentos item : EstoqueEquipamentos.values()) {
 			 
 			EstoqueEquipamento estoqueEquipamento = 
 					estoqueEquipamentoRepository.findByValor(item.name());
@@ -104,12 +104,7 @@ public class InicializadorDeSistema {
 					break;					 
 				}
 				
-				case OUTROS : {
-					estoqueEquipamento.setQuantidade(0);
-					estoqueEquipamento.setDescricao("Outros");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
+				 
 				
 				default:
 					throw new IllegalArgumentException("Unexpected value: " + item);

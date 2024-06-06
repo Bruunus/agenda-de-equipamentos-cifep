@@ -12,14 +12,16 @@
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/model/StatusReserva.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/model/EstoqueEquipamento.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/CifepApplication.java
+/home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/dto/equipamentos/EstoqueEquipamentos.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/controller/equipamentos/ReadEquipamentoController.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/service/equipamento/UpdateEquipamentoService.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/service/reserva/HomeService.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/controller/reserva/UpdateReservaController.java
-/home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/dto/equipamentos/TiposEquipamentos.java
+/home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/dto/equipamentos/EquipamentoValidation.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/dto/reserva/TipoReservaDTO.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/service/equipamento/EquipamentoService.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/config/CorsConfiguration.java
+/home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/service/error/EstoqueInsuficienteException.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/controller/reserva/DeleteAndFinallyReservaController.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/controller/reserva/ReadReservaController.java
 /home/brunus/Desenvolvimento/Java EE/Projetos Oficiais/Agenda de equipamentos cifep/agenda-de-equipamentos-cifep/src/main/java/br/com/agenda/cifep/dto/equipamentos/EstoqueDeEquipamentosDTO.java
