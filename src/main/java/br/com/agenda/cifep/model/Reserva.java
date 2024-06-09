@@ -52,7 +52,6 @@ public class Reserva {
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	@Column(length = 100)
 	private TipoReserva tipo;
 	
 	@NotNull

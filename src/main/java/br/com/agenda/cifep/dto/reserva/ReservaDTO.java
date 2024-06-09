@@ -5,13 +5,17 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.agenda.cifep.dto.equipamentos.EquipamentoValidation;
 import br.com.agenda.cifep.dto.equipamentos.ReservaDeEquipamentoDTO;
 import br.com.agenda.cifep.model.Reserva;
+import br.com.agenda.cifep.model.ReservaDeEquipamento;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;
+import br.com.agenda.cifep.service.equipamento.UpdateEquipamentoService;
 
 public class ReservaDTO {
 	
@@ -31,6 +35,10 @@ public class ReservaDTO {
 	 
 	
 	private String recorrenciaDeToda;
+	
+ 
+	private UpdateEquipamentoService updateEquipamentoService = 
+		 new UpdateEquipamentoService();
  
 	
 	
@@ -150,12 +158,40 @@ public class ReservaDTO {
 //				       
 //		}
 	
-	 
+	
+	/**
+	 * O método carregarDados é usando para fazer a serialização dos dados antes de enviá-los para o cliente.
+	 * Ele passa por um processo de conversão, a lista do parâmetro vem do banco de dados.
+	 * @param reserva
+	 * @return
+	 */
 	public List<ReservaDTO> carregarDados(List <Reserva> reserva) {
+		
+		// lógica para poder atualizar o estoque quando as reservas forem do tipo Multupla e anual, 
+//		pois a eventual ja realiza esse processo 
+//		estoqueDeEquipamentoRepository
+		 
+		
+		
 		
 		List<ReservaDTO> listaDeDados = new ArrayList<>();
 		
 		reserva.forEach(loadData -> {
+			
+			
+			if(loadData.getTipo() == TipoReserva.MULTIPLA || loadData.getTipo() == TipoReserva.ANUAL) {
+				
+				List<ReservaDeEquipamento> atualizacaoDeEstoque = loadData.getEquipamentos();				
+				updateEquipamentoService.atualizacaoDeEstoque(atualizacaoDeEstoque);
+ 
+//				System.out.println(item.getEquipamentos());
+			}
+			
+			
+			
+			
+			
+			
 			ReservaDTO reservaDTO = new ReservaDTO();
 			
 			reservaDTO.setId(loadData.getId());

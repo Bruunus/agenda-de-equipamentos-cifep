@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.model.ReservaDeEquipamento;
 import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
+import br.com.agenda.cifep.repository.equipamento.EstqDeEquipamentoRepository;
 import br.com.agenda.cifep.service.error.EstoqueInsuficienteException;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,8 +16,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Service
 public class UpdateEquipamentoService {
 	
+	
 	@Autowired
 	private EstoqueDeEquipamentoRepository estoqueDeEquipamentoRepository;
+	
+	@Autowired
+	private EstqDeEquipamentoRepository estoqueDeEquipamentoRepository2;
 	
 	
 	
@@ -27,13 +32,13 @@ public class UpdateEquipamentoService {
 	 * 
 	 * @param equipamentosRequest
 	 */
-	public void atualizaEstoqueAbrirReserva(List<ReservaDeEquipamento> equipamentosRequest) {		
+	public void atualizacaoDeEstoque(List<ReservaDeEquipamento> equipamentosRequest) {		
 		
-		List<EstoqueEquipamento> listData = estoqueDeEquipamentoRepository.findAll();
+		List<EstoqueEquipamento> estoqueData = (List<EstoqueEquipamento>) estoqueDeEquipamentoRepository2.findAll();
 		
 		equipamentosRequest.forEach(dataRequest -> {
 			
-			listData.forEach(dataEmEstoque -> {
+			estoqueData.forEach(dataEmEstoque -> {
 				
 				if(dataRequest.getDescricao().equals(dataEmEstoque.getValor())) {
 					Integer quantidadeRequest = dataRequest.getQuantidade();

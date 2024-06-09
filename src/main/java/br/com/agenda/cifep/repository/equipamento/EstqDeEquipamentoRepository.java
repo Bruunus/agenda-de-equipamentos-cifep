@@ -2,19 +2,16 @@ package br.com.agenda.cifep.repository.equipamento;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 
 @Repository
-public interface EstoqueDeEquipamentoRepository extends JpaRepository<EstoqueEquipamento, Long> {
+public interface EstqDeEquipamentoRepository extends CrudRepository<EstoqueEquipamento, Long>{
 
-	EstoqueEquipamento findByValor(String name);
-	
-//	List<EstoqueEquipamento> findAll();
 	
 	@Query("SELECT new br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO(e.id, e.descricao, e.valor, e.quantidade) "
 			+ "FROM EstoqueEquipamento e")
@@ -27,6 +24,5 @@ public interface EstoqueDeEquipamentoRepository extends JpaRepository<EstoqueEqu
 			+ "FROM EstoqueEquipamento e")
 	List<EstoqueQuantidadeDTO> getEstoqueQuantidades();
 	
-	 
-
+	
 }

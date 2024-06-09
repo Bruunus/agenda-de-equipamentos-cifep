@@ -36,10 +36,10 @@ public class CreateReservaController {
 		// 		);  // {Debug}
 
 	    if (reservaRealizada) {
-	        return ResponseEntity.ok(HttpStatus.OK);
-		    } else {
-		        return ResponseEntity.ok(HttpStatus.INTERNAL_SERVER_ERROR);		                
-		    } 	        
+	    	return ResponseEntity.status(HttpStatus.OK).build();
+	    } else {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();		                
+	    } 	        
 		 
 	}
 	
@@ -50,10 +50,10 @@ public class CreateReservaController {
 		boolean reservaRealizada = createReservaService.novaReservaAgendadaAnual(reservaDTO);
 
 		if (reservaRealizada) {
-	        return ResponseEntity.ok(HttpStatus.OK);
-		    } else {
-		        return ResponseEntity.ok(HttpStatus.INTERNAL_SERVER_ERROR);		                
-		    }	        
+			return ResponseEntity.status(HttpStatus.OK).build();
+	    } else {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();		                
+	    } 	        
 		 
 	}
 	
@@ -65,9 +65,9 @@ public class CreateReservaController {
 		boolean reservaRealizada = createReservaService.createReservaMultipla(reservaDTO);
 		
 		if (reservaRealizada) {
-	        return ResponseEntity.ok(HttpStatus.OK);
+	        return ResponseEntity.status(HttpStatus.OK).build();
 		    } else {
-		        return ResponseEntity.ok(HttpStatus.INTERNAL_SERVER_ERROR);		                
+		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();		                
 		    } 
 	}
 	

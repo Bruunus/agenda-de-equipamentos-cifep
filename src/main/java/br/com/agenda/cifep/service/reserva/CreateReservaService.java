@@ -88,7 +88,7 @@ public class CreateReservaService {
 	    
 	    updateEquipamentoService.validacaoAoAtualizaEstoque(equipamentosList);
 	    reservaRepository.save(reserva);	  
-	    updateEquipamentoService.atualizaEstoqueAbrirReserva(equipamentosList);
+	    updateEquipamentoService.atualizacaoDeEstoque(equipamentosList);
 	  
 	    	
 	    
@@ -156,7 +156,7 @@ public class CreateReservaService {
             novaReserva.getAgenda().add(agenda);
 
             Reserva reservaSalva = reservaRepository.save(novaReserva);
-            updateEquipamentoService.atualizaEstoqueAbrirReserva(equipamentosList);	//não testado ainda
+//            updateEquipamentoService.atualizaEstoqueAbrirReserva(equipamentosList);	//não testado ainda
             reservasSalvas.add(reservaSalva);
         }
 	    });
@@ -222,7 +222,7 @@ public class CreateReservaService {
 	            novaReserva.getAgenda().add(agenda);
 
 	            Reserva reservaSalva = reservaRepository.save(novaReserva);
-	            updateEquipamentoService.atualizaEstoqueAbrirReserva(equipamentosList);	//não testado ainda
+	            updateEquipamentoService.atualizacaoDeEstoque(equipamentosList);	//não testado ainda
 	            reservasSalvas.add(reservaSalva);
 	        }
 	    });
