@@ -12,7 +12,7 @@ import br.com.agenda.cifep.dto.reserva.AgendaDTO;
 import br.com.agenda.cifep.dto.reserva.ReservaDTO;
 import br.com.agenda.cifep.model.Agenda;
 import br.com.agenda.cifep.model.Reserva;
-import br.com.agenda.cifep.model.ReservaDeEquipamento;
+import br.com.agenda.cifep.model.ReservaDeFluxoDeEquipamento;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;
 import br.com.agenda.cifep.repository.reserva.ReservaRepository;
@@ -69,17 +69,17 @@ public class CreateReservaService {
 	    reserva.setTipo(TipoReserva.EVENTUAL);
 	    reserva.setRecorrenciaDeToda("*");
 	    
-	    List<ReservaDeEquipamento> equipamentosList = new ArrayList<>();
+	    List<ReservaDeFluxoDeEquipamento> equipamentosList = new ArrayList<>();
 	    
 	    for (ReservaDeEquipamentoDTO reservaDeEquipamentoDTO : reservaDTO.getEquipamentos()) {
 	    		
-	        ReservaDeEquipamento reservaDeEquipamento = new ReservaDeEquipamento();
+	        ReservaDeFluxoDeEquipamento reservaDeFluxoDeEquipamento = new ReservaDeFluxoDeEquipamento();
 	        
-	        reservaDeEquipamento.setDescricao(reservaDeEquipamentoDTO.getDescricao());	        
-	        reservaDeEquipamento.setQuantidade(reservaDeEquipamentoDTO.getQuantidade());	        
+	        reservaDeFluxoDeEquipamento.setDescricao(reservaDeEquipamentoDTO.getDescricao());	        
+	        reservaDeFluxoDeEquipamento.setQuantidade(reservaDeEquipamentoDTO.getQuantidade());	        
 	        
-	        reservaDeEquipamento.setReserva(reserva);  
-	        equipamentosList.add(reservaDeEquipamento);
+	        reservaDeFluxoDeEquipamento.setReserva(reserva);  
+	        equipamentosList.add(reservaDeFluxoDeEquipamento);
 	        
 	    
 	    reserva.getEquipamentos().addAll(equipamentosList);
@@ -133,14 +133,14 @@ public class CreateReservaService {
             novaReserva.setStatus(StatusReserva.ATIVA);
             novaReserva.setTipo(TipoReserva.MULTIPLA);
 
-            List<ReservaDeEquipamento> equipamentosList = new ArrayList<>();
+            List<ReservaDeFluxoDeEquipamento> equipamentosList = new ArrayList<>();
 
             reserva.getEquipamentos().forEach(equipamentoDTO -> {
-                ReservaDeEquipamento reservaDeEquipamento = new ReservaDeEquipamento();
-                reservaDeEquipamento.setDescricao(equipamentoDTO.getDescricao());
-                reservaDeEquipamento.setQuantidade(equipamentoDTO.getQuantidade());
-                reservaDeEquipamento.setReserva(novaReserva);
-                equipamentosList.add(reservaDeEquipamento);
+                ReservaDeFluxoDeEquipamento reservaDeFluxoDeEquipamento = new ReservaDeFluxoDeEquipamento();
+                reservaDeFluxoDeEquipamento.setDescricao(equipamentoDTO.getDescricao());
+                reservaDeFluxoDeEquipamento.setQuantidade(equipamentoDTO.getQuantidade());
+                reservaDeFluxoDeEquipamento.setReserva(novaReserva);
+                equipamentosList.add(reservaDeFluxoDeEquipamento);
             });
 
             novaReserva.setEquipamentos(equipamentosList);
@@ -199,14 +199,14 @@ public class CreateReservaService {
 	            novaReserva.setStatus(StatusReserva.ATIVA);
 	            novaReserva.setTipo(TipoReserva.ANUAL);
 
-	            List<ReservaDeEquipamento> equipamentosList = new ArrayList<>();
+	            List<ReservaDeFluxoDeEquipamento> equipamentosList = new ArrayList<>();
 
 	            reserva.getEquipamentos().forEach(equipamentoDTO -> {
-	                ReservaDeEquipamento reservaDeEquipamento = new ReservaDeEquipamento();
-	                reservaDeEquipamento.setDescricao(equipamentoDTO.getDescricao());
-	                reservaDeEquipamento.setQuantidade(equipamentoDTO.getQuantidade());
-	                reservaDeEquipamento.setReserva(novaReserva);
-	                equipamentosList.add(reservaDeEquipamento);
+	                ReservaDeFluxoDeEquipamento reservaDeFluxoDeEquipamento = new ReservaDeFluxoDeEquipamento();
+	                reservaDeFluxoDeEquipamento.setDescricao(equipamentoDTO.getDescricao());
+	                reservaDeFluxoDeEquipamento.setQuantidade(equipamentoDTO.getQuantidade());
+	                reservaDeFluxoDeEquipamento.setReserva(novaReserva);
+	                equipamentosList.add(reservaDeFluxoDeEquipamento);
 	            });
 
 	            novaReserva.setEquipamentos(equipamentosList);

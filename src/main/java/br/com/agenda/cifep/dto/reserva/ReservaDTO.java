@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import br.com.agenda.cifep.dto.equipamentos.EquipamentoValidation;
 import br.com.agenda.cifep.dto.equipamentos.ReservaDeEquipamentoDTO;
 import br.com.agenda.cifep.model.Reserva;
-import br.com.agenda.cifep.model.ReservaDeEquipamento;
+import br.com.agenda.cifep.model.ReservaDeFluxoDeEquipamento;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;
 import br.com.agenda.cifep.service.equipamento.UpdateEquipamentoService;
@@ -181,7 +181,7 @@ public class ReservaDTO {
 			
 			if(loadData.getTipo() == TipoReserva.MULTIPLA || loadData.getTipo() == TipoReserva.ANUAL) {
 				
-				List<ReservaDeEquipamento> atualizacaoDeEstoque = loadData.getEquipamentos();				
+				List<ReservaDeFluxoDeEquipamento> atualizacaoDeEstoque = loadData.getEquipamentos();				
 				updateEquipamentoService.atualizacaoDeEstoque(atualizacaoDeEstoque);
  
 //				System.out.println(item.getEquipamentos());

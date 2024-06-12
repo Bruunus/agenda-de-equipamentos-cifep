@@ -39,7 +39,7 @@ public class Reserva {
 	
 	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties({"reserva"})
-	private List<ReservaDeEquipamento> reservaDeEquipamentos = new ArrayList<>();
+	private List<ReservaDeFluxoDeEquipamento> reservaDeFluxoDeEquipamentos = new ArrayList<>();
 	
 	
 	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
@@ -61,13 +61,13 @@ public class Reserva {
 	
 	public Reserva() {}
 	
-	public Reserva(Long id, @NotNull String setor, @NotNull String responsavel, List<ReservaDeEquipamento> reservaDeEquipamentos,
+	public Reserva(Long id, @NotNull String setor, @NotNull String responsavel, List<ReservaDeFluxoDeEquipamento> reservaDeFluxoDeEquipamentos,
 			List<Agenda> agenda, @NotNull StatusReserva status, @NotNull TipoReserva tipo,
 			@NotNull String recorrenciaDeToda) {
 		this.id = id;
 		this.setor = setor;
 		this.nome = responsavel;
-		this.reservaDeEquipamentos = reservaDeEquipamentos;
+		this.reservaDeFluxoDeEquipamentos = reservaDeFluxoDeEquipamentos;
 		this.agenda = agenda;
 		this.status = status;
 		this.tipo = tipo;
@@ -107,12 +107,12 @@ public class Reserva {
 		this.sobrenome = sobrenome;
 	}
 
-	public List<ReservaDeEquipamento> getEquipamentos() {
-		return reservaDeEquipamentos;
+	public List<ReservaDeFluxoDeEquipamento> getEquipamentos() {
+		return reservaDeFluxoDeEquipamentos;
 	}
 
-	public void setEquipamentos(List<ReservaDeEquipamento> list) {
-		this.reservaDeEquipamentos = list;
+	public void setEquipamentos(List<ReservaDeFluxoDeEquipamento> list) {
+		this.reservaDeFluxoDeEquipamentos = list;
 	}
 		
 	public void setAgenda(List<Agenda> agenda) {

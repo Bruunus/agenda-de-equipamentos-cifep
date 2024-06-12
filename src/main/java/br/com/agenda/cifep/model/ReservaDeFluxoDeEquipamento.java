@@ -13,8 +13,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "reserva-equipamento")
-public class ReservaDeEquipamento {
+@Table(name = "reserva-de-fluxo-de-equipamento")
+public class ReservaDeFluxoDeEquipamento {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
