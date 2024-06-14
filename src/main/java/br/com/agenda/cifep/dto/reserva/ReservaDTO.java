@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import br.com.agenda.cifep.dto.equipamentos.EquipamentoValidation;
-import br.com.agenda.cifep.dto.equipamentos.ReservaDeEquipamentoDTO;
+import br.com.agenda.cifep.dto.equipamentos.ReservaDeFluxoDeEquipamentoDTO;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.ReservaDeFluxoDeEquipamento;
 import br.com.agenda.cifep.model.StatusReserva;
@@ -28,7 +28,7 @@ public class ReservaDTO {
 	private StatusReserva statusReserva;
 	private TipoReserva tipoReserva;
 	
-	private List<ReservaDeEquipamentoDTO> equipamentos;
+	private List<ReservaDeFluxoDeEquipamentoDTO> equipamentos;
 	
 	private List<AgendaDTO> agenda;
 	private EquipamentoValidation equipamentoValidation;
@@ -84,7 +84,7 @@ public class ReservaDTO {
 	        		"Equipamento(s): "	        		
 	        		);
 	        
-	        List<ReservaDeEquipamentoDTO> equipamentosError = new ArrayList<>();
+	        List<ReservaDeFluxoDeEquipamentoDTO> equipamentosError = new ArrayList<>();
 	        
 	        if (reservaDTO.getEquipamentos() != null) {
 	            equipamentosError.addAll(reservaDTO.getEquipamentos());
@@ -102,7 +102,7 @@ public class ReservaDTO {
 	 
 	 
 
-	    for (ReservaDeEquipamentoDTO equip : reservaDTO.getEquipamentos()) {
+	    for (ReservaDeFluxoDeEquipamentoDTO equip : reservaDTO.getEquipamentos()) {
 	        if (
 	        		equip == null || equip.getDescricao() == null || equip.getDescricao().isEmpty() || 
 	        		equip.getQuantidade() == 0 || equip.getQuantidade() == null
@@ -136,7 +136,7 @@ public class ReservaDTO {
 //			        return false;
 //			 }
 //
-//			    for (ReservaDeEquipamentoDTO equip : verificador.getEquipamentos()) {
+//			    for (ReservaDeFluxoDeEquipamentoDTO equip : verificador.getEquipamentos()) {
 //			        if (
 //			        		equip == null || equip.getDescricao() == null || equip.getDescricao().isEmpty() || 
 //			        		equip.getQuantidade() == 0 || equip.getQuantidade() == null
@@ -179,19 +179,6 @@ public class ReservaDTO {
 		reserva.forEach(loadData -> {
 			
 			
-			if(loadData.getTipo() == TipoReserva.MULTIPLA || loadData.getTipo() == TipoReserva.ANUAL) {
-				
-				List<ReservaDeFluxoDeEquipamento> atualizacaoDeEstoque = loadData.getEquipamentos();				
-				updateEquipamentoService.atualizacaoDeEstoque(atualizacaoDeEstoque);
- 
-//				System.out.println(item.getEquipamentos());
-			}
-			
-			
-			
-			
-			
-			
 			ReservaDTO reservaDTO = new ReservaDTO();
 			
 			reservaDTO.setId(loadData.getId());
@@ -200,9 +187,9 @@ public class ReservaDTO {
 			reservaDTO.setSobrenome(loadData.getSobrenome());
 			
 			// para todo join na tabela
-			List<ReservaDeEquipamentoDTO> equipamentosDTO = new ArrayList<>();
+			List<ReservaDeFluxoDeEquipamentoDTO> equipamentosDTO = new ArrayList<>();
 			loadData.getEquipamentos().forEach(equipamento -> {
-				ReservaDeEquipamentoDTO equipDTO = new ReservaDeEquipamentoDTO();
+				ReservaDeFluxoDeEquipamentoDTO equipDTO = new ReservaDeFluxoDeEquipamentoDTO();
 				
 				equipDTO.setId(equipamento.getId());
 				equipDTO.setDescricao(equipamento.getDescricao());
@@ -276,7 +263,7 @@ public class ReservaDTO {
 	public String getSobrenome() {
 		return sobrenome;
 	}
-	public List<ReservaDeEquipamentoDTO> getEquipamentos() {
+	public List<ReservaDeFluxoDeEquipamentoDTO> getEquipamentos() {
 		return equipamentos;
 	}
 	public List<AgendaDTO> getAgenda() {
@@ -311,7 +298,7 @@ public class ReservaDTO {
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
 	}	
-	public void setEquipamentos(List<ReservaDeEquipamentoDTO> equipamentos) {
+	public void setEquipamentos(List<ReservaDeFluxoDeEquipamentoDTO> equipamentos) {
 		this.equipamentos = equipamentos;
 	}
 	public void setAgenda(List<AgendaDTO> agenda) {

@@ -16,6 +16,8 @@ import jakarta.persistence.Table;
 @Table(name = "reserva-de-fluxo-de-equipamento")
 public class ReservaDeFluxoDeEquipamento {
 	
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -31,8 +33,19 @@ public class ReservaDeFluxoDeEquipamento {
     @JoinColumn(name = "reserva_id")
 	@JsonIgnore
     private Reserva reserva;
-
 	
+	
+	
+	
+	public ReservaDeFluxoDeEquipamento() {}
+	public ReservaDeFluxoDeEquipamento(Long id, @NotNull String descricao, @NotNull Integer quantidade,
+			Reserva reserva) {
+		this.id = id;
+		this.descricao = descricao;
+		this.quantidade = quantidade;
+		this.reserva = reserva;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -66,6 +79,16 @@ public class ReservaDeFluxoDeEquipamento {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	@JsonIgnore

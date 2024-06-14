@@ -44,6 +44,9 @@ public class Reserva {
 	
 	@OneToMany(mappedBy = "reserva", cascade = CascadeType.ALL)
 	private List<Agenda> agenda = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "reserva")
+    private List<ReservaDeFluxoDeEquipamento> reservasDeFluxoDeEquipamento;
 		
 	
 	@NotNull
@@ -154,6 +157,22 @@ public class Reserva {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return " "+this.id;
+	}
+
+	public List<ReservaDeFluxoDeEquipamento> getReservaDeFluxoDeEquipamentos() {
+		return reservaDeFluxoDeEquipamentos;
+	}
+
+	public void setReservaDeFluxoDeEquipamentos(List<ReservaDeFluxoDeEquipamento> reservaDeFluxoDeEquipamentos) {
+		this.reservaDeFluxoDeEquipamentos = reservaDeFluxoDeEquipamentos;
+	}
+
+	public List<ReservaDeFluxoDeEquipamento> getReservasDeFluxoDeEquipamento() {
+		return reservasDeFluxoDeEquipamento;
+	}
+
+	public void setReservasDeFluxoDeEquipamento(List<ReservaDeFluxoDeEquipamento> reservasDeFluxoDeEquipamento) {
+		this.reservasDeFluxoDeEquipamento = reservasDeFluxoDeEquipamento;
 	}
  
 	

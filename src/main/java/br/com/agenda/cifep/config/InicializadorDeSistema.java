@@ -2,13 +2,14 @@ package br.com.agenda.cifep.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.com.agenda.cifep.dto.equipamentos.EstoqueEquipamentos;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
 import jakarta.annotation.PostConstruct;
 
-@Component
+@Service
 public class InicializadorDeSistema {
 	
 	@Autowired

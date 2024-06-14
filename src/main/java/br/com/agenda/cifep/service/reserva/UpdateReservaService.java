@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import br.com.agenda.cifep.dto.equipamentos.ReservaDeEquipamentoDTO;
+import br.com.agenda.cifep.dto.equipamentos.ReservaDeFluxoDeEquipamentoDTO;
 import br.com.agenda.cifep.dto.reserva.AgendaDTO;
 import br.com.agenda.cifep.dto.reserva.ReservaDTO;
 import br.com.agenda.cifep.model.Agenda;
@@ -58,10 +58,10 @@ public class UpdateReservaService {
 			updateReserva.setTipo(reservaDTOHttp.getTipoReserva());
 			
 			
-			List<ReservaDeEquipamentoDTO> equipamentosDTO = new ArrayList<>();
+			List<ReservaDeFluxoDeEquipamentoDTO> equipamentosDTO = new ArrayList<>();
 			
 			updateReserva.getEquipamentos().forEach(equipamento -> {
-				ReservaDeEquipamentoDTO equipDTO = new ReservaDeEquipamentoDTO();
+				ReservaDeFluxoDeEquipamentoDTO equipDTO = new ReservaDeFluxoDeEquipamentoDTO();
 				
 				equipDTO.setId(equipamento.getId());
 				equipDTO.setDescricao(equipamento.getDescricao());

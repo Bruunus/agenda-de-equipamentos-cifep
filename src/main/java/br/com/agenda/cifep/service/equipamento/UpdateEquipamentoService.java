@@ -1,40 +1,56 @@
 package br.com.agenda.cifep.service.equipamento;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.agenda.cifep.dto.reserva.AgendaDTO;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
+import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.ReservaDeFluxoDeEquipamento;
+import br.com.agenda.cifep.model.TipoReserva;
 import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
-import br.com.agenda.cifep.repository.equipamento.EstqDeEquipamentoRepository;
+import br.com.agenda.cifep.repository.reserva.ReservaRepository;
 import br.com.agenda.cifep.service.error.EstoqueInsuficienteException;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * @author Bruno Fernandes dos Santos
+ */
 @Service
 public class UpdateEquipamentoService {
-	
 	
 	@Autowired
 	private EstoqueDeEquipamentoRepository estoqueDeEquipamentoRepository;
 	
-	@Autowired
-	private EstqDeEquipamentoRepository estoqueDeEquipamentoRepository2;
-	
+	@SuppressWarnings("unused")
+	private static int day = LocalDate.now().getDayOfMonth();
 	
 	
 	
 	/**
 	 * Este método é uma funcionalidade aplicada nas classes de serviço quando uma reserva
-	 * é realizada. Desse reseva é passado uma lista de equipamentos que vem da requisição,
+	 * é realizada. Desse reseva é passado uma lista de equipamentos que vem da requisição.
+	 * 
+	 * O processo é que buscamos todos os dados da tebela 'estoque-equipamentos', em seguida
+	 * com a lista fornecida realizamos uma iteração dos seus itens, e, para cada item 
+	 * realizamos uma nova iteração porém com a lista dos itens do estoque. E, para casa
+	 * item do estoque realizo uma comparação da descrição da lista fornecida com a do campo 
+	 * valor do banco de dados. Se a condição for verdadeira pegamos o valor de quantidade
+	 * de cada lista e realizamos a atualização do estoque.
+	 * 
+	 * 
 	 * 
 	 * @param equipamentosRequest
 	 */
 	public void atualizacaoDeEstoque(List<ReservaDeFluxoDeEquipamento> equipamentosRequest) {		
 		
-		List<EstoqueEquipamento> estoqueData = (List<EstoqueEquipamento>) estoqueDeEquipamentoRepository2.findAll();
+		List<EstoqueEquipamento> estoqueData = estoqueDeEquipamentoRepository.findAll();
 		
 		equipamentosRequest.forEach(dataRequest -> {
 			
@@ -47,16 +63,12 @@ public class UpdateEquipamentoService {
 					 
 					dataEmEstoque.setQuantidade(updateQuantidade);
 					estoqueDeEquipamentoRepository.save(dataEmEstoque);
+					System.out.println("Estoque atualizado");
 				}
 				
 			});
 			 
-		});
-		
-//		listData.forEach(atualizado -> {
-//			System.out.println("Update: "+atualizado.getDescricao()+" "+
-//			atualizado.getQuantidade());
-//		});		    	
+		});    	
 		    	
     }
 	
@@ -96,6 +108,52 @@ public class UpdateEquipamentoService {
 		
 		return estoqueValido.get();
 	}
+	
+	
+	
+	/**
+	 * Este método trabalha apenas com os serviços de criação de reserva MULTIPLA a ANUAL. O objetivo dele
+	 * é evitar evitar mais verbosidade nos métodos de serviço para criação de reserva MULTIPLA e ANUAL. 
+	 * Ele precisa acessar o objeto gerado na reserva de AgendaDTO e localiza a data de retirada do(s)
+	 * equipamento(s), pega apenas o dia desse valor LocalDate e realiza a comparação se for igual ao dia
+	 * de hoje, se sim então se realiza a atualização do estoque da lista passada dentro do parâmetro,
+	 * 
+	 * @param agendaDTO
+	 * @param equipamentosRequest
+	 */
+	public void atualizaEstoqueMultiplaEAnual(AgendaDTO agendaDTO, List<ReservaDeFluxoDeEquipamento> equipamentosRequest) {
+		atualizaEstoqueMultiplaOuAnual(agendaDTO, equipamentosRequest);
+	}
+
+
+
+	/**
+	 * Este método trabalha apenas com os serviços de criação de reserva MULTIPLA a ANUAL. O objetivo dele
+	 * é evitar evitar mais verbosidade nos métodos de serviço para criação de reserva MULTIPLA e ANUAL. 
+	 * Ele precisa acessar o objeto gerado na reserva de AgendaDTO e localiza a data de retirada do(s)
+	 * equipamento(s), pega apenas o dia desse valor LocalDate e realiza a comparação se for igual ao dia
+	 * de hoje, se sim então se realiza a atualização do estoque da lista passada dentro do parâmetro,
+	 * 
+	 * @param agendaDTO
+	 * @param equipamentosRequest
+	 */
+	public void atualizaEstoqueMultiplaOuAnual(AgendaDTO agendaDTO, List<ReservaDeFluxoDeEquipamento> equipamentosRequest) {
+      LocalDate dataRetirada = agendaDTO.getDataRetirada();
+      int diaDeHoje = dataRetirada.getDayOfMonth();
+      
+      if(diaDeHoje == day) {
+      	atualizacaoDeEstoque(equipamentosRequest);
+      }
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 public void atualizaEstoqueAoFecharReserva(Long id)    {

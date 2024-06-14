@@ -1,6 +1,7 @@
 package br.com.agenda.cifep.controller.reserva;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO;
+import br.com.agenda.cifep.dto.equipamentos.ReservaDeFluxoDeEquipamentoDTO;
 import br.com.agenda.cifep.dto.reserva.ReservaDTO;
+import br.com.agenda.cifep.model.EstoqueEquipamento;
+import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
+import br.com.agenda.cifep.service.equipamento.UpdateEquipamentoService;
 import br.com.agenda.cifep.service.reserva.ReadReservaService;
 
 // implanar o cors quando for testar no front-angular
@@ -22,6 +28,8 @@ public class ReadReservaController {
 		
 	@Autowired
 	private ReadReservaService readReservaService;
+	@Autowired
+	private UpdateEquipamentoService updateEquipamentoService;
 
 	
 	
@@ -66,14 +74,20 @@ public class ReadReservaController {
 	@GetMapping("current-day/reservas")
 	//@CrossOrigin("*")
 	public ResponseEntity<?> carregarReservasDoDia() {
+		
+		System.out.println("Reservas do dia");
+		
 		List<ReservaDTO> list = readReservaService.carregarTodasReservasDoDiaAtual();		
-		// ordenar por hora
-		//Collections.sort(list, Comparator.comparing(ReservaDTO::getHoraRetirada));
 		
 		if(list.isEmpty()) {
+			System.out.println("A lista está vazia");
+			 
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 	                .body("Não há nenhuma reserva para o dia!");
 		} else {
+			
+			 
+			
 			return ResponseEntity.ok(list);
 		}		
 	}

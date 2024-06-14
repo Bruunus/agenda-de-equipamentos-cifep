@@ -2,7 +2,7 @@ package br.com.agenda.cifep.dto.equipamentos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class ReservaDeEquipamentoDTO {
+public class ReservaDeFluxoDeEquipamentoDTO {
 	
 	private Long id;	 
 	private String descricao;
@@ -14,14 +14,21 @@ public class ReservaDeEquipamentoDTO {
     
     
 	
-    public ReservaDeEquipamentoDTO() {
+    public ReservaDeFluxoDeEquipamentoDTO() {
         
     }
 
     
-    public ReservaDeEquipamentoDTO(String descricao, Integer quantidade) {
+    public ReservaDeFluxoDeEquipamentoDTO(String descricao, Integer quantidade) {
         this.descricao = descricao;
         this.quantidade = quantidade;
+    }
+    
+    public ReservaDeFluxoDeEquipamentoDTO(Long id, String descricao, Integer quantidade, String reserva) {
+    	this.id = id;
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.reserva = reserva;
     }
     
     

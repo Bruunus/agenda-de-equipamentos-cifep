@@ -1,5 +1,6 @@
 package br.com.agenda.cifep.service.reserva;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.agenda.cifep.dto.equipamentos.EquipamentoValidation;
-import br.com.agenda.cifep.dto.equipamentos.ReservaDeEquipamentoDTO;
+import br.com.agenda.cifep.dto.equipamentos.ReservaDeFluxoDeEquipamentoDTO;
 import br.com.agenda.cifep.dto.reserva.AgendaDTO;
 import br.com.agenda.cifep.dto.reserva.ReservaDTO;
 import br.com.agenda.cifep.model.Agenda;
@@ -28,6 +29,7 @@ public class CreateReservaService {
 	@Autowired
 	private UpdateEquipamentoService updateEquipamentoService = 
 		 new UpdateEquipamentoService();
+	
 	
 	
 	
@@ -71,12 +73,12 @@ public class CreateReservaService {
 	    
 	    List<ReservaDeFluxoDeEquipamento> equipamentosList = new ArrayList<>();
 	    
-	    for (ReservaDeEquipamentoDTO reservaDeEquipamentoDTO : reservaDTO.getEquipamentos()) {
+	    for (ReservaDeFluxoDeEquipamentoDTO reservaDeFluxoDeEquipamentoDTO : reservaDTO.getEquipamentos()) {
 	    		
 	        ReservaDeFluxoDeEquipamento reservaDeFluxoDeEquipamento = new ReservaDeFluxoDeEquipamento();
 	        
-	        reservaDeFluxoDeEquipamento.setDescricao(reservaDeEquipamentoDTO.getDescricao());	        
-	        reservaDeFluxoDeEquipamento.setQuantidade(reservaDeEquipamentoDTO.getQuantidade());	        
+	        reservaDeFluxoDeEquipamento.setDescricao(reservaDeFluxoDeEquipamentoDTO.getDescricao());	        
+	        reservaDeFluxoDeEquipamento.setQuantidade(reservaDeFluxoDeEquipamentoDTO.getQuantidade());	        
 	        
 	        reservaDeFluxoDeEquipamento.setReserva(reserva);  
 	        equipamentosList.add(reservaDeFluxoDeEquipamento);
@@ -106,7 +108,7 @@ public class CreateReservaService {
 	
 	
 	
-	
+//	
 	
 	public boolean createReservaMultipla(List<ReservaDTO> reservaDTO) {
 		
@@ -121,7 +123,7 @@ public class CreateReservaService {
 		
 		reservaDTO.forEach(reserva -> {
 	    	
-        int quantidade = reserva.getAgenda().size(); //65
+        int quantidade = reserva.getAgenda().size(); 
 
         for (int i = 0; i < quantidade; i++) {
         	
@@ -146,6 +148,9 @@ public class CreateReservaService {
             novaReserva.setEquipamentos(equipamentosList);
 
             AgendaDTO agendaDTO = reserva.getAgenda().get(i);
+            
+            updateEquipamentoService.atualizaEstoqueMultiplaOuAnual(agendaDTO, equipamentosList);	// verifica se tem agenda para o dia de hoje...            
+            
             Agenda agenda = new Agenda();
             agenda.setDataRetirada(agendaDTO.getDataRetirada());
             agenda.setHoraRetirada(agendaDTO.getHoraRetirada());
@@ -156,6 +161,7 @@ public class CreateReservaService {
             novaReserva.getAgenda().add(agenda);
 
             Reserva reservaSalva = reservaRepository.save(novaReserva);
+//            updateEquipamentoService.atualizarEstoqueParaMultiplaEAnual();
 //            updateEquipamentoService.atualizaEstoqueAbrirReserva(equipamentosList);	//não testado ainda
             reservasSalvas.add(reservaSalva);
         }
@@ -212,6 +218,9 @@ public class CreateReservaService {
 	            novaReserva.setEquipamentos(equipamentosList);
 
 	            AgendaDTO agendaDTO = reserva.getAgenda().get(i);
+	            
+	            updateEquipamentoService.atualizaEstoqueMultiplaOuAnual(agendaDTO, equipamentosList);	// verifica se tem agenda para o dia de hoje...            
+	            
 	            Agenda agenda = new Agenda();
 	            agenda.setDataRetirada(agendaDTO.getDataRetirada());
 	            agenda.setHoraRetirada(agendaDTO.getHoraRetirada());

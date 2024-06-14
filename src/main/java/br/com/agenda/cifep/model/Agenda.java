@@ -51,6 +51,8 @@ public class Agenda {
     @JoinColumn(name = "reserva_id")
 	private Reserva reserva;
 	
+	 
+	
 	
 	
 	
@@ -114,13 +116,16 @@ public class Agenda {
 
 	public void setHoraDevolucao(LocalTime horaDevolucao) {
 		this.horaDevolucao = horaDevolucao;
-	}
-
-	 
+	}	 
 
 	public Reserva getReserva() {
 		return reserva;
 	}
+	
+	
+	
+	
+	
 
 	public void setReserva(Reserva reserva) {
 		this.reserva = reserva;
@@ -135,7 +140,12 @@ public class Agenda {
 	}
 
 
-	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "\nData da retirada: " + this.getDataRetirada() + " - Hora da retirada: " + this.getHoraRetirada()
+		+ "\nData da devolução: "+ this.getDataDevolucao() + " - Hora da devolução: "+this.getHoraDevolucao();
+	}
 	
 	
 	

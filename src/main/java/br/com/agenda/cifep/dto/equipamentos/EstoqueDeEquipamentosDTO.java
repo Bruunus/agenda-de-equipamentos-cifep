@@ -1,5 +1,8 @@
 package br.com.agenda.cifep.dto.equipamentos;
 
+import br.com.agenda.cifep.model.Agenda;
+import br.com.agenda.cifep.model.Reserva;
+
 public class EstoqueDeEquipamentosDTO {
 
 private Long id;
@@ -10,7 +13,6 @@ private Long id;
 	private String valor;	
 	 
 	private Integer quantidade;
-	
 	
 	
 

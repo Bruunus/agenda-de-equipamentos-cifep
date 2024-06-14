@@ -16,12 +16,12 @@ public class EquipamentoValidation {
 	
 	
 	@SuppressWarnings("unused")
-	public boolean validarEquipamentoNaList(/*List<ReservaDeEquipamentoDTO> list*/) {
+	public boolean validarEquipamentoNaList(/*List<ReservaDeFluxoDeEquipamentoDTO> list*/) {
 		 
 		System.out.println("Entrado no metodo de validação de equipamento");
 		
 		// pego a lista de equipamentos vinda da request	 
-//		List<ReservaDeEquipamentoDTO> listHttp = list;
+//		List<ReservaDeFluxoDeEquipamentoDTO> listHttp = list;
 		
 		// carrego a lista de estoque de equipamentos do banco
 		ReadEquipamentoService service = new ReadEquipamentoService();

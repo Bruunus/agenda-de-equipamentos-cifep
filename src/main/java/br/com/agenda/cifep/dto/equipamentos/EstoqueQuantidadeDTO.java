@@ -31,6 +31,11 @@ public class EstoqueQuantidadeDTO {
 	}
 	
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Valor: "+this.valor+" "+"Quantidade: "+this.quantidade;
+	}
 	
 	
 }
