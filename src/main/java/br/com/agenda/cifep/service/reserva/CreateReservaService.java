@@ -44,6 +44,9 @@ public class CreateReservaService {
 
 	    Reserva reserva = new Reserva();
 	    
+	    
+	    @SuppressWarnings("unused") LocalDate data_de_hoje = null;
+	    
 	    reserva.setSetor(reservaDTO.getSetor());
 	    reserva.setNome(reservaDTO.getNome());
 	    reserva.setSobrenome(reservaDTO.getSobrenome());
@@ -60,11 +63,14 @@ public class CreateReservaService {
 	    	agendaDb.setDataDevolucao(agendaDTO.getDataDevolucao());
 	    	agendaDb.setHoraDevolucao(agendaDTO.getHoraDevolucao());
 	    	
+	    	data_de_hoje = agendaDb.getDataRetirada();
+	    	
 	    	agendaDb.setReserva(reserva);
 	    	agenda.add(agendaDb);
 	    }
 	    
 	    reserva.setAgenda(agenda);
+	    
 	    
 	    
 	    reserva.setStatus(StatusReserva.ATIVA);
@@ -88,9 +94,9 @@ public class CreateReservaService {
 
 	    }	    
 	    
-	    updateEquipamentoService.validacaoAoAtualizaEstoque(equipamentosList);
+	    updateEquipamentoService.verificacaoDeEstoque(equipamentosList);
 	    reservaRepository.save(reserva);	  
-	    updateEquipamentoService.atualizacaoDeEstoque(equipamentosList);
+	    updateEquipamentoService.atualizacaoDeEstoque(equipamentosList, data_de_hoje);
 	  
 	    	
 	    
@@ -231,7 +237,7 @@ public class CreateReservaService {
 	            novaReserva.getAgenda().add(agenda);
 
 	            Reserva reservaSalva = reservaRepository.save(novaReserva);
-	            updateEquipamentoService.atualizacaoDeEstoque(equipamentosList);	//não testado ainda
+//	            updateEquipamentoService.atualizacaoDeEstoque(equipamentosList);	//não testado ainda
 	            reservasSalvas.add(reservaSalva);
 	        }
 	    });

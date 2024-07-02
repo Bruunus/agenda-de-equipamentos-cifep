@@ -16,7 +16,10 @@ import br.com.agenda.cifep.model.ReservaDeFluxoDeEquipamento;
 @Repository
 public interface EstoqueDeEquipamentoRepository extends JpaRepository<EstoqueEquipamento, Long> {
 	
+	void deleteAll();
+	
 	List<EstoqueEquipamento> findAll();
+	
 
 	EstoqueEquipamento findByValor(String name);
 	

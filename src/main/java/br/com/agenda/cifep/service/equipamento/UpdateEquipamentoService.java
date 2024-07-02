@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.agenda.cifep.config.InicializadorDeSistema;
 import br.com.agenda.cifep.dto.reserva.AgendaDTO;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.model.Reserva;
@@ -27,6 +28,9 @@ public class UpdateEquipamentoService {
 	
 	@Autowired
 	private EstoqueDeEquipamentoRepository estoqueDeEquipamentoRepository;
+	
+	@Autowired
+	private InicializadorDeSistema inicializadorDeSistema;
 	
 	@SuppressWarnings("unused")
 	private static int day = LocalDate.now().getDayOfMonth();
@@ -48,9 +52,44 @@ public class UpdateEquipamentoService {
 	 * 
 	 * @param equipamentosRequest
 	 */
-	public void atualizacaoDeEstoque(List<ReservaDeFluxoDeEquipamento> equipamentosRequest) {		
+	public void atualizacaoDeEstoque(
+		List<ReservaDeFluxoDeEquipamento> equipamentosRequest, 	LocalDate data_retirada
+	) {		
 		
 		List<EstoqueEquipamento> estoqueData = estoqueDeEquipamentoRepository.findAll();
+		LocalDate now = LocalDate.now();
+		
+		
+		System.out.println("Data da reserva: "+data_retirada +"\n"+ "Data do sistema: "+now);
+		
+		
+		equipamentosRequest.forEach(dataRequest -> {
+			
+			estoqueData.forEach(dataEmEstoque -> {
+				
+				if(dataRequest.getDescricao().equals(dataEmEstoque.getValor()) && 
+						data_retirada.equals(now)) {
+					Integer quantidadeRequest = dataRequest.getQuantidade();
+					Integer quantidadeData = dataEmEstoque.getQuantidade();
+					Integer updateQuantidade = quantidadeData - quantidadeRequest;
+					 
+					dataEmEstoque.setQuantidade(updateQuantidade);
+					estoqueDeEquipamentoRepository.save(dataEmEstoque);
+					System.out.println("Estoque atualizado");
+				}
+				
+			});
+			 
+		});    	
+		    	
+    }
+	
+	
+	
+public void atualizacaoDeEstoque(List<ReservaDeFluxoDeEquipamento> equipamentosRequest) {		
+		
+		List<EstoqueEquipamento> estoqueData = estoqueDeEquipamentoRepository.findAll();
+		LocalDate now = LocalDate.now();
 		
 		equipamentosRequest.forEach(dataRequest -> {
 			
@@ -74,8 +113,34 @@ public class UpdateEquipamentoService {
 	
 	
 	
-	public boolean validacaoAoAtualizaEstoque(List<ReservaDeFluxoDeEquipamento> equipamentosRequest)	{
-		
+	/**
+ * Veririca se tem os equipamentos solicitados disponíveis em estoque. Realiza iteração da
+ * lista do cliente e a lista do estoque. Dentro da iteração ele segue esse ordem: 
+ * 1° Verifico se tem algum nome de equipamento igual entre as duas listas
+ * 2º Se houver algum igual separo a quantidade de ambos em variáveis
+ * 3° Verifico a quantidade entre elas, se caso a quantidade em estoque for menor que a 
+ * quantidade solicitada retorna 'estoque insuficiente'	
+ * @param equipamentosRequest
+ * @return
+ */
+public boolean validacaoAoAtualizaEstoque(List<ReservaDeFluxoDeEquipamento> equipamentosRequest)	{
+	return verificacaoDeEstoque(equipamentosRequest);
+}
+
+
+
+	/**
+	 * Veririca se tem os equipamentos solicitados disponíveis em estoque. Realiza iteração da
+	 * lista do cliente e a lista do estoque. Dentro da iteração ele segue esse ordem: 
+	 * 1° Verifico se tem algum nome de equipamento igual entre as duas listas
+	 * 2º Se houver algum igual separo a quantidade de ambos em variáveis
+	 * 3° Verifico a quantidade entre elas, se caso a quantidade em estoque for menor que a 
+	 * quantidade solicitada retorna 'estoque insuficiente'	
+	 * @param equipamentosRequest
+	 * @return
+	 */
+	public boolean verificacaoDeEstoque(List<ReservaDeFluxoDeEquipamento> equipamentosRequest)	{
+		 
 		List<EstoqueEquipamento> listData = estoqueDeEquipamentoRepository.findAll();
 		
 		AtomicBoolean estoqueValido = new AtomicBoolean(true);
@@ -94,7 +159,8 @@ public class UpdateEquipamentoService {
 						// erro 
 						throw new EstoqueInsuficienteException
 						("Quantidade em estoque insuficiente para " + dataRequest.getDescricao() + 
-								"\nFavor atualizar o estoque e tentar novamente.");
+								"\nCaso o equipamento foi devolvido, favor realizar"
+								+ "a baixa e tentar novamente.");
 					} else {
 						estoqueValido.set(true);
 						System.out.println("Quantidade de solicitação ao estoque validada !");
@@ -158,6 +224,9 @@ public class UpdateEquipamentoService {
 	
 public void atualizaEstoqueAoFecharReserva(Long id)    {
 		
+	
+ 
+	
 		
 		//	crie uma query fazendo para buscar na tabela de equipamentos emprestados pelo id que voce recebeu
 		/*
