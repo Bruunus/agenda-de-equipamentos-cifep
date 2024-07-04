@@ -1,10 +1,18 @@
 package br.com.agenda.cifep.config;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import br.com.agenda.cifep.dto.equipamentos.EstoqueEquipamentos;
+import br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO;
+import br.com.agenda.cifep.dto.reserva.RadarDeReservasAgendadasDTO;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
 import jakarta.annotation.PostConstruct;
@@ -13,7 +21,7 @@ import jakarta.annotation.PostConstruct;
 public class InicializadorDeSistema {
 	
 	@Autowired
-	EstoqueDeEquipamentoRepository estoqueEquipamentoRepository;	// esta incrementando automaticamente
+	EstoqueDeEquipamentoRepository estoqueDeEquipamentoRepository;	// esta incrementando automaticamente
 
 	/**
 	 * O método init irá executar todas as tarefas antes da inicialização final do sistema.
@@ -28,46 +36,123 @@ public class InicializadorDeSistema {
 	public void init() {
 //		System.out.println("Inicializado contexto Spring Boot!!!");
 		resetEstoque();
-		atualizadorDeReservasAgendadasDoEstoque();
+		
+		
+		// eu preciso de um pré-calculo de estoque (estoque-agendado)!
+		//POrque o novo mecanismo vai carregar o estoque disponível todo dia toda as 06:30 
+//		com base nesse estoque-agendado
+		
+		final AtomicInteger calculo_soma_quantidade = new AtomicInteger(0);
+		Map<String, Integer> quantidadePorDescricao = new HashMap<>();
+		List<LocalDate> datas = new ArrayList<>();
+		datas.add(LocalDate.of(2024, 07, 04));
+		datas.add(LocalDate.of(2024, 07, 05));
+		datas.add(LocalDate.of(2024, 07, 06));
+		
+		
+		List<RadarDeReservasAgendadasDTO> quantidadeDisponivelDoDia = 
+				estoqueDeEquipamentoRepository.getQuantidadeDisponivelPorData(datas);
+		
+		
+		
+		for(LocalDate data: datas) {
+			 System.out.println("Para data " + data);
+			 
+			 for(RadarDeReservasAgendadasDTO descricao: quantidadeDisponivelDoDia) {
+				 if(descricao.getDataRetirada().equals(data)) {
+					 System.out.println("Descrição: " + descricao.getDescricao() 
+					 + "\tQUANTIDADE: " + descricao.getQuantidadeEquipamento());
+					 
+					 String descricaoItem = descricao.getDescricao();
+					 int quantidade = descricao.getQuantidadeEquipamento();
+					 
+					 quantidadePorDescricao.put(descricaoItem, quantidadePorDescricao
+							 .getOrDefault(descricao, 0) + quantidade);
+				 }
+			 }
+			 
+		}
+		
+		System.out.println("A SOMA DA QUANTIDADE DE ACORDO COM DATA DATA É: ");
+		for (Map.Entry<String, Integer> entry : quantidadePorDescricao.entrySet()) {
+		    String descricao = entry.getKey();
+		    int quantidade = entry.getValue();
+		    
+		    System.out.println("Descrição: " + descricao + "\tSOMA DA QUANTIDADE: " + quantidade);
+		}
+		
+		
+		
+		
+		
+//		quantidadeDisponivelDoDia.forEach(item -> {
+//			calculo_soma_quantidade.addAndGet(item.getQuantidadeEquipamento());
+//			System.out.println("AS DATAS SÃO: "+item.getDescricao()+"\tQUANTIDADE: "+item.getQuantidadeEquipamento());
+//		});
+//		System.out.println("Soma final do cálculo "+calculo_soma_quantidade);
+		
+		
+		/*
+		 
+		O resultado está vindo assim:  
+		 
+	 	AS DATAS SÃO: NOTEBOOK	QUANTIDADE: 1
+		AS DATAS SÃO: DATASHOW	QUANTIDADE: 6
+		AS DATAS SÃO: NOTEBOOK	QUANTIDADE: 1
+		AS DATAS SÃO: DATASHOW	QUANTIDADE: 1
+		AS DATAS SÃO: NOTEBOOK	QUANTIDADE: 7
+		AS DATAS SÃO: DATASHOW	QUANTIDADE: 1
+		AS DATAS SÃO: DATASHOW	QUANTIDADE: 1
+		AS DATAS SÃO: DATASHOW	QUANTIDADE: 1
+		Soma final do cálculo 19
+		
+		Preciso organizar por data e, cada data fazer o seu forech e para cada foreach de uma data
+		eu procuro se tem algum equipamento pela descrição igual e se tiver eu pego a sua quantidade.
+		
+		 
+		 
+		 
+		 
+		  */
 		
 	}
 	
 	
 	 
 
-	/**
-	 * A sua função principal é pegar as reservas agendadas para o dia letivo e 
-	 * subtrair o estoque com a sua quantidade para que ele fique atualizado em tempo de dev 
-	 * apenas
-	 * 
-	 * 
-	 *	Então para que ela rode sempre voce precisa fazer um do while para repetir o agendamento
-	 *	a cada 24 horas ás 07:00 da manhã
-	 */
-	private void atualizadorDeReservasAgendadasDoEstoque() {
-		
-		
-		
-//		Toda a vez que voce criar uma reserva o sistema deve fazer uma busca no banco de dados para saber se 
-//		aquele equipamento para aquela data e aquele
-//		horário solicitado ja tem criado, porém é preciso levar em consideração a quantidade de equipamento 
-//		porque se tiver mais que um no dia em estoque
-//		então pode ser criada.
-//
-//		Resolução:
-//
-//			Vai até a tabela de reservas e:
-//			
-//				>	Traga todas as reservas agendadas para este dia especifico
-//				>	Traga também todos os equipamentos e quantidade para este dia específico
-//				>	Pegue toda a equantidade de cada equipamento reservado e se os equipamentos forem iguais some-os.
-//				>	Com cada equipamentos somado compare o total dessa quantidade com a quantidade em estoque
-//
-//
-//			Basicamente a comparação de estoque se resume em pegar todas as reservas agendadas para o dia específico e subtrair pela quantidade de
-//			estoque disponível, pois o estoque só contabiliza por dia.
-		
-	}
+	 
+	 
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 	
 	
 	/**
@@ -80,7 +165,7 @@ public class InicializadorDeSistema {
 		for (EstoqueEquipamentos item : EstoqueEquipamentos.values()) {
 			 
 			EstoqueEquipamento estoqueEquipamento = 
-					estoqueEquipamentoRepository.findByValor(item.name());
+					estoqueDeEquipamentoRepository.findByValor(item.name());
 			
 			if (estoqueEquipamento == null) {
                 // Item não encontrado, realiza o insert
@@ -91,76 +176,76 @@ public class InicializadorDeSistema {
 				case DATASHOW : {
 					estoqueEquipamento.setQuantidade(4);
 					estoqueEquipamento.setDescricao("Datashow");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}
 				case NOTEBOOK : {
 					estoqueEquipamento.setQuantidade(5);
 					estoqueEquipamento.setDescricao("Notebook");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}
 				case LASER_POINTER : {
 					estoqueEquipamento.setQuantidade(1);
 					estoqueEquipamento.setDescricao("Lazer Pointer");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}
 				case CABO_HDMI : {
 					estoqueEquipamento.setQuantidade(0);
 					estoqueEquipamento.setDescricao("Cabo HDMI");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}
 				case EXTENSAO : {
 					estoqueEquipamento.setQuantidade(4);
 					estoqueEquipamento.setDescricao("Extensão");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}
 				case ADAPTADOR : {
 					estoqueEquipamento.setQuantidade(1);
 					estoqueEquipamento.setDescricao("Adaptador");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}
 				case FLIP_CHART : {
 					estoqueEquipamento.setQuantidade(1);
 					estoqueEquipamento.setDescricao("Flip Chart");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}
 				case WEB_CAM : {
 					estoqueEquipamento.setQuantidade(3);
 					estoqueEquipamento.setDescricao("Webcam");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}
 				case PEN_DRIVE : {
 					estoqueEquipamento.setQuantidade(0);
 					estoqueEquipamento.setDescricao("Pendrive");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}
 				
 				case CABO_P2 : {
 					estoqueEquipamento.setQuantidade(3);
 					estoqueEquipamento.setDescricao("Cabo P2");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}
 				
 				case CABO_P10 : {
 					estoqueEquipamento.setQuantidade(4);
 					estoqueEquipamento.setDescricao("Cabo P10");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}
 				
 				case MICROFONE : {
 					estoqueEquipamento.setQuantidade(3);
 					estoqueEquipamento.setDescricao("Microfone");
-					estoqueEquipamentoRepository.save(estoqueEquipamento);
+					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
 					break;					 
 				}
 				
@@ -182,7 +267,7 @@ public class InicializadorDeSistema {
 	 * para deletar os registros da tabela estoque-de-equipamento
 	 */
 	public void resetEstoqueClient() {
-		estoqueEquipamentoRepository.deleteAll();
+		estoqueDeEquipamentoRepository.deleteAll();
 		resetEstoque();
 	}
 	

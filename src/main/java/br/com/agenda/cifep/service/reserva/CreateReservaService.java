@@ -17,7 +17,7 @@ import br.com.agenda.cifep.model.ReservaDeFluxoDeEquipamento;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;
 import br.com.agenda.cifep.repository.reserva.ReservaRepository;
-import br.com.agenda.cifep.service.equipamento.UpdateEquipamentoService;
+import br.com.agenda.cifep.service.estoque.UpdateEstoqueService;
 
 @Service
 public class CreateReservaService {
@@ -27,15 +27,25 @@ public class CreateReservaService {
 	private ReservaRepository reservaRepository;
 	
 	@Autowired
-	private UpdateEquipamentoService updateEquipamentoService = 
-		 new UpdateEquipamentoService();
+	private UpdateEstoqueService updateEstoqueService = 
+		 new UpdateEstoqueService();
 	
-	
-	
-	
-
-	
+	private static LocalDate dataDeHoje;
+		
+	static {
+		dataDeHoje = LocalDate.now();
+	}
  
+	 
+
+
+
+
+
+
+
+
+
 	public boolean novaReservaAgendadaEventual(ReservaDTO reservaDTO) {
 		
 		if(!reservaDTO.validationItens(reservaDTO)) {
@@ -52,7 +62,7 @@ public class CreateReservaService {
 	    reserva.setSobrenome(reservaDTO.getSobrenome());
 	    
 	    List<Agenda> agenda = new ArrayList<>();
-	    
+	    List<LocalDate> listaDeDatasParaValidar = new ArrayList<>();
 	   
 	    
 	    for(AgendaDTO agendaDTO : reservaDTO.getAgenda()) {
@@ -64,6 +74,8 @@ public class CreateReservaService {
 	    	agendaDb.setHoraDevolucao(agendaDTO.getHoraDevolucao());
 	    	
 	    	data_de_hoje = agendaDb.getDataRetirada();
+	    	
+	    	listaDeDatasParaValidar.add(agendaDTO.getDataRetirada());
 	    	
 	    	agendaDb.setReserva(reserva);
 	    	agenda.add(agendaDb);
@@ -92,13 +104,26 @@ public class CreateReservaService {
 	    
 	    reserva.getEquipamentos().addAll(equipamentosList);
 
-	    }	    
+	    }	
 	    
-	    updateEquipamentoService.verificacaoDeEstoque(equipamentosList);
-	    reservaRepository.save(reserva);	  
-	    updateEquipamentoService.atualizacaoDeEstoque(equipamentosList, data_de_hoje);
-	  
+	   
+	   
+	    
+	    if(data_de_hoje.equals(dataDeHoje)) {    	
+	    	updateEstoqueService.verificacaoDeEstoque(equipamentosList);
+		    reservaRepository.save(reserva);	  
+		    updateEstoqueService.atualizacaoDeEstoque(equipamentosList);
 	    	
+	    } else {
+	    	System.out.println("Esta reserva não é para hoje! Mas para o dia "+data_de_hoje);
+	    	updateEstoqueService.getMonitoradorDeEstoqueParaReservasPosteriores(listaDeDatasParaValidar);
+	    	reservaRepository.save(reserva);
+	    	
+	    	// precisa fazer um atualizador de estoque do dia e que ele seja mostrado a cada 24hs as 07:00hs
+	    	// esse atuaizador deve sempre buscar a agenda da data do dia atual
+	    	// também ele serve para pesquisar reservas futuras
+	    	
+	    }
 	    
         // chama o método aqui
 	    
@@ -155,7 +180,7 @@ public class CreateReservaService {
 
             AgendaDTO agendaDTO = reserva.getAgenda().get(i);
             
-            updateEquipamentoService.atualizaEstoqueMultiplaOuAnual(agendaDTO, equipamentosList);	// verifica se tem agenda para o dia de hoje...            
+//            updateEstoqueService.atualizaEstoqueMultiplaOuAnual(agendaDTO, equipamentosList);	// verifica se tem agenda para o dia de hoje...            
             
             Agenda agenda = new Agenda();
             agenda.setDataRetirada(agendaDTO.getDataRetirada());
@@ -167,8 +192,8 @@ public class CreateReservaService {
             novaReserva.getAgenda().add(agenda);
 
             Reserva reservaSalva = reservaRepository.save(novaReserva);
-//            updateEquipamentoService.atualizarEstoqueParaMultiplaEAnual();
-//            updateEquipamentoService.atualizaEstoqueAbrirReserva(equipamentosList);	//não testado ainda
+//            updateEstoqueService.atualizarEstoqueParaMultiplaEAnual();
+//            updateEstoqueService.atualizaEstoqueAbrirReserva(equipamentosList);	//não testado ainda
             reservasSalvas.add(reservaSalva);
         }
 	    });
@@ -225,7 +250,7 @@ public class CreateReservaService {
 
 	            AgendaDTO agendaDTO = reserva.getAgenda().get(i);
 	            
-	            updateEquipamentoService.atualizaEstoqueMultiplaOuAnual(agendaDTO, equipamentosList);	// verifica se tem agenda para o dia de hoje...            
+//	            updateEstoqueService.atualizaEstoqueMultiplaOuAnual(agendaDTO, equipamentosList);	// verifica se tem agenda para o dia de hoje...            
 	            
 	            Agenda agenda = new Agenda();
 	            agenda.setDataRetirada(agendaDTO.getDataRetirada());
@@ -237,7 +262,7 @@ public class CreateReservaService {
 	            novaReserva.getAgenda().add(agenda);
 
 	            Reserva reservaSalva = reservaRepository.save(novaReserva);
-//	            updateEquipamentoService.atualizacaoDeEstoque(equipamentosList);	//não testado ainda
+//	            updateEstoqueService.atualizacaoDeEstoque(equipamentosList);	//não testado ainda
 	            reservasSalvas.add(reservaSalva);
 	        }
 	    });

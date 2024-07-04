@@ -15,7 +15,7 @@ import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.ReservaDeFluxoDeEquipamento;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.model.TipoReserva;
-import br.com.agenda.cifep.service.equipamento.UpdateEquipamentoService;
+import br.com.agenda.cifep.service.estoque.UpdateEstoqueService;
 
 public class ReservaDTO {
 	
@@ -37,8 +37,8 @@ public class ReservaDTO {
 	private String recorrenciaDeToda;
 	
  
-	private UpdateEquipamentoService updateEquipamentoService = 
-		 new UpdateEquipamentoService();
+	private UpdateEstoqueService updateEstoqueService = 
+		 new UpdateEstoqueService();
  
 	
 	

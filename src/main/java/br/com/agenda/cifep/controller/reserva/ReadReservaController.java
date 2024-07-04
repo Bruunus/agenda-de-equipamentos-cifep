@@ -17,7 +17,7 @@ import br.com.agenda.cifep.dto.equipamentos.ReservaDeFluxoDeEquipamentoDTO;
 import br.com.agenda.cifep.dto.reserva.ReservaDTO;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
-import br.com.agenda.cifep.service.equipamento.UpdateEquipamentoService;
+import br.com.agenda.cifep.service.estoque.UpdateEstoqueService;
 import br.com.agenda.cifep.service.reserva.ReadReservaService;
 
 // implanar o cors quando for testar no front-angular
@@ -29,7 +29,7 @@ public class ReadReservaController {
 	@Autowired
 	private ReadReservaService readReservaService;
 	@Autowired
-	private UpdateEquipamentoService updateEquipamentoService;
+	private UpdateEstoqueService updateEstoqueService;
 
 	
 	

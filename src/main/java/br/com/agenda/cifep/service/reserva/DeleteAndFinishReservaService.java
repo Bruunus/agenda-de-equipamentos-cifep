@@ -12,7 +12,7 @@ import br.com.agenda.cifep.model.Agenda;
 import br.com.agenda.cifep.model.Reserva;
 import br.com.agenda.cifep.model.StatusReserva;
 import br.com.agenda.cifep.repository.reserva.ReservaRepository;
-import br.com.agenda.cifep.service.equipamento.UpdateEquipamentoService;
+import br.com.agenda.cifep.service.estoque.UpdateEstoqueService;
 
 @Service
 public class DeleteAndFinishReservaService {
@@ -22,8 +22,8 @@ public class DeleteAndFinishReservaService {
 	private ReservaRepository reservaRepository;
 	
 	@Autowired
-	private UpdateEquipamentoService updateEquipamentoService = 
-		 new UpdateEquipamentoService();
+	private UpdateEstoqueService updateEstoqueService = 
+		 new UpdateEstoqueService();
 	
 	
 
@@ -63,7 +63,6 @@ public class DeleteAndFinishReservaService {
 		
 		
 	 
-		updateEquipamentoService.atualizaEstoqueAoFecharReserva(idReserva);
 		 
 		
 		
