@@ -293,11 +293,19 @@ public class UpdateEstoqueService {
 		
 		
 		
+		
+//		Trago todas as reservas existentes pelas datas passadas
 		List<RadarDeReservasAgendadasDTO> quantidadeDisponivelDoDia = 
 				estoqueDeEquipamentoRepository.getQuantidadeDisponivelPorData(datas);
-		List<EstoqueQuantidadeDTO> estoqueAgendado = estoqueDeEquipamentoRepository.getEstoqueQuantidades();
 		
-		preCalculoDeEstoque();
+//		Pelas datas passadas faço o calculo do total de equipamentos reservados para cada data
+		List<RadarDeReservasAgendadasDTO> estoqueAgendado = calculoDeEstoqueFuturo(datas);
+		
+		
+//		Uso o estoque como referência no "if" de limite máximo, então no if uso como limite maximo disponível
+		List<EstoqueQuantidadeDTO> estoque = estoqueDeEquipamentoRepository
+				.getEstoqueQuantidades();
+		
 		
 		Map<String, Integer> radarEstoqueEstourado = new HashMap<>();	// mapas de chaves e valores		 
 		
@@ -381,28 +389,88 @@ public class UpdateEstoqueService {
 	
 	 
 
+	/*
+	 * Esse exemplo deu certo porém tome cuidado porque a data se repete na lista quando tem outro equipamento
+	 * 
+	 * A impressão sai assim 
+		 2024-07-06	NOTEBOOK	7
+		 2024-07-06	DATASHOW	1
+		 2024-07-05	NOTEBOOK	1
+		 2024-07-04	DATASHOW	2
+		 2024-07-05	DATASHOW	1
+	 */
+	private List<RadarDeReservasAgendadasDTO> preCalculoDeEstoque(List<LocalDate> datas) {
+		return calculoDeEstoqueFuturo(datas);
+	}
 
-	private List<RadarDeReservasAgendadasDTO> preCalculoDeEstoque() {
-		
-		final AtomicInteger calculo_soma_quantidade = new AtomicInteger(0);
-		
-		List<LocalDate> datas = new ArrayList<>();
-		datas.add(LocalDate.of(2024, 07, 04));
-		datas.add(LocalDate.of(2024, 07, 05));
-		datas.add(LocalDate.of(2024, 07, 06));
-		
-		
-		List<RadarDeReservasAgendadasDTO> quantidadeDisponivelDoDia = 
-				estoqueDeEquipamentoRepository.getDescricaoPorData(datas);
-		
-		quantidadeDisponivelDoDia.forEach(item -> {
-			System.out.println("AS DATAS SÃO: "+item);
-		});
+
+
+	/*
+	 * Esse exemplo deu certo porém tome cuidado porque a data se repete na lista quando tem outro equipamento
+	 * 
+	 * A impressão sai assim 
+		 2024-07-06	NOTEBOOK	7
+		 2024-07-06	DATASHOW	1
+		 2024-07-05	NOTEBOOK	1
+		 2024-07-04	DATASHOW	2
+		 2024-07-05	DATASHOW	1
+	 */
+	private List<RadarDeReservasAgendadasDTO> calculoDeEstoqueFuturo(List<LocalDate> datas) {
 		
 		
-		// aqui eu vou somar a quantidade de cada item de acordo com a data agendada
 		
-		return quantidadeDisponivelDoDia;
+		/*
+		 * 
+		 */ 
+		
+		
+		
+		List<RadarDeReservasAgendadasDTO> totalDisponivel = new ArrayList<>();
+
+        // Dados da request service
+//        List<LocalDate> datas = new ArrayList<>();
+//        datas.add(LocalDate.of(2024, 07, 04));
+//        datas.add(LocalDate.of(2024, 07, 05));
+//        datas.add(LocalDate.of(2024, 07, 06));
+
+        Map<String, Integer> somaQuantidades = new HashMap<>(); // Mapa para armazenar as somas de quantidade por data e descrição
+
+        List<RadarDeReservasAgendadasDTO> quantidadeDisponivelDoDia = estoqueDeEquipamentoRepository.getQuantidadeDisponivelPorData(datas);
+
+        for (RadarDeReservasAgendadasDTO qtd : quantidadeDisponivelDoDia) {
+            LocalDate dataItem = qtd.getDataRetirada();
+            String descricaoItem = qtd.getDescricao();
+            int quantidadeItem = qtd.getQuantidadeEquipamento();
+
+            String chave = dataItem.toString() + "-" + descricaoItem; // Criação da chave para o mapa
+
+            if (somaQuantidades.containsKey(chave)) {
+                int somaQuantidade = somaQuantidades.get(chave);
+                somaQuantidades.put(chave, somaQuantidade + quantidadeItem);
+            } else {
+                somaQuantidades.put(chave, quantidadeItem);
+            }
+        }
+
+        for (Map.Entry<String, Integer> entry : somaQuantidades.entrySet()) {
+            String chave = entry.getKey();
+            int somaQuantidade = entry.getValue();
+            LocalDate data = LocalDate.parse(chave.substring(0, 10));
+            String descricao = chave.substring(11);
+
+            totalDisponivel.add(new RadarDeReservasAgendadasDTO(data, descricao, somaQuantidade));
+        }
+
+        // Impressão dos resultados
+        for (RadarDeReservasAgendadasDTO total : totalDisponivel) {
+            System.out.println(total.getDataRetirada() + "\t" + total.getDescricao() + "\t" + total.getSomaQuantidade());
+        }
+        
+        
+        return totalDisponivel;
+        
+        
+        
 	}
 	
 

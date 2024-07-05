@@ -1,6 +1,7 @@
 package br.com.agenda.cifep.dto.reserva;
 
 import java.time.LocalDate;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RadarDeReservasAgendadasDTO {
 	
@@ -9,6 +10,7 @@ public class RadarDeReservasAgendadasDTO {
 	private String descricaoEquipamento;
 	private Integer quantidadeEquipamento;
 	private LocalDate dataRetirada;
+	private int somaQuantidade;
 //	private LocalTime horaRetirada;		//	aguardando novas instruções ...
 //	private LocalDate dataFinalizada;	//	aguardando novas instruções ...
 	
@@ -22,6 +24,12 @@ public class RadarDeReservasAgendadasDTO {
 		this.nome = name;
 		this.dataRetirada = dataRetirada;
 	}
+	public RadarDeReservasAgendadasDTO(LocalDate dataRetirada, String descricao, int somaQuantidade) {
+		this.dataRetirada = dataRetirada;
+		this.descricaoEquipamento = descricao;
+		this.somaQuantidade = somaQuantidade;
+	}
+	
 	public RadarDeReservasAgendadasDTO(String descricao, Integer quantidade) {
 		this.descricaoEquipamento = descricao;
 		this.quantidadeEquipamento = quantidade;
@@ -62,6 +70,12 @@ public class RadarDeReservasAgendadasDTO {
 	}
 	public void setQuantidadeEquipamento(Integer quantidadeEquipamento) {
 		this.quantidadeEquipamento = quantidadeEquipamento;
+	}
+	public int getSomaQuantidade() {
+		return somaQuantidade;
+	}
+	public void setSomaQuantidade(int somaQuantidade) {
+		this.somaQuantidade = somaQuantidade;
 	}
 	
 	

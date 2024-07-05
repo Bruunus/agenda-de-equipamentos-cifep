@@ -42,45 +42,201 @@ public class InicializadorDeSistema {
 		//POrque o novo mecanismo vai carregar o estoque disponível todo dia toda as 06:30 
 //		com base nesse estoque-agendado
 		
-		final AtomicInteger calculo_soma_quantidade = new AtomicInteger(0);
-		Map<String, Integer> quantidadePorDescricao = new HashMap<>();
-		List<LocalDate> datas = new ArrayList<>();
-		datas.add(LocalDate.of(2024, 07, 04));
-		datas.add(LocalDate.of(2024, 07, 05));
-		datas.add(LocalDate.of(2024, 07, 06));
+		
+//		TESTE DE FUNCIONALIDADE PARA O ESTOQUE
 		
 		
-		List<RadarDeReservasAgendadasDTO> quantidadeDisponivelDoDia = 
-				estoqueDeEquipamentoRepository.getQuantidadeDisponivelPorData(datas);
+//		/*
+//		 * Esse exemplo deu certo porém tome cuidado porque a data se repete na lista quando tem outro equipamento
+//		 */
+//		
+//		/*
+//		 * A impressão sai assim 
+//		 2024-07-06	NOTEBOOK	7
+//		 2024-07-06	DATASHOW	1
+//		 2024-07-05	NOTEBOOK	1
+//		 2024-07-04	DATASHOW	2
+//		 2024-07-05	DATASHOW	1
+//		 */ 
+//		
+//		
+//		
+//		List<RadarDeReservasAgendadasDTO> totalDisponivel = new ArrayList<>();
+//
+//        // Dados da request service
+//        List<LocalDate> datas = new ArrayList<>();
+//        datas.add(LocalDate.of(2024, 07, 04));
+//        datas.add(LocalDate.of(2024, 07, 05));
+//        datas.add(LocalDate.of(2024, 07, 06));
+//
+//        Map<String, Integer> somaQuantidades = new HashMap<>(); // Mapa para armazenar as somas de quantidade por data e descrição
+//
+//        List<RadarDeReservasAgendadasDTO> quantidadeDisponivelDoDia = estoqueDeEquipamentoRepository.getQuantidadeDisponivelPorData(datas);
+//
+//        for (RadarDeReservasAgendadasDTO qtd : quantidadeDisponivelDoDia) {
+//            LocalDate dataItem = qtd.getDataRetirada();
+//            String descricaoItem = qtd.getDescricao();
+//            int quantidadeItem = qtd.getQuantidadeEquipamento();
+//
+//            String chave = dataItem.toString() + "-" + descricaoItem; // Criação da chave para o mapa
+//
+//            if (somaQuantidades.containsKey(chave)) {
+//                int somaQuantidade = somaQuantidades.get(chave);
+//                somaQuantidades.put(chave, somaQuantidade + quantidadeItem);
+//            } else {
+//                somaQuantidades.put(chave, quantidadeItem);
+//            }
+//        }
+//
+//        for (Map.Entry<String, Integer> entry : somaQuantidades.entrySet()) {
+//            String chave = entry.getKey();
+//            int somaQuantidade = entry.getValue();
+//            LocalDate data = LocalDate.parse(chave.substring(0, 10));
+//            String descricao = chave.substring(11);
+//
+//            totalDisponivel.add(new RadarDeReservasAgendadasDTO(data, descricao, somaQuantidade));
+//        }
+//
+//        // Impressão dos resultados
+//        for (RadarDeReservasAgendadasDTO total : totalDisponivel) {
+//            System.out.println(total.getDataRetirada() + "\t" + total.getDescricao() + "\t" + total.getSomaQuantidade());
+//        }
 		
 		
 		
-		for(LocalDate data: datas) {
-			 System.out.println("Para data " + data);
-			 
-			 for(RadarDeReservasAgendadasDTO descricao: quantidadeDisponivelDoDia) {
-				 if(descricao.getDataRetirada().equals(data)) {
-					 System.out.println("Descrição: " + descricao.getDescricao() 
-					 + "\tQUANTIDADE: " + descricao.getQuantidadeEquipamento());
-					 
-					 String descricaoItem = descricao.getDescricao();
-					 int quantidade = descricao.getQuantidadeEquipamento();
-					 
-					 quantidadePorDescricao.put(descricaoItem, quantidadePorDescricao
-							 .getOrDefault(descricao, 0) + quantidade);
-				 }
-			 }
-			 
-		}
 		
-		System.out.println("A SOMA DA QUANTIDADE DE ACORDO COM DATA DATA É: ");
-		for (Map.Entry<String, Integer> entry : quantidadePorDescricao.entrySet()) {
-		    String descricao = entry.getKey();
-		    int quantidade = entry.getValue();
-		    
-		    System.out.println("Descrição: " + descricao + "\tSOMA DA QUANTIDADE: " + quantidade);
-		}
 		
+		
+		
+		
+		
+		
+		
+		
+//		Deu quase certo
+//		List<RadarDeReservasAgendadasDTO> totalDisponivel = new ArrayList<>();
+//		
+////		dados da request service
+//		List<LocalDate> datas = new ArrayList<>();
+//		datas.add(LocalDate.of(2024, 07, 04));
+//		datas.add(LocalDate.of(2024, 07, 05));
+//		datas.add(LocalDate.of(2024, 07, 06));
+//		
+//		
+//		List<String> descricaoTotais = new ArrayList<>();
+//		
+//		LocalDate dataAtual = null;
+//		String descricaoAtual = null;
+//		int somaQuantidade = 0;
+//		
+//		
+//		List<RadarDeReservasAgendadasDTO> quantidadeDisponivelDoDia = 
+//				estoqueDeEquipamentoRepository.getQuantidadeDisponivelPorData(datas);
+//		
+//		
+//		for(RadarDeReservasAgendadasDTO qtd : quantidadeDisponivelDoDia) {
+//			LocalDate dataItem = qtd.getDataRetirada();
+//			String descricaoItem = qtd.getDescricao();			
+//			int quantidadeItem = qtd.getQuantidadeEquipamento();
+//			
+//			if (dataAtual == null || !dataAtual.equals(dataItem)) {
+//				
+//				if (descricaoAtual != null) {
+//                    totalDisponivel.add(new RadarDeReservasAgendadasDTO(dataAtual, descricaoAtual, somaQuantidade));
+//                }
+//				
+//				dataAtual = dataItem;	
+//				descricaoAtual = descricaoItem;
+//				somaQuantidade = quantidadeItem;
+//		        
+//			} else if (descricaoAtual.equals(descricaoItem)) {
+//				somaQuantidade += quantidadeItem;
+//		    }
+//			
+//		}
+//		
+//		if (descricaoAtual != null) {
+//            totalDisponivel.add(new RadarDeReservasAgendadasDTO(dataAtual, descricaoAtual, somaQuantidade));
+//        }
+//		
+//		
+//		// Adicionar o último total à lista
+//		if (descricaoAtual != null) {
+//		    descricaoTotais.add("Data: " + dataAtual + ", Descrição: " + descricaoAtual 
+//		    		+ ", Total: " + somaQuantidade);
+//		}
+//		
+//		 
+//
+////		Aqui pe a chave: aqui devolve toda a lista com os equipamentos totais somados de acordo com cada data passada.
+//		for (RadarDeReservasAgendadasDTO total : totalDisponivel) {
+//
+//		    System.out.println(
+//		    		total.getDataRetirada()+"\t"+
+//		    		total.getDescricao()+"\t"+
+//		    		total.getSomaQuantidade()
+//		    		);
+//		    
+//		}
+//		
+		
+//		***********************************************************
+		
+		
+		 
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		final AtomicInteger calculo_soma_quantidade = new AtomicInteger(0);
+//		
+//		List<LocalDate> datas = new ArrayList<>();
+//		datas.add(LocalDate.of(2024, 07, 04));
+//		datas.add(LocalDate.of(2024, 07, 05));
+//		datas.add(LocalDate.of(2024, 07, 06));
+//		
+//		
+//		List<RadarDeReservasAgendadasDTO> quantidadeDisponivelDoDia = 
+//				estoqueDeEquipamentoRepository.getQuantidadeDisponivelPorData(datas);
+//		
+//		
+//		EstoqueEquipamentos equipamentosDescricao = null;
+//		
+//		for(LocalDate data: datas) {
+//			 System.out.println("Para data " + data);
+//			 
+//			 for(RadarDeReservasAgendadasDTO descricao: quantidadeDisponivelDoDia) {
+//				 if(descricao.getDataRetirada().equals(data)) {
+//					 System.out.println("Descrição: " + descricao.getDescricao() 
+//					 + "\tQUANTIDADE: " + descricao.getQuantidadeEquipamento());
+//					 
+//					 String descricaoItem = descricao.getDescricao();
+//					 int quantidade = descricao.getQuantidadeEquipamento();
+//					 
+//					 
+//					 
+//				 }
+//			 }
+//			 
+//		}
+//		
+//		System.out.println("Equipamento do item: "+ equipamentosDescricao);
+//		System.out.println("SOMA DA QUANTIDADE PARA NOTEBOOK: " + calculo_soma_quantidade.get());
+//		
 		
 		
 		
