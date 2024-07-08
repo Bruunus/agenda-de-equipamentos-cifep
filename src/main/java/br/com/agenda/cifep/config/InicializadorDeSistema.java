@@ -2,10 +2,7 @@ package br.com.agenda.cifep.config;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +12,7 @@ import br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO;
 import br.com.agenda.cifep.dto.reserva.RadarDeReservasAgendadasDTO;
 import br.com.agenda.cifep.model.EstoqueEquipamento;
 import br.com.agenda.cifep.repository.equipamento.EstoqueDeEquipamentoRepository;
+import br.com.agenda.cifep.service.estoque.UpdateEstoqueService;
 import jakarta.annotation.PostConstruct;
 
 @Service
@@ -22,6 +20,8 @@ public class InicializadorDeSistema {
 	
 	@Autowired
 	EstoqueDeEquipamentoRepository estoqueDeEquipamentoRepository;	// esta incrementando automaticamente
+	@Autowired
+	UpdateEstoqueService updateEstoqueService;
 
 	/**
 	 * O método init irá executar todas as tarefas antes da inicialização final do sistema.
@@ -37,6 +37,45 @@ public class InicializadorDeSistema {
 //		System.out.println("Inicializado contexto Spring Boot!!!");
 		resetEstoque();
 		
+		List<LocalDate> datas = new ArrayList<>();
+       datas.add(LocalDate.of(2024, 07, 04));
+       datas.add(LocalDate.of(2024, 07, 05));
+       datas.add(LocalDate.of(2024, 07, 06));
+       
+ 
+//       boolean monitoradorDeEstoqueParaReservasPosteriores = 
+//    		   updateEstoqueService.getMonitoradorDeEstoqueParaReservasPosteriores(datas);
+//       
+//       
+//       
+//       if(!monitoradorDeEstoqueParaReservasPosteriores) {    	 
+//    	   List<RadarDeReservasAgendadasDTO> reservasInsuficientes = UpdateEstoqueService.getReservasInsuficientes();
+//    	   reservasInsuficientes.forEach(insuf -> {System.out.println(insuf);});  
+//       }
+		
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       
+//       
+//       
+//		for (RadarDeReservasAgendadasDTO qtdDisponivel: monitoradorDeEstoqueParaReservasPosteriores) {
+//			System.out.println(
+//					qtdDisponivel.getDescricao()+"\t"+
+//					qtdDisponivel.getSomaQuantidade()+"\t"+
+////					qtdDisponivel.getId()+"\t"+
+////					qtdDisponivel.getNome()+"\t"+
+////					qtdDisponivel.getSetor()+"\t"+
+//					qtdDisponivel.getDataRetirada());
+//		}
+//		
 		
 		// eu preciso de um pré-calculo de estoque (estoque-agendado)!
 		//POrque o novo mecanismo vai carregar o estoque disponível todo dia toda as 06:30 

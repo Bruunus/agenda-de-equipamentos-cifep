@@ -1,6 +1,7 @@
 package br.com.agenda.cifep.repository.equipamento;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -73,23 +74,17 @@ public interface EstoqueDeEquipamentoRepository extends JpaRepository<EstoqueEqu
 	
 			 
 
-		@Query(value = 
-			"SELECT new br.com.agenda.cifep.dto.reserva.RadarDeReservasAgendadasDTO"
-			+ "(rfe.descricao, rfe.quantidade, r.nome, a.dataRetirada) FROM Reserva r "
-			+ "JOIN r.reservasDeFluxoDeEquipamento rfe " 
-			+ "JOIN r.agenda a "
-			+ "WHERE a.dataRetirada IN :datas "
-			+ "AND r.status = 'ATIVA'")
-	List<RadarDeReservasAgendadasDTO> getQuantidadeDisponivelDoDia(@Param("datas") List<LocalDate> datas);
 
+//	a sequencia das colunas precisam estar na mesma ordem de declaração do construtor
 	@Query(value = 
 		"SELECT new br.com.agenda.cifep.dto.reserva.RadarDeReservasAgendadasDTO"
-		+ "(rfe.descricao, rfe.quantidade, r.nome, a.dataRetirada) FROM Reserva r "
+		+ "(rfe.descricao, rfe.quantidade,r.id, r.nome, r.setor, a.dataRetirada, a.horaRetirada, a.dataDevolucao, a.horaDevolucao) "
+		+ "FROM Reserva r "
 		+ "JOIN r.reservasDeFluxoDeEquipamento rfe " 
 		+ "JOIN r.agenda a "
 		+ "WHERE a.dataRetirada IN :datas "
 		+ "AND r.status = 'ATIVA'")
-	List<RadarDeReservasAgendadasDTO> getQuantidadeDisponivelPorData(@Param("datas") List<LocalDate> datas);
+	List<RadarDeReservasAgendadasDTO> getQuantidadeReservadaPorData(@Param("datas") List<LocalDate> datas);
 
 	
 	/**
