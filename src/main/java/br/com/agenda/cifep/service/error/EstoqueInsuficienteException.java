@@ -1,6 +1,5 @@
 package br.com.agenda.cifep.service.error;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import br.com.agenda.cifep.dto.reserva.RadarDeReservasAgendadasDTO;
@@ -23,6 +22,8 @@ public class EstoqueInsuficienteException extends RuntimeException {
 		super(message);
 		this.setReservasInsuficientes(list);
 	}
+	
+	public EstoqueInsuficienteException() {}
 	
 
 	
@@ -51,7 +52,8 @@ public class EstoqueInsuficienteException extends RuntimeException {
 	 */
 	public List<RadarDeReservasAgendadasDTO> estoqueInsuficienteException() {
 
-		System.err.println("Algumas datas não possui equipamentos disponíveis");	
+		System.err.println("Algumas datas não possui equipamentos disponíveis");
+		System.out.println("Atingido limite disponível ");
 		reservasInsuficientes.forEach(i -> {
 			i.getDataRetirada();
 			i.getDescricao();

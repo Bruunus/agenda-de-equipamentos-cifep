@@ -5,29 +5,26 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class RadarDeReservasAgendadasDTO {
 	
-	private Long id;
-	private String nome;
-	private String setor;	//	aguardando novas instruções ...
+ 
 	private String descricaoEquipamento;
+	@JsonIgnore
 	private Integer quantidadeEquipamento;
 	private int somaQuantidade;
 	private LocalDate dataRetirada;	
 	private LocalTime horaRetirada;		//	aguardando novas instruções ...
 	private LocalDate dataDevolucao;
 	private LocalTime horaDevolucao;
-	private List<LocalDate> datas;
 	
 	public RadarDeReservasAgendadasDTO() {}
 	
 	public RadarDeReservasAgendadasDTO(String descricao, Integer quantidade, Long id, String name, String setor, 
 			LocalDate dataRetirada, LocalTime horaRetirada, LocalDate dataDevolucao, LocalTime horaDevolucao) {
 		this.setDescricao(descricao);			
-		this.setQuantidadeEquipamento(quantidade);
-		this.setId(id);
-		this.setNome(name);
-		this.setSetor(setor);
+		this.setQuantidadeEquipamento(quantidade); 
 		this.setDataRetirada(dataRetirada);
 		this.setHoraRetirada(horaRetirada);
 		this.setDataDevolucao(dataDevolucao);
@@ -60,6 +57,7 @@ public class RadarDeReservasAgendadasDTO {
 	}
 	
 	
+	
 	public RadarDeReservasAgendadasDTO(String descricao, Integer quantidadeSomada, LocalDate dataRetirada) {
 		this.descricaoEquipamento = descricao;
 		this.somaQuantidade = quantidadeSomada;
@@ -67,12 +65,21 @@ public class RadarDeReservasAgendadasDTO {
 		
 	}
 	
+	 
+	
 	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return ""+this.nome+"\t"+this.dataRetirada;
+		return this.dataRetirada+"\t"+this.horaRetirada+"\t"+this.dataDevolucao+"\t"+this.horaDevolucao+"\t"+		
+		this.descricaoEquipamento+"\t"+this.somaQuantidade+"\t";
+		 
 	}
+	
+	
+	
+	 
+
 	
 	public String getDescricao() {
 		return descricaoEquipamento;
@@ -82,13 +89,6 @@ public class RadarDeReservasAgendadasDTO {
 		this.descricaoEquipamento = descricao;
 	}
 	
-	public String getNome() {
-		return nome;
-	}
-	
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 	
 	
 	public LocalDate getDataRetirada() {
@@ -109,19 +109,6 @@ public class RadarDeReservasAgendadasDTO {
 	public void setSomaQuantidade(int somaQuantidade) {
 		this.somaQuantidade = somaQuantidade;
 	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public String getSetor() {
-		return setor;
-	}
-	public void setSetor(String setor) {
-		this.setor = setor;
-	}
-
 	public String getDescricaoEquipamento() {
 		return descricaoEquipamento;
 	}
@@ -154,13 +141,7 @@ public class RadarDeReservasAgendadasDTO {
 		this.horaDevolucao = horaDevolucao;
 	}
 
-	public List<LocalDate> getDatas() {
-		return datas;
-	}
-
-	public void setDatas(List<LocalDate> datas) {
-		this.datas = datas;
-	}
+	
 
 	 
 	

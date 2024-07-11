@@ -116,7 +116,7 @@ public class CreateReservaService {
 	    	
 	    } else {
 	    	System.out.println("Esta reserva não é para hoje! Mas para o dia "+data_de_hoje);
-	    	updateEstoqueService.getMonitoradorDeEstoqueParaReservasPosteriores(listaDeDatasParaValidar);
+	    	updateEstoqueService.getEstoqueDisponivelDeAgenda(listaDeDatasParaValidar);
 	    	reservaRepository.save(reserva);
 	    	
 	    	// precisa fazer um atualizador de estoque do dia e que ele seja mostrado a cada 24hs as 07:00hs

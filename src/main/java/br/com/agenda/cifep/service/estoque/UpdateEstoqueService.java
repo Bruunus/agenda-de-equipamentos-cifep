@@ -146,14 +146,20 @@ public class UpdateEstoqueService {
 	 * 
 	 * No bloco seguinte analizamos junto ao estoque para termos uma base de quantidade padrão de empréstimo por dia, se o valor total 
 	 * somando de cada equipamento de acordo com cada data for maior que a quantidade padrão do estoque é lançada um exception e retorna
-	 * a lista dessas datas solicitadas pelo estoque para o cliente informando as datas que não foram aceitas.
+	 * a lista dessas datas solicitadas pelo estoque para o cliente informando as datas que não foram aceitas.ERRADO CORRIGINDO --->>>
+	 * 
+	 * 
+	 * Este método receba uma lista de datas e tráz todas as reservas ja criadas pelas datas, o método retorna uma lista com as reservas
+	 * das datas solicitadas e o cliente analisa de acordo com o que ele quer, se uma data é passada e não retorna nenhuma reserva nela
+	 * é porque não existe.
+	 * 
 	 * @param datas
 	 * @return boolean
 	 */
-	private boolean  monitoradorDeEstoqueParaReservasPosteriores(List<LocalDate> datas) throws EstoqueInsuficienteException {
+	private List<RadarDeReservasAgendadasDTO> monitoradorDeEstoqueParaReservasPosteriores(List<LocalDate> datas) {
 		  
 //		AtomicBoolean equipamentoDisponivel = new AtomicBoolean(true);
-		boolean equipamentoDisponivel = false;
+//		boolean equipamentoDisponivel = false;
 		Map<String, Integer> somaQuantidades = new HashMap<>();
 		
 		LocalDate dataItem = null;
@@ -201,99 +207,80 @@ public class UpdateEstoqueService {
 //            	senão crio uma nova posição, uma nova chave
                 somaQuantidades.put(chave, quantidadeItem);
             }			
-		}
+		} 
 		
 		// itero sobre o mapa de armazeno cada chave e converto cada dado ao seu tipo para poder adicionar na lista
 		for (Map.Entry<String, Integer> entry : somaQuantidades.entrySet()) {
             String chave = entry.getKey();
             int somaQuantidade = entry.getValue();
             LocalDate data = LocalDate.parse(chave.substring(0, 10));
-            String descricao = chave.substring(11);
+            String descricao = chave.substring(11);            
 
             totalSolicitado.add(new RadarDeReservasAgendadasDTO(data, horaRetirada, dataDevolucao, horaDevolucao,  descricao, somaQuantidade));
-        }		
-		
+        }				
 		
 //		{Debug}	
-//		System.out.println("Quantidade total dos elementos: ");
-//        for (RadarDeReservasAgendadasDTO total : totalSolicitado) {
-//            System.out.println(
-//        		total.getDataRetirada()+"\t"+
-////        		//total.getHoraRetirada()+"\t"+
-////        		//total.getDataDevolucao()+"\t"+ 
-////        		//total.getHoraDevolucao()+"\t"+
-//        		total.getDescricao()+"\t"+
-//        		total.getSomaQuantidade()
-//    		);
-//        }
-        
-        
-        List<EstoqueQuantidadeDTO> estoque = estoqueDeEquipamentoRepository
-				.getEstoqueQuantidades();
-        
-//        {debug}
-        System.out.println("ESTOQUE DE QUIPAMENTOS: ");
-        for(EstoqueQuantidadeDTO etq: estoque) {
-        	System.out.println(
-        			etq.getValor()+"\t"+
-        			etq.getQuantidade()
-        			);
-        }        
-        
-        /**
-         * Verificação da soma total dos esquipamentos solicitados de acordo com a data com a quantidade padrão do estoque.
-         * 
-         */
-        for(RadarDeReservasAgendadasDTO total: totalSolicitado) {
-        	
-        	for(EstoqueQuantidadeDTO etq: estoque) {
-        		
-        		if(total.getDescricao().equals(etq.getValor())) {
-        		 
-        			Integer qtdRequest = total.getSomaQuantidade();
-        			Integer qtdEstoque = etq.getQuantidade();        			
-        			
-//        			{Debug}
-//        			System.out.println(
-//        					"Descrição da request: "+total.getDescricao()+"\t"+"Quantidade solicitada: "+qtdRequest+"\n"+
-//        					"Descrição do estoque: "+etq.getValor()+"\t"+"Quantidade disponível: "+qtdEstoque
-//        					);
-        			
-        			if(qtdEstoque <= qtdRequest) {        				
-//        				System.out.println("Caiu no bloco do false");	{Debug}
-        				System.err.println(
-        						"EstoqueInsuficienteExeception: "+total.getDescricao()+" na data "+total.getDataRetirada()+"\n"+
-        						"A quantidade solicitada desse equipamentos foi ["+qtdRequest+"] 0001: estoque dispovível somente com "+qtdEstoque+"\n"
-        						);        				 
-
-//        				Cria uma lista de datas insuficiente para retornar para o cliente	        				
-        				getReservasInsuficientes().add(new RadarDeReservasAgendadasDTO(total.getDescricao(), total.getSomaQuantidade(), total.getDataRetirada()));
-        				        				        				
-//        				{Debug} 
-//        				for (RadarDeReservasAgendadasDTO insuficientes: getReservasInsuficientes()) {
-//        					System.out.println(
-//        							"Insuficiente --->>> "+insuficientes.getDescricao()+
-//        							"\tQuantidade: "+insuficientes.getSomaQuantidade()+
-//        							"\t"+insuficientes.getDataRetirada()
-//        							);
-//        				}       
-        				equipamentoDisponivel = false;        				 
-        			} 
-        			
-        		}
-        		
-        	}
-        		
+		System.out.println("Reservas agendadas do dia(s) "+dataItem);
+        for (RadarDeReservasAgendadasDTO total : totalSolicitado) {
+            System.out.println(
+        		total.getDataRetirada()+"\t"+
+        		total.getHoraRetirada()+"\t"+
+        		total.getDataDevolucao()+"\t"+ 
+        		total.getHoraDevolucao()+"\t"+
+        		total.getDescricao()+"\t"+
+        		total.getSomaQuantidade()
+    		);
         }
         
-        
-        if(!equipamentoDisponivel) {
-        	throw new EstoqueInsuficienteException("EstoqueInsuficienteExeception: Estoque indisponível.", getReservasInsuficientes()); 
+        if(totalSolicitado.isEmpty()) {
+        	System.out.println("A lista está vazia");
         }
         
+        validacaoDoEstoque(totalSolicitado);
+               
+    	return totalSolicitado;        
+        		
+	}
+	
+	
+	
+	
+	/**
+	 * Método de validação de quantidade limite no estoque 
+	 * @param reservasAgendadas
+	 */
+	private void validacaoDoEstoque(List<RadarDeReservasAgendadasDTO> reservasAgendadas) {
+		List<EstoqueQuantidadeDTO> estoque = estoqueDeEquipamentoRepository.getEstoqueQuantidades();
+		List<RadarDeReservasAgendadasDTO> reservasInsuficiente = new ArrayList<>();
 		
-        return equipamentoDisponivel;
-        		
+		for (RadarDeReservasAgendadasDTO reservas: reservasAgendadas) {
+			for (EstoqueQuantidadeDTO itemEstoque: estoque) {
+				
+				if(reservas.getDescricao().equals(itemEstoque.getValor())) {
+					Integer qtdReserva = reservas.getSomaQuantidade();
+        			Integer qtdEstoque = itemEstoque.getQuantidade();
+        			
+        			if(qtdEstoque < qtdReserva || qtdEstoque == qtdReserva) {
+        				reservasInsuficiente.add(
+        						new RadarDeReservasAgendadasDTO(reservas.getDescricao(), reservas.getSomaQuantidade(), reservas.getDataRetirada())
+        						);
+        			} 
+				}				
+			}
+		}
+		
+//		{Debug}
+//		System.out.println("Reservas insuficientes");
+//		for (RadarDeReservasAgendadasDTO itensInsuficientes: reservasInsuficiente) {
+////			if(itensInsuficientes.getDescricao())
+////			System.out.println(itensInsuficientes);
+//		}
+		
+		if(!reservasInsuficiente.isEmpty()) {
+			System.out.println("A lista não está vazia então será lançada uma throw com os itens");
+			throw new EstoqueInsuficienteException("EstoqueInsuficienteExeception: Estoque indisponível.", reservasInsuficiente);			 
+		}		
+		
 	}
 	
 	
@@ -308,7 +295,7 @@ public class UpdateEstoqueService {
 	/**
 	 * Getter público do método monitoradorDeEstoqueParaReservasPosteriores
 	 */
-	public boolean getMonitoradorDeEstoqueParaReservasPosteriores(List<LocalDate> datas) {
+	public List<RadarDeReservasAgendadasDTO> getEstoqueDisponivelDeAgenda(List<LocalDate> datas) {
 		return monitoradorDeEstoqueParaReservasPosteriores(datas);
 	}
 

@@ -1,13 +1,13 @@
 package br.com.agenda.cifep.controller.equipamentos;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,45 +48,25 @@ public class ReadEquipamentoController {
 	
 	
  
-	@GetMapping("/validador-agenda-estoque")
-	public ResponseEntity<List<RadarDeReservasAgendadasDTO>> verificadorDeAgendasFuturas(@RequestBody List<LocalDate> datas) {		
+ 
+	@PostMapping("/pesquisa-reservas-futuras")
+	public ResponseEntity<List<RadarDeReservasAgendadasDTO>> verificadorDeAgendasFuturas(@RequestBody List<LocalDate> datas) {				
 		
-//		List<LocalDate> datas = dto.getDatas();
-		boolean monitoradorDeEstoqueParaReservasPosteriores = true;
-		
+		@SuppressWarnings("unused")
+		List<RadarDeReservasAgendadasDTO> list = null;
 		try {
-			monitoradorDeEstoqueParaReservasPosteriores = 
-					updateEstoqueService.getMonitoradorDeEstoqueParaReservasPosteriores(datas);
+			list = updateEstoqueService.getEstoqueDisponivelDeAgenda(datas);
 			
-			if(!monitoradorDeEstoqueParaReservasPosteriores) {				
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-						.build();					 
-			} else {
-				System.out.println("Caiu no bloco 200");
-				return ResponseEntity.status(HttpStatus.OK)
-						.build();
-			}
+			return ResponseEntity.status(HttpStatus.OK)
+					.build();
 			
-		} catch (EstoqueInsuficienteException e) {
-			// TODO Auto-generated catch block
+		} catch (EstoqueInsuficienteException  e) {
 			e.printStackTrace();
-			e.estoqueInsuficienteException();
-			String mensagem = "EstoqueInsuficienteExeception, estoque insuficiente para as datas solicitas.";
+			List<RadarDeReservasAgendadasDTO> estoqueInsuficienteException = e.estoqueInsuficienteException();
 			
-			List<RadarDeReservasAgendadasDTO> list = 
-					UpdateEstoqueService.getReservasInsuficientes();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.header("Mensagem", mensagem)
-					.body(list);
-			
-		}
-		
-		
-		
-		
-		
-		
-		
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(estoqueInsuficienteException);
+		}			
 		
 		  
 	}
