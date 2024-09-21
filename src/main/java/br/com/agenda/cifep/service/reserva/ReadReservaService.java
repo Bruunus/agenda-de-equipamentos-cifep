@@ -46,13 +46,13 @@ public class ReadReservaService {
 
 	}
 
- 
-	public List<ReservaDTO> carregarTodasReservasAtivasAnuais() {
-		 
-		List<Reserva> reservas =  reservaRepository.findByStatusAndTipo(StatusReserva.ATIVA, TipoReserva.ANUAL);
-		return reservaDTO.carregarDados(reservas);		
-		
-	}
+	/*Funcionalidade desativada*/
+//	public List<ReservaDTO> carregarTodasReservasAtivasAnuais() {
+//		 
+//		List<Reserva> reservas =  reservaRepository.findByStatusAndTipo(StatusReserva.ATIVA, TipoReserva.ANUAL);
+//		return reservaDTO.carregarDados(reservas);		
+//		
+//	}
 
 
 	// 	Consulta com JPQL

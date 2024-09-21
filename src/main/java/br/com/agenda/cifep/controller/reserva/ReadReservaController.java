@@ -42,12 +42,13 @@ public class ReadReservaController {
 		
 	}
 	
-	@GetMapping("actives-full-year/reservas")
-	public ResponseEntity<List<ReservaDTO>> carregarAsReservasAtivasAnual() {
-		List<ReservaDTO> list = readReservaService.carregarTodasReservasAtivasAnuais();
-		return new ResponseEntity<>(list, HttpStatus.OK);
-		
-	}
+	/* Funcionalidade desativada */
+//	@GetMapping("actives-full-year/reservas")
+//	public ResponseEntity<List<ReservaDTO>> carregarAsReservasAtivasAnual() {
+//		List<ReservaDTO> list = readReservaService.carregarTodasReservasAtivasAnuais();
+//		return new ResponseEntity<>(list, HttpStatus.OK);
+//		
+//	}
 	
 	@GetMapping("month/{mes}/reservas")
 	public ResponseEntity<List<ReservaDTO>> pesquisarReservaPorMesAtivas(@PathVariable int mes) {

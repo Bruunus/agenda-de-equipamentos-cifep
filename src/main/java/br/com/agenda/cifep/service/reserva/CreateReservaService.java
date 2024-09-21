@@ -210,7 +210,7 @@ public class CreateReservaService {
 	}
 	
 	
-	
+	/* Funcionalidade desativada */
 	public boolean novaReservaAgendadaAnual(List<ReservaDTO> reservaDTO) {
 		
 		for (ReservaDTO reserva : reservaDTO) {
@@ -234,7 +234,7 @@ public class CreateReservaService {
 	            novaReserva.setSetor(reserva.getSetor());
 	            novaReserva.setRecorrenciaDeToda(reserva.getRecorrenciaDeToda());
 	            novaReserva.setStatus(StatusReserva.ATIVA);
-	            novaReserva.setTipo(TipoReserva.ANUAL);
+//	            novaReserva.setTipo(TipoReserva.ANUAL);
 
 	            List<ReservaDeFluxoDeEquipamento> equipamentosList = new ArrayList<>();
 

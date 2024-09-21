@@ -4,8 +4,7 @@ public enum TipoReserva {
 	
 
 	EVENTUAL,
-	MULTIPLA,
-	ANUAL;
+	MULTIPLA
 	
 	
 	
