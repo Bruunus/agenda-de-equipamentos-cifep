@@ -1,1 +1,4 @@
+br/com/agenda/cifep/service/estoque/UpdateEstoqueService.class
 br/com/agenda/cifep/config/InicializadorDeSistema$1.class
+br/com/agenda/cifep/dto/reserva/RadarDeReservasAgendadasDTO.class
+br/com/agenda/cifep/service/estoque/EstoqueService.class

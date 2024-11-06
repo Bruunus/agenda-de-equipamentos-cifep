@@ -91,104 +91,61 @@ public class InicializadorDeSistema {
 	 * os registros execute o método.
 	 */
 	private void resetEstoque() {
-		
-		for (EstoqueEquipamentos item : EstoqueEquipamentos.values()) {
-			 
-			EstoqueEquipamento estoqueEquipamento = 
-					estoqueDeEquipamentoRepository.findByValor(item.name());
-			
-			if (estoqueEquipamento == null) {
-                // Item não encontrado, realiza o insert
-                estoqueEquipamento = new EstoqueEquipamento();
-                estoqueEquipamento.setValor(item.name());
-                System.out.println("");
-                switch (item) {
-				case DATASHOW : {
-					estoqueEquipamento.setQuantidade(4);
-					estoqueEquipamento.setDescricao("Datashow");
-					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
-				case NOTEBOOK : {
-					estoqueEquipamento.setQuantidade(5);
-					estoqueEquipamento.setDescricao("Notebook");
-					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
-				case LASER_POINTER : {
-					estoqueEquipamento.setQuantidade(1);
-					estoqueEquipamento.setDescricao("Lazer Pointer");
-					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
-				case CABO_HDMI : {
-					estoqueEquipamento.setQuantidade(0);
-					estoqueEquipamento.setDescricao("Cabo HDMI");
-					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
-				case EXTENSAO : {
-					estoqueEquipamento.setQuantidade(4);
-					estoqueEquipamento.setDescricao("Extensão");
-					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
-				case ADAPTADOR : {
-					estoqueEquipamento.setQuantidade(1);
-					estoqueEquipamento.setDescricao("Adaptador");
-					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
-				case FLIP_CHART : {
-					estoqueEquipamento.setQuantidade(1);
-					estoqueEquipamento.setDescricao("Flip Chart");
-					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
-				case WEB_CAM : {
-					estoqueEquipamento.setQuantidade(3);
-					estoqueEquipamento.setDescricao("Webcam");
-					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
-				case PEN_DRIVE : {
-					estoqueEquipamento.setQuantidade(0);
-					estoqueEquipamento.setDescricao("Pendrive");
-					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
-				
-				case CABO_P2 : {
-					estoqueEquipamento.setQuantidade(3);
-					estoqueEquipamento.setDescricao("Cabo P2");
-					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
-				
-				case CABO_P10 : {
-					estoqueEquipamento.setQuantidade(4);
-					estoqueEquipamento.setDescricao("Cabo P10");
-					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
-				
-				case MICROFONE : {
-					estoqueEquipamento.setQuantidade(3);
-					estoqueEquipamento.setDescricao("Microfone");
-					estoqueDeEquipamentoRepository.save(estoqueEquipamento);
-					break;					 
-				}
-				
-				 
-				
-				default:
-					throw new IllegalArgumentException("Unexpected value: " + item);
-				}
-                
-                
-            }
-		}
-		
+	    for (EstoqueEquipamentos item : EstoqueEquipamentos.values()) {
+	        // Verifica se o equipamento já existe no banco de dados
+	        EstoqueEquipamento estoqueEquipamento = estoqueDeEquipamentoRepository.findByDescricao(item.getDescricao());
+
+	        // Se não existir, cria um novo registro
+	        if (estoqueEquipamento == null) {
+	            estoqueEquipamento = new EstoqueEquipamento();
+	            estoqueEquipamento.setDescricao(item.getDescricao()); // Usando getDescricao()
+
+	            // Define a quantidade com base no tipo de equipamento
+	            switch (item) {
+	                case DATASHOW:
+	                    estoqueEquipamento.setQuantidade(4);
+	                    break;
+	                case NOTEBOOK:
+	                    estoqueEquipamento.setQuantidade(5);
+	                    break;
+	                case LASER_POINTER:
+	                    estoqueEquipamento.setQuantidade(1);
+	                    break;
+	                case CABO_HDMI:
+	                    estoqueEquipamento.setQuantidade(0);
+	                    break;
+	                case EXTENSAO:
+	                    estoqueEquipamento.setQuantidade(4);
+	                    break;
+	                case ADAPTADOR:
+	                    estoqueEquipamento.setQuantidade(1);
+	                    break;
+	                case FLIP_CHART:
+	                    estoqueEquipamento.setQuantidade(1);
+	                    break;
+	                case WEB_CAM:
+	                    estoqueEquipamento.setQuantidade(3);
+	                    break;
+	                case PEN_DRIVE:
+	                    estoqueEquipamento.setQuantidade(0);
+	                    break;
+	                case CABO_P2:
+	                    estoqueEquipamento.setQuantidade(3);
+	                    break;
+	                case CABO_P10:
+	                    estoqueEquipamento.setQuantidade(4);
+	                    break;
+	                case MICROFONE:
+	                    estoqueEquipamento.setQuantidade(3);
+	                    break;
+	                default:
+	                    throw new IllegalArgumentException("Unexpected value: " + item);
+	            }
+
+	            // Salva o novo equipamento no banco de dados
+	            estoqueDeEquipamentoRepository.save(estoqueEquipamento);
+	        }
+	    }
 	}
 	
 	

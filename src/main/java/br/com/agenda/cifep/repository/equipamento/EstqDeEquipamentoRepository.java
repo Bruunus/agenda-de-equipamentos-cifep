@@ -13,14 +13,14 @@ import br.com.agenda.cifep.model.EstoqueEquipamento;
 public interface EstqDeEquipamentoRepository extends CrudRepository<EstoqueEquipamento, Long>{
 
 	
-	@Query("SELECT new br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO(e.id, e.descricao, e.valor, e.quantidade) "
+	@Query("SELECT new br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO(e.id, e.descricao, e.quantidade) "
 			+ "FROM EstoqueEquipamento e")
 	List<EstoqueEquipamento> findAllTable();
 
 	
 	//@Query(value = "SELECT valor AS valor, quantidade AS quantidade FROM `estoque-de-equipamento`;", nativeQuery = true)
 	
-	@Query("SELECT new br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO(e.valor, e.quantidade) "
+	@Query("SELECT new br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO(e.descricao, e.quantidade) "
 			+ "FROM EstoqueEquipamento e")
 	List<EstoqueQuantidadeDTO> getEstoqueQuantidades();
 	

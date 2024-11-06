@@ -9,9 +9,7 @@ private Long id;
 	
 	 
 	private String descricao;
-	
-	private String valor;	
-	 
+		 
 	private Integer quantidade;
 	
 	
@@ -40,14 +38,6 @@ private Long id;
 		this.quantidade = quantidade;
 	}
 
-	public String getValor() {
-		return valor;
-	}
-
-	public void setValor(String valor) {
-		this.valor = valor;
-	}
-	
 	
 	
 	

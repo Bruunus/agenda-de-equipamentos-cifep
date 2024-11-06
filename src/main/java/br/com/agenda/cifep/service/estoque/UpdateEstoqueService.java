@@ -64,7 +64,7 @@ public class UpdateEstoqueService {
 			
 			estoqueData.forEach(dataEmEstoque -> {
 				
-				if(dataRequest.getDescricao().equals(dataEmEstoque.getValor())) {
+				if(dataRequest.getDescricao().equals(dataEmEstoque.getDescricao())) {
 					Integer quantidadeRequest = dataRequest.getQuantidade();
 					Integer quantidadeData = dataEmEstoque.getQuantidade();
 					Integer updateQuantidade = quantidadeData - quantidadeRequest;
@@ -106,7 +106,7 @@ public class UpdateEstoqueService {
 					
 			listData.forEach(dataEmEstoque -> {
 				
-				if(dataRequest.getDescricao().equals(dataEmEstoque.getValor())) {
+				if(dataRequest.getDescricao().equals(dataEmEstoque.getDescricao())) {
 					
 					Integer quantidadeRequest = dataRequest.getQuantidade();
 					Integer quantidadeData = dataEmEstoque.getQuantidade();

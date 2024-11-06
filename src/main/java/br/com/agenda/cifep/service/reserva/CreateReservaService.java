@@ -96,7 +96,7 @@ public class CreateReservaService {
 	        ReservaDeFluxoDeEquipamento reservaDeFluxoDeEquipamento = new ReservaDeFluxoDeEquipamento();
 	        
 	        reservaDeFluxoDeEquipamento.setDescricao(reservaDeFluxoDeEquipamentoDTO.getDescricao());	        
-	        reservaDeFluxoDeEquipamento.setQuantidade(reservaDeFluxoDeEquipamentoDTO.getQuantidade());	        
+	        reservaDeFluxoDeEquipamento.setQuantidade(reservaDeFluxoDeEquipamentoDTO.getQuantidade());        
 	        
 	        reservaDeFluxoDeEquipamento.setReserva(reserva);  
 	        equipamentosList.add(reservaDeFluxoDeEquipamento);

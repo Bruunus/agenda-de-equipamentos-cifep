@@ -2,6 +2,7 @@ package br.com.agenda.cifep.model;
 
 import javax.validation.constraints.NotNull;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,12 +15,10 @@ public class EstoqueEquipamento {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long id;	
 	
 	@NotNull
-	private String valor;
-	
-	@NotNull
+	@Column(unique = true)
 	private String descricao;
 	
 	@NotNull
@@ -27,21 +26,12 @@ public class EstoqueEquipamento {
 	
 	
 	
-
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getValor() {
-		return valor;
-	}
-
-	public void setValor(String descricao) {
-		this.valor = descricao;
 	}
 
 	public Integer getQuantidade() {
@@ -64,7 +54,7 @@ public class EstoqueEquipamento {
 	@Override
 	public String toString() {
 		 
-		return ""+this.id+" "+this.valor+" "+this.quantidade;
+		return ""+this.id+" "+this.quantidade;
 	}
 	
 	

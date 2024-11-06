@@ -24,7 +24,6 @@ import jakarta.persistence.SqlResultSetMapping;
 //		targetClass = br.com.agenda.cifep.dto.reserva.RadarDeReservasAgendadasDTO.class, 
 //		columns = 
 //			@ColumnResult(name = "nome", type = String.)))
-@Repository
 public interface EstoqueDeEquipamentoRepository extends JpaRepository<EstoqueEquipamento, Long> {
 	
 	void deleteAll();
@@ -32,7 +31,7 @@ public interface EstoqueDeEquipamentoRepository extends JpaRepository<EstoqueEqu
 	List<EstoqueEquipamento> findAll();
 	
 
-	EstoqueEquipamento findByValor(String name);
+	EstoqueEquipamento findByDescricao(String name);
 	
 //	List<EstoqueEquipamento> findAll();
 	
@@ -43,7 +42,7 @@ public interface EstoqueDeEquipamentoRepository extends JpaRepository<EstoqueEqu
 	
 	//@Query(value = "SELECT valor AS valor, quantidade AS quantidade FROM `estoque-de-equipamento`;", nativeQuery = true)
 	
-	@Query("SELECT new br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO(e.valor, e.quantidade) "
+	@Query("SELECT new br.com.agenda.cifep.dto.equipamentos.EstoqueQuantidadeDTO(e.descricao, e.quantidade) "
 			+ "FROM EstoqueEquipamento e")
 	List<EstoqueQuantidadeDTO> getEstoqueQuantidades();
 	
